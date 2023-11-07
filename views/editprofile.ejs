@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="/admin/bootstrap.min.css" >
+
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="row w-100">
+                <div class="col">
+                    <a class="navbar-brand" href="#">WatchBox</a>
+                </div>
+                <div class="col text-right">
+                    <button class="btn btn-light" type="button">Logout</button>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="container">
+        <div class="main-body">
+        
+              <!-- Breadcrumb -->
+              <nav aria-label="breadcrumb" class="main-breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="/">Home</a></li>
+
+                  <li class="breadcrumb-item active" aria-current="page">User Profile</li>
+                </ol>
+              </nav>
+              <form action="/user/Profile/update/<%=user._id%>" method="post" >
+                <div class="form-group">
+                  <label for="productName"><i class="fas fa-user"></i> Name</label>
+                  <input type="text" name="name" class="form-control" value="<%=user.name%>" id="productName" >
+                </div>
+             
+                <div class="form-group">
+                  <label for="productPrice"><i class="fas fa-dollar-sign"></i> Email</label>
+                  <input type="email" name="email" class="form-control" id="productPrice" value="<%=user.email%>" >
+                </div>
+                <div class="form-group">
+                  <label for="productCategory"><i class="fas fa-tags"></i> Phone</label>
+                  <input type="text" name="phone" class="form-control" id="productCategory" value="<%=user.phone%>" >
+                </div>
+               
+               
+                <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> Submit</button>
+              </form>
+
+
+
+        </div>
+    </div>          
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <title>WatchboX</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8" />
+    <link href="//fonts.googleapis.com/css?family=Mukta:200,300,400,500,600,700,800" rel="stylesheet">
+    <link rel="stylesheet" href="/loginstyle.css" type="text/css" media="all" />
+
+    <style>
+        .error-message {
+            color: red;
+            text-align: left;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="w3l-forms-main-61">
+        <div class="form-inner">
+            <div class="wrapper">
+                <div class="d-grid top-form">
+                    <div class="logo">
+                        <a class="brand-logo" href=""><span><span class="fa fa-viadeo" aria-hidden="true"></span> Please Signup</span></a>
+                    </div>
+                </div>
+                <div class="form-bg-blur">
+                    <div class="form-61">
+                        <h6 class="form-head">Please enter your Details</h6>
+
+                        <form action="/signup" method="post" onsubmit="return validateForm()">
+                            <div>
+                                <p class="text-head">Name</p>
+                                <input type="text" name="name" class="input" />
+                                <div class="error-message" id="error-name"></div>
+                            </div>
+                            <div>
+                                <p class="text-head">Email</p>
+                                <input type="email" name="email" class="input" />
+                                <div class="error-message" id="error-email"></div>
+                                <h3 style="color:red;"><%=message%></h3>
+                                
+                            </div>
+                            <div>
+                                <p class="text-head">Password</p>
+                                <input type="password" name="password" class="input" />
+                                <div class="error-message" id="error-password"></div>
+                            </div>
+                            <div>
+                                <p class="text-head">Confirm Password</p>
+                                <input type="password" name="conpassword" class="input" />
+                                <div class="error-message" id="error-conpassword"></div>
+                            </div>
+                        
+                            <button type="submit" class="signinbutton btn">Signup</button>
+                        
+                            <p class="signup">Already have an account? <a href="login" class="signuplink">Login</a></p>
+                        </form>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+       
+
+       function validateForm() {
+    const name = document.querySelector('input[name="name"]').value;
+    const email = document.querySelector('input[name="email"]').value;
+    const password = document.querySelector('input[name="password"]').value;
+    const conpassword = document.querySelector('input[name="conpassword"]').value;
+
+    const errorName = document.getElementById('error-name');
+    const errorEmail = document.getElementById('error-email');
+    const errorPassword = document.getElementById('error-password');
+    const errorConPassword = document.getElementById('error-conpassword');
+
+    errorName.innerHTML = '';
+    errorEmail.innerHTML = '';
+    errorPassword.innerHTML = '';
+    errorConPassword.innerHTML = '';
+
+    let isValid = true;
+
+    if (name.trim() === '') {
+        errorName.innerHTML = 'Please enter your name.';
+        isValid = false;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (email.trim() === '') {
+        errorEmail.innerHTML = 'Please Enter Your Email Address.';
+        isValid = false;
+    } else if (!emailRegex.test(email)) {
+        errorEmail.innerHTML = 'Please Enter A Valid Email Address.';
+        isValid = false;
+    }
+
+    if (password.trim() === '') {
+        errorPassword.innerHTML = 'Please Enter Your Password.';
+        isValid = false;
+    }
+
+    if (password !== conpassword) {
+        errorConPassword.innerHTML = 'Passwords Do Not Match.';
+        isValid = false;
+    }
+
+    return isValid;
+}
+
+    </script>
+</body>
+
+</html>

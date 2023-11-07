@@ -1,0 +1,391 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>WatchBox_Luxury Watches A Ecommerce Category Flat Bootstrap Resposive Website </title>
+<link href="/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+<!--jQuery(necessary for Bootstrap's JavaScript plugins)-->
+<script src="/js/jquery-1.11.0.min.js"></script>
+<!--Custom-Theme-files-->
+<!--theme-style-->
+<link href="/homestyle.css" rel="stylesheet" type="text/css" media="all" />	
+<!--//theme-style-->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Luxury Watches Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!--start-menu-->
+<script src="/js/simpleCart.min.js"> </script>
+<link href="/memenu.css" rel="stylesheet" type="text/css" media="all" />
+<script type="text/javascript" src="js/memenu.js"></script>
+<script>$(document).ready(function(){$(".memenu").memenu();});</script>	
+
+
+
+<style>
+	.added-to-cart {
+    background-color: green;
+    color: white;
+}
+</style>
+
+<!--dropdown-->
+<script src="/js/jquery.easydropdown.js"></script>			
+</head>
+<body> 
+	<!--top-header-->
+	<div class="top-header">
+		<div class="container">
+			<div class="top-header-main">
+				<div class="col-md-6 top-header-left">
+					<div class="drop">
+						<div class="box">
+							<h1 style="color: white;">WatchBox</h1>	
+						</div>
+						<div class="clearfix"></div>
+					</div>
+				</div>
+				<div class="col-md-6 top-header-left">
+					<div class="cart box_1">
+						<a href="checkout.html">
+							 <div class="total">
+								<span class="simpleCart_total"></span></div>
+								<img src="images/cart-1.png" alt="" />
+						</a>
+						<p><a href="/user/cart" class="simpleCart_empty">Empty Cart</a></p>
+						<!--  -->
+						<div id="cartMessage"></div>
+						<!--  -->
+						<div class="clearfix"> </div><br>
+
+
+						<form action="/logout" method="post">
+							<button type="submit">Logout</button>
+							
+						</form>
+						
+						  
+
+						<a href="/user/profile">Profile</a>
+					</div>
+					
+				</div>
+				
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</div>
+	<!--top-header-->
+	<!--start-logo-->
+	<div class="logo">
+		<a href="index.html"><h1>Luxury Watches</h1></a>
+	</div>
+	<!--start-logo-->
+	<!--bottom-header-->
+	<div class="header-bottom">
+		<div class="container">
+			<div class="header">
+				<div class="col-md-9 header-left">
+				<div class="top-nav">
+					<ul class="memenu skyblue"><li class="active"><a href="/">Home</a></li>
+						<li class="grid"><a href="#">Top Offers</a>
+							<div class="mepanel">
+								<div class="row">
+									<div class="col1 me-one">
+										<h4>Shop</h4>
+										
+									</div>
+									<div class="col1 me-one">
+										<h4>Style Zone</h4>
+											
+									</div>
+									<div class="col1 me-one">
+										<h4>Popular Brands</h4>
+											
+									</div>
+								</div>
+							</div>
+						</li>
+						<li class="grid"><a href="#">Categories</a>
+							<div class="mepanel">
+								<div class="row">
+									<div class="col1 me-one">
+										<h4>Shop</h4>
+										
+									</div>
+									<div class="col1 me-one">
+										<h4>Style Zone</h4>
+										
+									</div>
+									<div class="col1 me-one">
+										<h4>Popular Brands</h4>
+										
+									</div>
+								</div>
+							</div>
+						</li>
+						
+						<li class="grid"><a href="typo.html">Blog</a>
+						</li>
+						<li class="grid"><a href="contact.html">Contact</a>
+						</li>
+					</ul>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+			<div class="col-md-3 header-right"> 
+				<div class="search-bar">
+					<form action="/search" method="GET">
+					<input type="text" value="Search" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}">
+					<input type="submit" value="">
+				</div>
+			</div>
+			<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div>
+	<!--bottom-header-->
+	<!--banner-starts-->
+	<div class="bnr" id="home">
+		<div  id="top" class="callbacks_container">
+			<ul class="rslides" id="slider4">
+			    <li>
+					<img src="images/bnr-1.jpg" alt=""/>
+				</li>
+				<li>
+					<img src="images/bnr-2.jpg" alt=""/>
+				</li>
+				<li>
+					<img src="images/bnr-3.jpg" alt=""/>
+				</li>
+				
+			</ul>
+		</div>
+		<div class="clearfix"> </div>
+	</div>
+	<!--banner-ends--> 
+	<!--Slider-Starts-Here-->
+				<script src="/js/responsiveslides.min.js"></script>
+				<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+			 <script>
+			    // You can also use "$(window).load(function() {"
+			    $(function () {
+			      // Slideshow 4
+			      $("#slider4").responsiveSlides({
+			        auto: true,
+			        pager: true,
+			        nav: true,
+			        speed: 500,
+			        namespace: "callbacks",
+			        before: function () {
+			          $('.events').append("<li>before event fired.</li>");
+			        },
+			        after: function () {
+			          $('.events').append("<li>after event fired.</li>");
+			        }
+			      });
+			
+			    });
+			  </script>
+			<!--End-slider-script-->
+	<!--about-starts-->
+	
+	<div class="about"> 
+		<div class="container">
+			<div class="logo">
+				<a href=""><h1 style="font-family:Georgia; color: black;">Top Categories</h1></a>
+			  </div>
+			  
+			<div class="about-top grid-1">
+				<div class="col-md-3 about-left">
+					<figure class="effect-bubba">
+						<img class="img-responsive" src="images/abt-1.jpg" alt=""/>
+						<figcaption>
+							<h2>Analog Watches</h2>
+							<p>Analog luxury watches are exquisite timepieces that combine both functionality and aesthetics.</p>	
+						</figcaption>			
+					</figure>
+				</div>
+				<div class="col-md-3 about-left">
+					<figure class="effect-bubba">
+						<img class="img-responsive" src="images/abt-2.jpg" alt=""/>
+						<figcaption>
+							<h4>Digital Watch</h4>
+							<p>A digital luxury watch is a timepiece that combines the functionality of a digital display </p>	
+						</figcaption>			
+					</figure>
+				</div>
+				<div class="col-md-3 about-left">
+					<figure class="effect-bubba">
+						<img class="img-responsive" src="images/abt-3.jpg" alt=""/>
+						<figcaption>
+							<h4>Smart Watch</h4>
+							<p> smartwatches are a category of wearable technology that combines advanced features and functionality </p>	
+						</figcaption>			
+					</figure>
+				</div>
+				<div class="col-md-3 about-left">
+					<figure class="effect-bubba">
+						<img class="img-responsive" src="images/abt-3.jpg" alt=""/>
+						<figcaption>
+							<h4>Fitness Watch</h4>
+							<p>fitness watches combine the functionality of a fitness tracker with the style and quality </p>	
+						</figcaption>			
+					</figure>
+				</div>
+				
+				
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</div>
+	<!--about-end-->
+	<!--product-starts-->
+	
+	<div class="logo">
+		<a href=""><h1 style="font-family: Georgia; color: black;">New Arrivals</h1></a>
+	</div>
+	
+	<div class="product">
+		<div class="container">
+			<div class="product-top">
+				<div class="row">
+					<% products.slice().reverse().forEach((row, index) => { %>
+						<div class="col-md-3 product-left" style="margin-bottom: 20px;">
+							<div class="product-main simpleCart_shelfItem">
+								<a href="/productdetails/<%= row._id %>" class="mask">
+									<img class="img-responsive zoom-img" src="/productimg/<%= row.image %>" alt="<%= row.image %>" />
+								</a>
+								<div class="">
+									<h3><%= row.name %></h3>
+									<p>Explore Now</p>
+									<h4><span class="item_price">&#8377;<%= row.price %></span></h4>
+									<h4>
+										
+										<a class="btn btn-secondary" href="/productdetails/<%= row._id %>">View Details</a>
+										<a class="btn btn-primary" href="/addtocart/<%=row._id%>" >Add to Cart</a>
+										<!-- The price display -->
+										
+									</h4>
+									
+								</div>
+								<div class="srch">
+									<span>-60%</span>
+								</div>
+							</div>
+						</div>
+					<% }) %>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+
+	
+	<!--product-end-->
+	<div>
+		<% if (currentPage > 1) { %>
+			<a href="?page=<%= currentPage - 1 %>">Previous</a>
+		<% } %>
+	
+		<!-- You might need to calculate if there are more products -->
+		<a href="?page=<%= currentPage + 1 %>">Next</a>
+	</div>
+	
+	
+
+	
+	
+	
+	<!--information-starts-->
+	<div class="information">
+		<div class="container">
+			<div class="infor-top">
+				<div class="col-md-3 infor-left">
+					<h3>Follow Us</h3>
+					<ul>
+						<li><a href="#"><span class="fb"></span><h6>Facebook</h6></a></li>
+						<li><a href="#"><span class="twit"></span><h6>Twitter</h6></a></li>
+						<li><a href="#"><span class="google"></span><h6>Google+</h6></a></li>
+					</ul>
+				</div>
+				<div class="col-md-3 infor-left">
+					<h3>Information</h3>
+					<ul>
+						<li><a href="#"><p>Specials</p></a></li>
+						<li><a href="#"><p>New Products</p></a></li>
+						<li><a href="#"><p>Our Stores</p></a></li>
+						<li><a href="contact.html"><p>Contact Us</p></a></li>
+						<li><a href="#"><p>Top Sellers</p></a></li>
+					</ul>
+				</div>
+				<div class="col-md-3 infor-left">
+					<h3>My Account</h3>
+					<ul>
+						<li><a href="account.html"><p>My Account</p></a></li>
+						<li><a href="#"><p>My Credit slips</p></a></li>
+						<li><a href="#"><p>My Merchandise returns</p></a></li>
+						<li><a href="#"><p>My Personal info</p></a></li>
+						<li><a href="#"><p>My Addresses</p></a></li>
+					</ul>
+				</div>
+				<div class="col-md-3 infor-left">
+					<h3>Store Information</h3>
+					<h4>The company name,
+						<span>Lorem ipsum dolor,</span>
+						Glasglow Dr 40 Fe 72.</h4>
+					<h5>+955 123 4567</h5>	
+					<p><a href="mailto:example@email.com">contact@example.com</a></p>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</div>
+	<!--information-end-->
+	<!--footer-starts-->
+	<div class="footer">
+		<div class="container">
+			<div class="footer-top">
+				<div class="col-md-6 footer-left">
+					<form>
+						<input type="text" value="Enter Your Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Enter Your Email';}">
+						<input type="submit" value="Subscribe">
+					</form>
+				</div>
+				<div class="col-md-6 footer-right">					
+					<p>© 2015 Luxury Watches. All Rights Reserved | Design by  <a href="http://w3layouts.com/" target="_blank">W3layouts</a> </p>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</div>
+	<!--footer-end-->	
+	<script>
+		
+
+		// JavaScript code
+// document.addEventListener('DOMContentLoaded', function() {
+//     const addToCartButtons = document.querySelectorAll('.btn-primary'); // Select all "Add to Cart" buttons
+
+//     addToCartButtons.forEach(button => {
+//         button.addEventListener('click', function(event) {
+//             event.preventDefault(); // Prevent the default form submission
+
+//             const productName = this.getAttribute('data-product-name'); // Get the product name (you may need to add this attribute in your button)
+//             const cartMessage = document.getElementById('cartMessage');
+
+//             cartMessage.textContent = `${productName} added to cart`; // Set the message
+
+//             // Clear the message after a few seconds (for example, 5 seconds)
+//             setTimeout(function() {
+//                 cartMessage.textContent = '';
+//             }, 5000); // 5000 milliseconds = 5 seconds
+//         });
+//     });
+// });
+
+	</script>
+</body>
+</html>

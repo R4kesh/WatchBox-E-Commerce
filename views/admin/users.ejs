@@ -1,0 +1,279 @@
+
+<!DOCTYPE html>
+<head>
+<title>Admin Usermanagement</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Visitors Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- bootstrap-css -->
+<link rel="stylesheet" href="/admin/bootstrap.min.css" >
+<!-- //bootstrap-css -->
+<!-- Custom CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<link href="/admin/style.css" rel='stylesheet' type='text/css' />
+<link href="/admin/style-responsive.css" rel="stylesheet"/>
+<!-- font CSS -->
+<link href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+<!-- font-awesome icons -->
+<link rel="stylesheet" href="/admin/font.css" type="text/css"/>
+<link href="/admin/font-awesome.css" rel="stylesheet"> 
+<link rel="stylesheet" href="/admin/morris.css" type="text/css"/>
+<!-- calendar -->
+<link rel="stylesheet" href="/admin/monthly.css">
+<!-- //calendar -->
+<!-- //font-awesome icons -->
+<script src="/js/admin/jquery2.0.3.min.js"></script>
+<script src="/js/admin/raphael-min.js"></script>
+<script src="/js/admin/morris.js"></script>
+<style>
+    /* Example CSS for table style */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 2px solid #ccc; /* Main border for the table */
+}
+
+.table th,
+.table td {
+    border: 1px solid #ccc; /* Borders for table cells */
+    padding: 8px; /* Padding for cells */
+}
+
+.table thead {
+    background-color: #f0f0f0; /* Header background color */
+}
+
+.table tr:nth-child(even) {
+    background-color: #f9f9f9; /* Even row background color */
+}
+
+.table tr:hover {
+    background-color: #e0e0e0; /* Hover row background color */
+}
+
+/* Adjust these styles based on your specific design preferences */
+
+</style>
+</head>
+<body>
+<section id="container">
+<!--header start-->
+<header class="header fixed-top clearfix">
+<!--logo start-->
+<div class="brand">
+    <a href="/admin" class="logo">
+        ADMIN
+    </a>
+    <!-- <div class="sidebar-toggle-box">
+        <div class="fa fa-bars"></div>
+    </div> -->
+</div>
+<!--logo end-->
+
+</div>
+<div class="top-nav clearfix">
+    <!--search & user info start-->
+    <ul class="nav pull-right top-menu">
+        <li>
+            <input type="text" class="form-control search" placeholder=" Search">
+        </li>
+        <!-- user login dropdown start-->
+        <li class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                <img alt="" src="/images/2.png">
+                <span class="username">John Doe</span>
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu extended logout">
+                <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
+                <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
+                <li><a href="login.html"><i class="fa fa-key"></i> Log Out</a></li>
+            </ul>
+        </li>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+            <a class="nav-link" href="/admin/logout">Log-out</a>
+        </button>
+        <!-- user login dropdown end -->
+       
+    </ul>
+    <!--search & user info end-->
+</div>
+</header>
+<!--header end-->
+<!--sidebar start-->
+<aside>
+    <div id="sidebar" class="nav-collapse">
+        <!-- sidebar menu start-->
+        <div class="leftside-navigation">
+            <ul class="sidebar-menu" id="nav-accordion">
+                <li>
+                    <a class="active" href="/admin">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="sub-menu">
+                    <a href="/admin/users">
+                        <i class="fas fa-users"></i>
+                        <span>Users</span>
+                    </a>
+                    
+                </li>
+                <li>
+                    <a href="/admin/category">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>Category </span>
+                    </a>
+                </li>
+                <li class="sub-menu">
+                    <a href="/admin/products">
+                        <i class="fas fa-box"></i>
+                        <span>Products</span>
+                    </a>
+                   
+                </li>
+                
+            </ul>            </div>
+        <!-- sidebar menu end-->
+    </div>
+</aside>
+<!--sidebar end-->
+<!--main content start-->
+
+
+
+
+<section id="main-content">
+    <section class="wrapper">
+        <div class="market-updates"></div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+           <h1>User Details</h1>
+            
+        </nav>
+        <!-- You may want to remove or replace the above navbar with your preferred navigation. -->
+
+        <div class="container2"> <!-- I noticed you had commented this out, you can uncomment if needed. -->
+            <div class="row my-4">
+                <div class="col-lg-12">
+                    <div class="table-responsive">
+                       
+
+                        
+                        <table class="table table-striped text-center my-3">
+                            <thead>
+                                <tr class="table-dark ">
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Join at</th>
+                                    
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <%users.forEach((row, index) => { %>
+                                <tr class='align-middle'>
+                                    <td style="color: black;"><%= index+1 %></td>
+                                    <td style="color: black;"><%= row.name %></td>
+                                    <td style="color: black;"><%= row.email %></td>
+                                    <td style="color: black;"><%= row.created.toLocaleDateString() %></td>
+                      
+
+                                    <td>
+										<% if (row.blocked) { %>
+                                                <form method="post" action="/admin/unblock/<%= row._id %>">
+                                                 <button type="submit" class="btn btn-success">Unblock</button>
+                                                 </form>
+                                                     <% } else { %>
+                                                        <form method="post" action="/admin/block/<%= row._id %>">
+                                                        <button type="submit" class="btn btn-danger">Block</button>
+                                                         </form>
+               
+           
+                                                          <% } %>
+
+
+                                                    </td>
+										
+                                </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                        
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--main content end-->
+<script>
+    function checker(event) {
+      const result=confirm('Are You Sure You Want to Delete?');
+      if(result==false){
+        event.preventDefault();
+      }
+    }
+  </script>
+
+
+<script src="js/admin/bootstrap.js"></script>
+<script src="js/admin/jquery.dcjqaccordion.2.7.js"></script>
+<script src="js/admin/scripts.js"></script>
+<script src="js/admin/jquery.slimscroll.js"></script>
+<script src="js/admin/jquery.nicescroll.js"></script>
+<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/flot-chart/excanvas.min.js"></script><![endif]-->
+<script src="/js/admin/jquery.scrollTo.js"></script>
+<!--     ///////////////////////-->
+<script>
+    // Add an event listener for all buttons with the class "block-button"
+    const buttons = document.querySelectorAll('.block-button');
+
+    buttons.forEach(button => {
+        button.addEventListener('click', async (event) => {
+            event.preventDefault();
+            const button = event.target;
+            const userId = button.getAttribute('data-user-id');
+            const userStatus = button.closest('tr').querySelector('[data-user-status]');
+            
+            // Simulate an asynchronous request to the server to block/unblock the user
+            try {
+                const response = await fetch(`/admin/block/${userId}`, { method: 'POST' });
+                if (response.status === 200) {
+                    if (userStatus.getAttribute('data-user-status') === 'active') {
+                        userStatus.textContent = 'Blocked';
+                        userStatus.setAttribute('data-user-status', 'blocked');
+                        button.textContent = 'Unblock';
+                    } else {
+                        userStatus.textContent = 'Active';
+                        userStatus.setAttribute('data-user-status', 'active');
+                        button.textContent = 'Block';
+                    }
+                } else {
+                    console.error('Failed to block/unblock user');
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        });
+    });
+</script>
+

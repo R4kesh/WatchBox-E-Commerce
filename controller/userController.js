@@ -312,6 +312,7 @@ const updateProfile=async(req,res)=>{
         }else{
           res.redirect('/user/profile')  
         }
+        //fghjkl
 
     }catch(err){
         console.log('Error updating the product : ',err);

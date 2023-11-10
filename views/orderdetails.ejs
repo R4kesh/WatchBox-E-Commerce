@@ -34,9 +34,7 @@ background: linear-gradient(to top left, rgba(205, 156, 242, 1), rgba(246, 243, 
 			  <!-- Left elements -->
 	  
 			  <!-- right elements -->
-			  <div class="">
-				<a href="https://github.com/mdbootstrap/bootstrap-material-design" class="me-1 border rounded py-1 px-3 nav-link" target="_blank"> <i class="fas fa-user-alt me-2"></i>Sign in </a>
-			  </div>
+			  
 			  <!-- right elements -->
 			</div>
 		  </div>
@@ -44,18 +42,18 @@ background: linear-gradient(to top left, rgba(205, 156, 242, 1), rgba(246, 243, 
 		<!-- Jumbotron -->
 	  
 		<!-- Heading -->
-		<div class="bg-primary">
+		<div class="bg-black">
 		  <div class="container py-4">
 			<!-- Breadcrumb -->
 			<nav class="d-flex">
 			  <h6 class="mb-0">
-				<a href="" class="text-white-50">Home</a>
+				<a href="/" class="text-white-50">Home</a>
 				<span class="text-white-50 mx-2"> > </span>
-				<a href="" class="text-white-50">2. Shopping cart</a>
+				<a href="/user/profile" class="text-white-50">Profile</a>
 				<span class="text-white-50 mx-2"> > </span>
-				<a href="" class="text-white"><u>3. Order info</u></a>
-				<span class="text-white-50 mx-2"> > </span>
-				<a href="" class="text-white-50">4. Payment</a>
+				<a href="" class="text-white"><u>Order info</u></a>
+				<span class="text-white-50 mx-2"> </span>
+				
 			  </h6>
 			</nav>
 			<!-- Breadcrumb -->
@@ -70,13 +68,14 @@ background: linear-gradient(to top left, rgba(205, 156, 242, 1), rgba(246, 243, 
             <div class="col-lg-10 col-xl-8">
               <div class="card" style="border-radius: 10px;">
                 <div class="card-header px-4 py-5">
+					
                   <h5 class="text-muted mb-0">Thanks for your Order, <span style="color: #a8729a;"><%=user.name%></span>!</h5>
                 </div>
                 <div class="card-body p-4">
-                  <div class="d-flex justify-content-between align-items-center mb-4">
+                  <!-- <div class="d-flex justify-content-between align-items-center mb-4">
                     <p class="lead fw-normal mb-0" style="color: #a8729a;">Receipt</p>
                     <p class="small text-muted mb-0">Receipt Voucher : 1KAU9-84UIL</p>
-                  </div>
+                  </div> -->
                   <%orderItems.forEach(item =>{%>
 
                  
@@ -102,6 +101,21 @@ background: linear-gradient(to top left, rgba(205, 156, 242, 1), rgba(246, 243, 
                         <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
                           <p class="text-muted mb-0 small">₹<%= item.product.price %></p>
                         </div>
+						<div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+							<% if (item.status !== 'Cancelled') { %>
+								<% if (item.status === 'Delivered') { %>
+									<!-- If status is Delivered, display Return button -->
+									<a href="/returnOrder/<%= item._id %>" class="btn btn-outline-primary">Return</a>
+								<% } else { %>
+									<!-- If status is not Cancelled or Delivered, display Cancel Order button -->
+									<a href="/cancelOrder/<%= item._id %>" class="btn btn-outline-primary">Cancel Order</a>
+								<% } %>
+							<% } else { %>
+								<!-- If status is Cancelled, display Cancelled message -->
+								<p class="text-muted mb-0 small">Cancelled</p>
+							<% } %>
+						</div>
+						
                       </div>
                       <hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">
                       <div class="row d-flex align-items-center">
@@ -109,14 +123,57 @@ background: linear-gradient(to top left, rgba(205, 156, 242, 1), rgba(246, 243, 
                           <p class="text-muted mb-0 small">Track Order</p>
                         </div>
                         <div class="col-md-10">
+
+
                           <div class="progress" style="height: 6px; border-radius: 16px;">
-                            <div class="progress-bar" role="progressbar"
-                              style="width: 65%; border-radius: 16px; background-color: #a8729a;" aria-valuenow="65"
-                              aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
+        <div class="progress-bar" role="progressbar"
+            style="width: <% 
+                switch (item.status) {
+                    case 'Pending':
+                        %>0<%
+                        break;
+                    case 'Order Confirmed':
+                        %>25<%
+                        break;
+                    case 'Shipped':
+                        %>50<%
+                        break;
+                    case 'Out For Delivery':
+                        %>75<%
+                        break;
+                    case 'Delivered':
+                        %>100<%
+                        break;
+                    default:
+                        %>0<%
+                }
+            %>%; border-radius: 16px; background-color: #a8729a;" aria-valuenow="<% 
+                switch (item.status) {
+                    case 'Pending':
+                        %>0<%
+                        break;
+                    case 'Order Confirmed':
+                        %>25<%
+                        break;
+                    case 'Shipped':
+                        %>50<%
+                        break;
+                    case 'Out For Delivery':
+                        %>75<%
+                        break;
+                    case 'Delivered':
+                        %>100<%
+                        break;
+                    default:
+                        %>0<%
+                }
+            %>" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+
+
                           <div class="d-flex justify-content-around mb-1">
-                            <p class="text-muted mt-1 mb-0 small ms-xl-5">Out for delivary</p>
-                            <p class="text-muted mt-1 mb-0 small ms-xl-5">Delivered</p>
+                            <p class="text-muted mt-1 mb-0 small ms-xl-5"></p>
+                            <p class="text-muted mt-1 mb-0 small ms-xl-5"><%=item.status%></p>
                           </div>
                         </div>
                       </div>
@@ -126,7 +183,7 @@ background: linear-gradient(to top left, rgba(205, 156, 242, 1), rgba(246, 243, 
                   <% })%>
                  
       
-                  <div class="d-flex justify-content-between pt-2">
+                  <!-- <div class="d-flex justify-content-between pt-2">
                     <p class="fw-bold mb-0">Order Details</p>
                     <p class="text-muted mb-0"><span class="fw-bold me-4">Total</span> $898.00</p>
                   </div>
@@ -150,7 +207,7 @@ background: linear-gradient(to top left, rgba(205, 156, 242, 1), rgba(246, 243, 
                   style="background-color: #a8729a; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
                   <h5 class="d-flex align-items-center justify-content-end text-white text-uppercase mb-0">Total
                     paid: <span class="h2 mb-0 ms-2">$1040</span></h5>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>

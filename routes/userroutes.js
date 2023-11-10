@@ -56,7 +56,9 @@ user_Routes.get('/user/profile',userController.profileLoad)
 // user_Routes.get('/home',(req,res)=>{
 //     res.render('home')
 // })
+user_Routes.get('/products',userController.productsLoad)
 user_Routes.get('/productdetails/:id',userController.productdetail)
+
 
 user_Routes.get('/profile/addaddress',userController.addaddressLoad)
 user_Routes.post('/user/addaddress',userController.updateAddress)
@@ -67,6 +69,7 @@ user_Routes.get('/user/profile/edit/:id',userController.editProfile)
 user_Routes.post('/user/Profile/update/:id',userController.updateProfile)
 
 user_Routes.get('/user/orders',userController.ordersLoad)
+user_Routes.get('/cancelOrder/:id',userController.cancelOrder)
 
 user_Routes.get('/user/cart',userController.cartLoad)
 user_Routes.get('/addtocart/:id',userController.addToCart)

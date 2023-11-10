@@ -55,6 +55,36 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     tbody tr:hover {
         background-color: #e0e0e0; /* Hover row background color */
     }
+    .pagination {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .pagination a {
+            display: inline-block;
+            padding: 8px 16px;
+            margin: 3px;
+            border: 1px solid #ccc;
+            text-decoration: none;
+            border-radius: 4px;
+            background-color: #f2f2f2;
+            color: #333;
+        }
+
+        .pagination a:hover {
+            background-color: #ddd;
+        }
+
+        .pagination a.active {
+            background-color: #007bff;
+            color: white;
+        }
+        .center-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
 
 
 </style>
@@ -89,7 +119,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <b class="caret"></b>
             </a>
             <ul class="dropdown-menu extended logout">
-                <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
+views/admin/category.ejs                <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
                 <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
                 <li><a href="login.html"><i class="fa fa-key"></i> Log Out</a></li>
             </ul>
@@ -110,8 +140,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <!-- sidebar menu start-->
         <div class="leftside-navigation">
             <ul class="sidebar-menu" id="nav-accordion">
-                <li>
-                    <a class="active" href="/admin">
+                <li  class="sub-menu">
+                    <a  href="/admin">
                         <i class="fas fa-tachometer-alt"></i>
                         <span>Dashboard</span>
                     </a>
@@ -123,16 +153,23 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </a>
                     
                 </li>
-                <li>
+                <li  class="sub-menu">
                     <a href="/admin/category">
                         <i class="fas fa-shopping-cart"></i>
                         <span>Category </span>
                     </a>
                 </li>
-                <li class="sub-menu">
-                    <a href="/admin/products">
+                <li>
+                    <a class="active" href="/admin/products">
                         <i class="fas fa-box"></i>
                         <span>Products</span>
+                    </a>
+                   
+                </li>
+                <li class="sub-menu">
+                    <a href="/admin/orders">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span>Orders</span>
                     </a>
                    
                 </li>
@@ -208,11 +245,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 <a href="?page=1">First</a>
                                 <a href="?page=<%= currentPage - 1 %>">Previous</a>
                             <% } %>
-                        
+                            
                             <% for (let i = 1; i <= pages; i++) { %>
-                                <a href="?page=<%= i %>"><%= i %></a>
+                                <a href="?page=<%= i %>" class="<%= i === currentPage ? 'active' : '' %>"><%= i %></a>
                             <% } %>
-                        
+                            
                             <% if (currentPage < pages) { %>
                                 <a href="?page=<%= currentPage + 1 %>">Next</a>
                                 <a href="?page=<%= pages %>">Last</a>

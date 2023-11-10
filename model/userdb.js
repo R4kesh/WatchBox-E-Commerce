@@ -65,7 +65,7 @@ const watchUsers= new mongoose.Schema({
         }
     }],
     cart: [{
-        product: {
+            product: {
             type:mongoose.Schema.Types.ObjectId,
             ref: 'products' ,
             required: true,
@@ -82,7 +82,7 @@ const watchUsers= new mongoose.Schema({
     },
 
        
-    },],
+    }],
     totalPrice: {
         type: Number,
         default: 0  
@@ -99,12 +99,17 @@ const watchUsers= new mongoose.Schema({
      required: true,
     default: 1
     },
+    status:{
+        type:String,
+        default:'Pending',
+    },
+    orderDate: {
+        type: Date,
+        required: true,
+        default: Date.now
+    },
    }],
-   orderDate: {
-    type: Date,
-    required: true,
-    default: Date.now
-}
+  
   
 
 })

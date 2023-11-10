@@ -148,11 +148,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <form action="/admin/category/update/<%= category._id %>" method="post">
                   <div class="form-group">
                     <label for="categoryName"><i class="fas fa-user"></i>Category</label>
-                    <input type="text" name="category" class="form-control" value="<%= category.category %>" id="productName" placeholder="Enter product name">
+                    <input type="text" name="category" class="form-control" value="<%= category.category %>" id="productName" placeholder="Enter product name" required>
                   </div>
                   <div class="form-group">
                     <label for="productDescription"><i class="fas fa-file-alt"></i> Description</label>
-                    <textarea class="form-control" name="description" id="productDescription"><%- category.description %></textarea>
+                    <textarea class="form-control" name="description" id="productDescription" required><%- category.description %></textarea>
 
                   </div>
                   

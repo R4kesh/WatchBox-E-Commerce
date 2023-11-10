@@ -44,6 +44,11 @@
                                 
                             </div>
                             <div>
+                                <p class="text-head">Phone Number</p>
+                                <input type="text" name="phone" class="input" />
+                                <div class="error-message" id="error-phone"></div>
+                            </div>
+                            <div>
                                 <p class="text-head">Password</p>
                                 <input type="password" name="password" class="input" />
                                 <div class="error-message" id="error-password"></div>
@@ -71,16 +76,19 @@
        function validateForm() {
     const name = document.querySelector('input[name="name"]').value;
     const email = document.querySelector('input[name="email"]').value;
+    const phone = document.querySelector('input[name="phone"]').value;
     const password = document.querySelector('input[name="password"]').value;
     const conpassword = document.querySelector('input[name="conpassword"]').value;
 
     const errorName = document.getElementById('error-name');
     const errorEmail = document.getElementById('error-email');
+    const errorPhone = document.getElementById('error-phone');
     const errorPassword = document.getElementById('error-password');
     const errorConPassword = document.getElementById('error-conpassword');
 
     errorName.innerHTML = '';
     errorEmail.innerHTML = '';
+    errorPhone.innerHTML = '';
     errorPassword.innerHTML = '';
     errorConPassword.innerHTML = '';
 
@@ -91,7 +99,7 @@
         isValid = false;
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[^\s@]+@gmail.com$/;
     if (email.trim() === '') {
         errorEmail.innerHTML = 'Please Enter Your Email Address.';
         isValid = false;
@@ -99,6 +107,14 @@
         errorEmail.innerHTML = 'Please Enter A Valid Email Address.';
         isValid = false;
     }
+
+    if (phone.trim() === '') {
+                errorPhone.innerHTML = 'Please Enter Your Phone Number.';
+                isValid = false;
+            } else if (!/^\d{10}$/.test(phone)) {
+                errorPhone.innerHTML = 'Please Enter a 10-digit Phone Number.';
+                isValid = false;
+            }
 
     if (password.trim() === '') {
         errorPassword.innerHTML = 'Please Enter Your Password.';

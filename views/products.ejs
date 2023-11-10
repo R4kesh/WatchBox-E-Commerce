@@ -54,20 +54,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								<img src="images/cart-1.png" alt="" />
 						</a>
 						
-						<br><br>
+						<!--  -->
+						<div id="cartMessage"></div>
+						<!--  -->
+						<div class="clearfix"> </div><br>
 
 
-						<form action="/logout" method="post">
-							<button class="btn btn-white" type="submit">Logout</button>
+						<!-- <form action="/logout" method="post">
+							<button class="btn btn-primary" type="submit">Logout</button>
 							
 						</form>
 						
-						  <br>
+						  
 
-						<a style="background-color: aliceblue;" href="/user/profile" class="btn btn-white">
-							<i class="fas fa-user"></i> Profile
-						</a>
-						
+						<a href="/user/profile" class="btn btn-primary">Profile</a> -->
 					</div>
 					
 				</div>
@@ -79,7 +79,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<!--top-header-->
 	<!--start-logo-->
 	<div class="logo">
-		<a href=""><h1>Luxury Watches</h1></a>
+		<a href="index.html"><h1>Luxury Watches</h1></a>
 	</div>
 	<!--start-logo-->
 	<!--bottom-header-->
@@ -89,47 +89,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="col-md-9 header-left">
 				<div class="top-nav">
 					<ul class="memenu skyblue"><li class="active"><a href="/">Home</a></li>
-						<li class="grid"><a href="/products">Products</a>
+						<li class="grid"><a href="">Products</a>
 							<div class="mepanel">
-								<div class="row">
-									<div class="col1 me-one">
-										<h4>Shop</h4>
-										
-									</div>
-									<div class="col1 me-one">
-										<h4>Style Zone</h4>
-											
-									</div>
-									<div class="col1 me-one">
-										<h4>Popular Brands</h4>
-											
-									</div>
-								</div>
-							</div>
-						</li>
-						<li class="grid"><a href="#">Categories</a>
-							<div class="mepanel">
-								<div class="row">
-									<div class="col1 me-one">
-										<h4>Shop</h4>
-										
-									</div>
-									<div class="col1 me-one">
-										<h4>Style Zone</h4>
-										
-									</div>
-									<div class="col1 me-one">
-										<h4>Popular Brands</h4>
-										
-									</div>
-								</div>
+								
 							</div>
 						</li>
 						
-						<li class="grid"><a href="typo.html">Blog</a>
-						</li>
-						<li class="grid"><a href="contact.html">Contact</a>
-						</li>
+						
 					</ul>
 				</div>
 				<div class="clearfix"> </div>
@@ -192,60 +158,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<!--End-slider-script-->
 	<!--about-starts-->
 	
-	<div class="about"> 
-		<div class="container">
-			<div class="logo">
-				<a href=""><h1 style="font-family:Georgia; color: black;">Top Categories</h1></a>
-			  </div>
-			  
-			<div class="about-top grid-1">
-				<div class="col-md-3 about-left">
-					<figure class="effect-bubba">
-						<img class="img-responsive" src="images/abt-1.jpg" alt=""/>
-						<figcaption>
-							<h2>Analog Watches</h2>
-							<p>Analog luxury watches are exquisite timepieces that combine both functionality and aesthetics.</p>	
-						</figcaption>			
-					</figure>
-				</div>
-				<div class="col-md-3 about-left">
-					<figure class="effect-bubba">
-						<img class="img-responsive" src="images/abt-2.jpg" alt=""/>
-						<figcaption>
-							<h4>Digital Watch</h4>
-							<p>A digital luxury watch is a timepiece that combines the functionality of a digital display </p>	
-						</figcaption>			
-					</figure>
-				</div>
-				<div class="col-md-3 about-left">
-					<figure class="effect-bubba">
-						<img class="img-responsive" src="images/abt-3.jpg" alt=""/>
-						<figcaption>
-							<h4>Smart Watch</h4>
-							<p> smartwatches are a category of wearable technology that combines advanced features and functionality </p>	
-						</figcaption>			
-					</figure>
-				</div>
-				<div class="col-md-3 about-left">
-					<figure class="effect-bubba">
-						<img class="img-responsive" src="images/abt-3.jpg" alt=""/>
-						<figcaption>
-							<h4>Fitness Watch</h4>
-							<p>fitness watches combine the functionality of a fitness tracker with the style and quality </p>	
-						</figcaption>			
-					</figure>
-				</div>
-				
-				
-				<div class="clearfix"></div>
-			</div>
-		</div>
-	</div>
+
 	<!--about-end-->
 	<!--product-starts-->
 	
 	<div class="logo">
-		<a href=""><h1 style="font-family: Georgia; color: black;">New Arrivals</h1></a>
+		<a href=""><h1 style="font-family: Georgia; color: black;">Products</h1></a>
 	</div>
 	
 	<div class="product">
@@ -293,18 +211,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			</div>
 		</div>
 	</div>
-	
 
-	
-	<!--product-end-->
-	
-	
-	
-	
-
-	
-	
-	
 	<!--information-starts-->
 	<div class="information">
 		<div class="container">
@@ -367,31 +274,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			</div>
 		</div>
 	</div>
-	<!--footer-end-->	
-	<script>
-		
-
-		// JavaScript code
-// document.addEventListener('DOMContentLoaded', function() {
-//     const addToCartButtons = document.querySelectorAll('.btn-primary'); // Select all "Add to Cart" buttons
-
-//     addToCartButtons.forEach(button => {
-//         button.addEventListener('click', function(event) {
-//             event.preventDefault(); // Prevent the default form submission
-
-//             const productName = this.getAttribute('data-product-name'); // Get the product name (you may need to add this attribute in your button)
-//             const cartMessage = document.getElementById('cartMessage');
-
-//             cartMessage.textContent = `${productName} added to cart`; // Set the message
-
-//             // Clear the message after a few seconds (for example, 5 seconds)
-//             setTimeout(function() {
-//                 cartMessage.textContent = '';
-//             }, 5000); // 5000 milliseconds = 5 seconds
-//         });
-//     });
-// });
-
-	</script>
+	
 </body>
 </html>

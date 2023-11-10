@@ -242,7 +242,7 @@ span.simpleCart_total {
 	border-top-color: #73B6E1;
 }
 .dropdown.focus .carat{
-	border-top-color: #73B6E1;
+	border-top-color: black;
 }
 .dropdown.focus .carat:after{
 	border-top-color: #73B6E1;
@@ -475,7 +475,7 @@ span.simpleCart_total {
 	background:#000;
 }
 .callbacks_here a:after{
-	background:rgba(6, 107, 195, 0.85);
+	background:black;
 }
 ul.callbacks_tabs.callbacks2_tabs {
 	display: block;

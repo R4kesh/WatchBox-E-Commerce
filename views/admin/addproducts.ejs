@@ -22,7 +22,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <link rel="stylesheet" href="/admin/font.css" type="text/css"/>
 <link href="/admin/font-awesome.css" rel="stylesheet"> 
 <link rel="stylesheet" href="/admin/morris.css" type="text/css"/>
-
+<style>
+    .error-message {
+        color: red;
+        margin-top: 5px;
+    }
+</style>
 
 <!-- //font-awesome icons -->
 <script src="/js/admin/jquery2.0.3.min.js"></script>
@@ -30,10 +35,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="/js/admin/morris.js"></script>
 <style>
     
-    .error-message {
-        color: red; 
-        
-    }
+   
 </style>
 </head>
 <body>
@@ -155,21 +157,24 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <div class="container">
             <div class="row justify-content-center">
               <div class="col-md-6">
-                <form action="/admin/Products/add" method="post" enctype="multipart/form-data">
+                <form action="/admin/Products/add" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
                   <div class="form-group">
                     <label for="productName"><i class="fas fa-user"></i>Product Name</label>
                     <input type="text" name="name" class="form-control" id="productName" placeholder="Enter product name">
+                    <div id="errorName" class="error-message"></div>
                     <% if (error) { %>
-                        <p class="error-message"><%= error %></p>
-                    <% } %>
+                        <p style="color: red;"><%= error %></p>
+                      <% } %>
                   </div>
                   <div class="form-group">
                     <label for="productDescription"><i class="fas fa-file-alt"></i> Description of product</label>
                     <textarea class="form-control" name="description" id="productDescription" rows="3"></textarea>
+                    <div id="errorDescription" class="error-message"></div>
                   </div>
                   <div class="form-group">
                     <label for="productPrice"><i class="fas fa-dollar-sign"></i> Price of product</label>
                     <input type="number" name="price" class="form-control" id="productPrice" placeholder="Enter product price">
+                    <div id="errorPrice" class="error-message"></div>
                   </div>
                  
                   <div class="form-group">
@@ -186,10 +191,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                   <div class="form-group">
                     <label for="productImage"><i class="fas fa-image"></i> Image of product</label>
                     <input type="file" name="image" class="form-control-file" id="productImage">
+                    <div id="errorImage" class="error-message"></div>
                   </div>
                   <div class="form-group">
                     <label for="productStock"><i class="fas fa-cubes"></i> Stock of product</label>
                     <input type="number" name="stock" class="form-control" id="productStock" placeholder="Enter product stock">
+                    <div id="errorStock" class="error-message"></div>
                   </div>
                   <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> Submit</button>
                 </form>
@@ -227,17 +234,62 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!--     ///////////////////////-->
 
 
-<script>
-    // Add this script after your error message
-    document.addEventListener('DOMContentLoaded', () => {
-      const errorElement = document.querySelector('.error-message');
-      if (errorElement) {
-        // Set a timeout to remove the error message after 5 seconds
-        setTimeout(() => {
-          errorElement.style.display = 'none';
-        }, 3000); // 5000 milliseconds = 5 seconds
-      }
-    });
+  <script>
+function validateForm() {
+            let isValid = true;
+
+            const name = document.getElementById('productName').value;
+            const description = document.getElementById('productDescription').value;
+            const price = parseFloat(document.getElementById('productPrice').value);
+            const category = document.getElementById('productCategory').value;
+            const image = document.getElementById('productImage').value;
+            const stock = parseFloat(document.getElementById('productStock').value);
+
+            const errorName = document.getElementById('errorName');
+            const errorDescription = document.getElementById('errorDescription');
+            const errorPrice = document.getElementById('errorPrice');
+            const errorImage = document.getElementById('errorImage');
+            const errorStock = document.getElementById('errorStock');
+
+            errorName.innerHTML = '';
+            errorDescription.innerHTML = '';
+            errorPrice.innerHTML = '';
+            errorImage.innerHTML = '';
+            errorStock.innerHTML = '';
+
+            if (name.trim() === '') {
+                errorName.innerHTML = 'Please enter a product Name.';
+                isValid = false;
+            }
+
+            if (description.trim() === '') {
+                errorDescription.innerHTML = 'Please enter a product description.';
+                isValid = false;
+            }
+
+            if (price <= 0 || isNaN(price)) {
+                errorPrice.innerHTML = 'Price must be a number greater than zero.';
+                isValid = false;
+            }
+
+            if (category.trim() === '') {
+                // No validation needed for category
+                // Add custom validation if required
+            }
+
+            if (!image) {
+                errorImage.innerHTML = 'Please select an image.';
+                isValid = false;
+            }
+
+            if (stock <= 0 || isNaN(stock)) {
+                errorStock.innerHTML = 'Stock must be a number greater than zero.';
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
   </script>
 </body>
 </html>

@@ -27,7 +27,6 @@ const signupLoad=async(req,res)=>{
 
 
 const PAGE_SIZE = 4;
-
 const homeLoad = async (req, res) => {
     try {
         if (req.session.user) {
@@ -51,6 +50,32 @@ const homeLoad = async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 };
+const PAGESIZE = 8;
+const productsLoad= async (req, res) => {
+    try {
+        if (req.session.user) {
+            const currentPage = parseInt(req.query.page) || 1;
+            const skip = (currentPage - 1) * PAGESIZE;
+
+            const products = await productcollection
+                .find()
+                .skip(skip)
+                .limit(PAGESIZE)
+                .exec(); // Use .exec() to execute the query
+
+            const users = await collection.findOne({ email: req.session.user });
+
+            res.render('products', { products, users, currentPage });
+        } else {
+            res.redirect('/');
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+
+};
+
 
 
 
@@ -185,7 +210,7 @@ const profileLoad=async(req,res)=>{
 
 const addaddressLoad=async(req,res)=>{
     const id=req.session.user;
-    console.log("id:",id)
+   
     const user = await collection.findOne({email:id})
     console.log('user:',user)
     res.render('addaddress',{user})
@@ -335,6 +360,28 @@ const ordersLoad=async(req,res)=>{
     
 }
 
+const cancelOrder=async(req,res)=>{
+    try{
+        const orderId = req.params.id;
+        console.log('ii:',orderId);
+        const order = await collection.findOneAndUpdate(
+            { 'orders._id': orderId }, // Search condition
+            { $set: { 'orders.$.status': 'Cancelled' } }, // Update status to 'Cancelled'
+            { new: true } // To get the updated order
+        );
+       
+        res.redirect('/user/orders')
+   
+
+    }catch (error) {
+        console.error('Error loading :', error);
+        res.status(500).send('Internal Server Error');
+      }
+}
+
+
+
+
 
 const cartLoad=async(req,res)=>{
     try {
@@ -342,6 +389,7 @@ const cartLoad=async(req,res)=>{
         
         const user = await collection.findOne({ email: userId }).populate('cart.product');
         if (user) {
+            
           res.render('cart', { cartItems: user.cart});
         } else {
           res.status(404).send('User not found');
@@ -475,7 +523,9 @@ const quantityUpdate=async (req, res) => {
     //   const productItem=products.find()
       // Find the specific product in the user's cart and update its quantity
       const cartItem = User.cart.find(item => item.product.toString() === productId);
+      console.log('it',cartItem);
       if (cartItem) {
+        console.log('ne',newQuantity);
         cartItem.quantity = newQuantity;
         console.log('a:',cartItem.quantity)
         await User.save(); 
@@ -533,6 +583,7 @@ const checkoutLoad=async(req,res)=>{
 const checkoutAddAddress=async(req,res)=>{
     const userId = req.session.user;
     const user = await collection.findOne({ email: userId });
+    console.log('uz',user)
     res.render('checkoutaddaddress',{user})
 }
 
@@ -551,7 +602,8 @@ const updateCheckoutAddress=async(req,res)=>{
         
         
         try{
-       const user= await collection.updateOne({email:id})
+       const user= await collection.findOne({email:id})
+       console.log('uy',user);
        if(user){
         await collection.updateOne(
             { email: id },
@@ -604,12 +656,21 @@ const conformLoad=async(req,res)=>{
         const userId = req.session.user; 
         const user = await collection.findOne({ email: userId }).populate('cart.product').populate('orders.product');
         if(user){
-            user.orders = user.orders.concat(user.cart);
-
-                // Empty the cart array (if moving only the first product)
+            // user.orders = user.orders.concat(user.cart);
+            for (const item of user.cart) {
+                user.orders.push(item);
+            }
+                
+            for (const order of user.orders) {
+                const product = order.product;
+                const orderedQuantity = order.quantity;
+                console.log('qu',orderedQuantity)
+                product.stock -= orderedQuantity;
+                await product.save();
+            }
+           
                 user.cart = [];
                 
-                // Save the changes to the user document
                 await user.save();
 
         }else{
@@ -630,10 +691,10 @@ const conformLoad=async(req,res)=>{
 
 module.exports={
     loginLoad,signupLoad,
-    homeLoad,verifyLogin,
+    homeLoad,productsLoad,verifyLogin,
     insertUser,otpLoad,
     verifyOtp,userLogout,
-    productdetail,profileLoad,
+    productdetail,cancelOrder,profileLoad,
     addaddressLoad,updateAddress,editAddress
     ,addressUpdate,editProfile,updateProfile,
     cartLoad,addToCart,removeFromCart,quantityUpdate,

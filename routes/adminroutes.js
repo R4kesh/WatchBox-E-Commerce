@@ -5,6 +5,7 @@ const session=require('express-session')
 const adminController=require('../controller/adminController')
 
 const productcollection=require('../model/productdb')
+
 const multer=require('multer')
 
 const storage=multer.diskStorage({
@@ -64,6 +65,7 @@ admin_Routes.get('/admin/category/edit/:id',adminController.editCategory)
 admin_Routes.post('/admin/category/update/:id',adminController.updateCategory)
 
 admin_Routes.get('/admin/orders',adminController.ordersLoad)
+admin_Routes.get('/updateOrderStatus/:userId/:orderId/:newStatus',adminController.updateOrderStatus)
 
 admin_Routes.get('/admin/logout',adminController.adminLogout);
 

@@ -1,11 +1,11 @@
 
     .icon-hover-primary:hover {
-    border-color: #3b71ca !important;
+    border-color: black !important;
     background-color: white !important;
   }
   
   .icon-hover-primary:hover i {
-    color: #3b71ca !important;
+    color: black !important;
   }
   .icon-hover-danger:hover {
     border-color: #dc4c64 !important;

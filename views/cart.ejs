@@ -31,22 +31,22 @@
 		  <!-- Left elements -->
   
 		  <!-- Center elements -->
-		  <div class="order-lg-last col-lg-5 col-sm-8 col-8">
+		  <!-- <div class="order-lg-last col-lg-5 col-sm-8 col-8">
 			<div class="d-flex float-end">
 			  <a href="https://github.com/mdbootstrap/bootstrap-material-design" class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center" target="_blank">
 				<i class="fas fa-user-alt m-1 me-md-2"></i>
 				<p class="d-none d-md-block mb-0">Sign in</p>
-			  </a>
+			  </a> -->
 			  <!-- <a href="https://github.com/mdbootstrap/bootstrap-material-design" class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center" target="_blank">
 				<i class="fas fa-heart m-1 me-md-2"></i>
 				<p class="d-none d-md-block mb-0">Wishlist</p>
 			  </a> -->
-			  <a href="https://github.com/mdbootstrap/bootstrap-material-design" class="border rounded py-1 px-3 nav-link d-flex align-items-center" target="_blank">
+			  <!-- <a href="https://github.com/mdbootstrap/bootstrap-material-design" class="border rounded py-1 px-3 nav-link d-flex align-items-center" target="_blank">
 				<i class="fas fa-shopping-cart m-1 me-md-2"></i>
 				<p class="d-none d-md-block mb-0">My cart</p>
 			  </a>
 			</div>
-		  </div>
+		  </div> -->
 		  <!-- Center elements -->
   
 		  <!-- Right elements -->
@@ -68,12 +68,12 @@
 	<!-- Jumbotron -->
   
 	<!-- Heading -->
-	<div class="bg-primary">
+	<div class="bg-black">
 	  <div class="container py-4" style="color: black;">
 		<!-- Breadcrumb -->
 		<nav class="d-flex">
 		  <h6 class="mb-0">
-			<a href="" class="text-white-50">Home</a>
+			<a href="/" class="text-white-50">Home</a>
 			<span class="text-white-50 mx-2"> > </span>
 			<a href="" class="text-white"><u>Shopping cart</u></a>
 		  </h6>
@@ -93,7 +93,12 @@
       <div class="col-lg-9">
         <div class="card border shadow-0">
           <div class="m-4">
-            <h4 class="card-title mb-4">Your shopping cart</h4>
+			<% if (cartItems.length === 0) { %>
+				<h1>Cart is Empty</h1>
+            
+			
+				<% } else { %>
+					<h4 class="card-title mb-4">Your shopping cart</h4>
 			<%total=0%>
             <% cartItems.forEach(item => { %>
               <div class="row gy-3 mb-4">
@@ -111,7 +116,7 @@
                     </div>
                   </div>
                 </div>
-
+				
 
 				
 
@@ -142,10 +147,10 @@
                   </div>
                 </div>
               </div>
-			
+			  
 			    <br />
 				<%total+=item.product.price * item.quantity%>
-			  <% }); %>
+				<% }); %>
           </div>
           <!-- Other cart details can be added here -->
         </div>
@@ -194,7 +199,9 @@
       <!-- Other sections of the cart page can be added here -->
     </div>
   </div>
+  
 
+  <% } %>
 
 
 
@@ -299,7 +306,7 @@
   <!-- Recommended -->
   
   <!-- Footer -->
-  <footer class="text-center text-lg-start text-muted bg-primary mt-3">
+  <footer class="text-center text-lg-start text-muted bg-black mt-3">
 	<!-- Section: Links  -->
 	<section class="">
 	  <div class="container text-center text-md-start pt-4 pb-4">
@@ -312,7 +319,7 @@
 			  WatchBox
 			</a>
 			<p class="mt-1 text-white">
-			  © 2023 Copyright: MDBootstrap.com
+			  
 			</p>
 		  </div>
 		  <!-- Grid column -->
@@ -439,15 +446,6 @@ const totalPriceElement = document.getElementById('totalPriceValue');
 if (totalPriceElement) {
   totalPriceElement.textContent = totalPrice; // Update the displayed total price
 }
-
-// function calculateTotalPrice() {
-//  let total = 0;
-//  cartItems.forEach(item => {
-//    total += item.product.price * item.quantity;
-//  });
-//  document.getElementById('totalPriceValue').textContent = total;
-// }
-
 
 function increaseValue(productId,price) {
     let currentValue = parseInt(document.getElementById('number_' + productId).value, 10);

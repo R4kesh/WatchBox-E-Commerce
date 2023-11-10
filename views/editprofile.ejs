@@ -36,16 +36,16 @@
               <form action="/user/Profile/update/<%=user._id%>" method="post" >
                 <div class="form-group">
                   <label for="productName"><i class="fas fa-user"></i> Name</label>
-                  <input type="text" name="name" class="form-control" value="<%=user.name%>" id="productName" >
+                  <input type="text" name="name" class="form-control" value="<%=user.name%>" id="productName" required>
                 </div>
              
                 <div class="form-group">
                   <label for="productPrice"><i class="fas fa-dollar-sign"></i> Email</label>
-                  <input type="email" name="email" class="form-control" id="productPrice" value="<%=user.email%>" >
+                  <input type="email" name="email" class="form-control" id="productPrice" value="<%=user.email%>" required>
                 </div>
                 <div class="form-group">
                   <label for="productCategory"><i class="fas fa-tags"></i> Phone</label>
-                  <input type="text" name="phone" class="form-control" id="productCategory" value="<%=user.phone%>" >
+                  <input type="text" name="phone" class="form-control" id="productCategory" value="<%=user.phone%>" required>
                 </div>
                
                

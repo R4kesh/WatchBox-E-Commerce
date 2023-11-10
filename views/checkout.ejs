@@ -22,9 +22,7 @@
 			  <!-- Left elements -->
 	  
 			  <!-- right elements -->
-			  <div class="">
-				<a href="https://github.com/mdbootstrap/bootstrap-material-design" class="me-1 border rounded py-1 px-3 nav-link" target="_blank"> <i class="fas fa-user-alt me-2"></i>Sign in </a>
-			  </div>
+			  
 			  <!-- right elements -->
 			</div>
 		  </div>
@@ -32,18 +30,17 @@
 		<!-- Jumbotron -->
 	  
 		<!-- Heading -->
-		<div class="bg-primary">
+		<div class="bg-black">
 		  <div class="container py-4">
 			<!-- Breadcrumb -->
 			<nav class="d-flex">
 			  <h6 class="mb-0">
-				<a href="" class="text-white-50">Home</a>
+				<a href="/" class="text-white-50">Home</a>
 				<span class="text-white-50 mx-2"> > </span>
-				<a href="" class="text-white-50">2. Shopping cart</a>
+				<a href="/user/cart" class="text-white-50">2. Shopping cart</a>
 				<span class="text-white-50 mx-2"> > </span>
 				<a href="" class="text-white"><u>3. Order info</u></a>
-				<span class="text-white-50 mx-2"> > </span>
-				<a href="" class="text-white-50">4. Payment</a>
+				
 			  </h6>
 			</nav>
 			<!-- Breadcrumb -->
@@ -93,9 +90,7 @@
 													</option>
 												<% }) %>
 											</select>
-										<% if (user.address.length > 1) { %>
-											<button type="submit" onclick="showSelectedAddress()">Select</button>
-										<% } %>
+										
 										<% } else { %>
 											No addresses found!
 										<% } %>
@@ -104,15 +99,11 @@
 							</div>
 						</div>
 					</div>
-					
-	  
-					
-	  
 					<div class="col-6 mb-3">
 					  
 					  <div class="form-outline">
 					<a class="btn btn-info " href="/user/checkout/address">Add Address</a>
-					<a class="btn btn-info " href="/user/checkout/editaddress/<%=user._id%>">Edit Address</a>
+					<a class="btn btn-info <% if (user.address.length === 0) { %>disabled<% } %>" href="/user/checkout/editaddress/<%=user._id%>">Edit Address</a>
 						
 					  </div>
 					</div>
@@ -139,7 +130,7 @@
 					</div>
 					<div class="col-lg-4 mb-3">
 						<!-- Default checked radio -->
-						<div class="form-check h-100 border rounded-3">
+						<!-- <div class="form-check h-100 border rounded-3">
 						  <div class="p-3">
 							<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked />
 							<label class="form-check-label" for="flexRadioDefault1">
@@ -147,7 +138,7 @@
 							  <small class="text-muted">(OP)</small>
 							</label>
 						  </div>
-						</div>
+						</div> -->
 					  </div>
 					<!-- <div class="col-lg-4 mb-3"> -->
 					  <!-- Default radio -->
@@ -225,11 +216,18 @@
 					  <textarea class="form-control" id="textAreaExample1" rows="2"></textarea>
 					</div>
 				  </div> -->
-	  
+				  
 				  <div class="float-end">
 					<a href="/user/cart" class="btn btn-outline-primary shadow-0 border">Go to Cart</a>
-
-					<a href="/order/conform" class="btn btn-success shadow-0 border">PlaceOrder</a>
+					<% if (user.address && user.address.length > 0) { %>
+						<a href="/order/conform" class="btn btn-success shadow-0 border" onclick="validateAddress()">Place Order</a>
+					<% } else { %>
+						<button class="btn btn-success shadow-0 border" disabled>
+							Place Order
+						</button>
+						<p style="color: red;">Please add an address first.</p>
+					<% } %>
+					
 				  </div>
 				</div>
 			  </div>
@@ -263,7 +261,7 @@
 				  <button class="btn btn-light text-primary border">Apply</button>
 				</div> -->
 	  
-				<hr />
+				<hr/>
 				<h6 class="text-dark my-4">Items in cart</h6>
 				<% cartItems.forEach(item => { %>
 				<div class="d-flex align-items-center mb-4">
@@ -286,8 +284,6 @@
 				</div>
 				<% }); %>
 				
-	  
-				
 			  </div>
 			</div>
 		  </div>
@@ -295,7 +291,7 @@
 	  </section>
 	  
 	  <!-- Footer -->
-	  <footer class="text-center text-lg-start text-muted bg-primary mt-3">
+	  <footer class="text-center text-lg-start text-muted bg-black mt-3">
 		<!-- Section: Links  -->
 		<section class="">
 		  <div class="container text-center text-md-start pt-4 pb-4">
@@ -434,5 +430,17 @@
 <script
   type="text/javascript"
   src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"></script>
+  <script>
+    function validateAddress() {
+        // Check if address is selected
+        const addressSelect = document.getElementById('addressSelect'); // Assuming there is a select box with this ID
+
+        if (addressSelect && addressSelect.value === '') {
+            // If no address is selected, show an alert message
+            alert('Please select an address before placing the order.');
+            event.preventDefault(); // Prevent the default action (order placement)
+        }
+    }
+</script>
 </body>
 </html>

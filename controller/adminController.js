@@ -115,7 +115,7 @@ const productsLoad = async (req, res) => {
 
 
 const addProduct=async(req,res)=>{
-    const error="";
+   let error='';
     res.render('addproducts',{error})
 }
 
@@ -200,12 +200,14 @@ const deleteProduct=async(req,res)=>{
 
 const editProduct=async(req,res)=>{
     let id = req.params.id;
+    const errorMessage=''
     productcollection.findById(id)
     .then(product=>{
+        
         if(!product){
             res.redirect('/admin/products')
         }else{
-            res.render('editproducts',{product:product})
+            res.render('editproducts',{product,errorMessage})
         }
     })
     .catch(error =>{
@@ -216,7 +218,17 @@ const editProduct=async(req,res)=>{
 
 const updateProduct=async(req,res)=>{
     try{
+        const enteredProductName = req.body.name.toLowerCase();
         let id = req.params.id;
+        const existingProduct = await productcollection.findOne({
+            name: { $regex: new RegExp('^' + enteredProductName + '$', 'i') }
+        });
+    
+        if (existingProduct) {
+            res.render('editproducts', { error: 'Product already exists' });
+        } else {
+
+        
         const result = await productcollection.findByIdAndUpdate(id, {
             name:req.body.name,
             description:req.body.description,
@@ -230,6 +242,7 @@ const updateProduct=async(req,res)=>{
         }else{
           res.redirect('/admin/products')  
         }
+    }
     }catch(err){
         console.log('Error updating the product : ',err);
         
@@ -324,9 +337,38 @@ const deletecategory=async(req,res)=>{
 }
 
 const ordersLoad=async(req,res)=>{
-    const user=await collection.find({orders:{$exists:true,$ne:[]}}).populate('orders.product');
-    console.log('uuu',user)
-    res.render('orders',{orderItems: user.orders,user})
+    try {
+        const users = await collection.find({ orders: { $exists: true, $ne: [] } }).populate('orders.product');
+
+        res.render('orders', { users:users });
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).send('Internal Server Error');
+    }
+ 
+}
+
+const updateOrderStatus=async(req,res)=>{
+   
+    const userId = req.params.userId;
+    const orderId = req.params.orderId;
+    const newStatus = req.params.newStatus;
+    
+    try{
+        const order=await collection.findOneAndUpdate(
+            {'orders._id':orderId},
+            {$set:{ 'orders.$.status':newStatus}},
+           {new:true}
+           
+        )
+        console.log('oo',order)
+            res.redirect('/admin/orders')
+
+    }catch(error){
+        console.error('Error loading :', error);
+        res.status(500).send('Internal Server Error');
+      }
+
 }
 
 
@@ -360,6 +402,6 @@ module.exports={
     editProduct,updateProduct,adminLogout,
     insertCategory,addcategory,editCategory,
     updateCategory,deletecategory,userBlock,userUnblock,
-    ordersLoad
+    ordersLoad,updateOrderStatus
     
 }

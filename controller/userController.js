@@ -39,6 +39,7 @@ const homeLoad = async (req, res) => {
                 .limit(PAGE_SIZE)
                 .exec(); // Use .exec() to execute the query
 
+                    
             const users = await collection.findOne({ email: req.session.user });
 
             res.render('home', { products, users, currentPage });
@@ -76,8 +77,101 @@ const productsLoad= async (req, res) => {
 
 };
 
+const forgotLoad=async(req,res)=>{
+    let error=''
+    res.render('forgot',{error})
+}
+
+const verifyEmail=async(req,res)=>{
+    
+    try{
+        const userremail=await collection.findOne({email:req.body.email})
+
+        if(userremail){
+            
+     otp=generateOtp.generate(4,{digits:true,alphabets:false,specialChars:false})
+
+    transporter=nodemailer.createTransport({
+        service:"gmail",
+        auth:{
+            user: 'testtdemoo11111@gmail.com',
+              pass: 'wikvaxsgqyebphvh',
+        },
+    })
+    const mailOptions={
+        from:"rakeshsrks2580@gmail.com",
+        to:"rakeshsrks2580@gmail.com",
+        subject:"Your Otp code",
+        text:`your otp code is:${otp}`
+    }
+    transporter.sendMail(mailOptions,(error,info) =>{
+        if(error){
+            console.error("error sending otp",error)
+
+        }
+        else{
+            console.log("otp send:",info.response);
+        }
+
+    })
+    console.log("send successfully");
+    let errorMessage=''
+    res.render('forgototp',{errorMessage,user:userremail._id})
 
 
+        }else{
+            let error='Email not match'
+            res.render('forgot',{error})
+        }
+
+    }catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+}
+
+const forgototpverify=async(req,res)=>{
+    try{
+        const id=req.params.id
+        const user=await collection.findById(id)
+        
+        const enterOtp=req.body.otp;
+        console.log(enterOtp)
+        if(otp===enterOtp){
+            
+        
+        res.render("newpassword",{userr:user._id})
+        }
+        else{
+            res.render("forgototp",{ errorMessage: 'Invalid OTP. Please try again.' })
+        }
+    }
+    catch(error){
+        console.error(error);
+        res.status(500).send("internal server error")
+    }
+
+
+}
+
+const setnewpassword=async(req,res)=>{
+    try{
+        const newPassword = req.body.password;
+        const id=req.params.id;
+        const user=await collection.findById(id)
+      
+        console.log('uu',user)
+
+
+        await collection.findByIdAndUpdate(id, { password:newPassword });
+
+        res.redirect('/login')
+
+    }catch(error){
+        console.error(error);
+        res.status(500).send("internal server error")
+    }
+}
 
 
 const verifyLogin=async(req,res)=>{
@@ -268,7 +362,7 @@ const addressUpdate=async(req,res)=>{
    
    try{
     const id={_id:req.params.id};
-    console.log("idis:",id)
+    
     newAddress={
         address:[{
             houseName: req.body.houseName,
@@ -289,24 +383,7 @@ const addressUpdate=async(req,res)=>{
   }  
     }
  
-  
-//     const result=await collection.findByIdAndUpdate(id,{
-//         houseName: req.body.houseName,
-//         street: req.body.street,
-//         city: req.body.city,
-//         state: req.body.state,
-//         pincode: req.body.pincode,
-//         country: req.body.country,
-//     })
-//     if(!result){
-//         console.log('not found')
-//     }else{
-//       res.redirect('/user/profile')  
-//     }
-// }catch(err){
-//     console.log('Error updating the address : ',err);  
-// }
-// }
+
 
 const editProfile=async(req,res)=>{
     const id=req.params.id;
@@ -337,12 +414,35 @@ const updateProfile=async(req,res)=>{
         }else{
           res.redirect('/user/profile')  
         }
-        //fghjkl
+        
 
     }catch(err){
         console.log('Error updating the product : ',err);
         
     }
+}
+
+const resetLoad=async(req,res)=>{
+    const error=''
+    res.render('resetpassword',{error})
+}
+
+const resetCheck=async(req,res)=>{
+    const useremail=req.session.user
+    const user=await collection.findOne({email:useremail})
+   
+    if (req.body.currentpassword === user.password){
+
+        await collection.findByIdAndUpdate(user._id, { password: req.body.newpassword });
+        const successMessage = 'Your password has been reset successfully.';
+        const error=''
+        res.render('resetpassword', { successMessage,error });
+
+    }else{
+        const error='Current password do not match'
+        res.render('resetpassword',{error})
+    }
+
 }
 
 const ordersLoad=async(req,res)=>{
@@ -365,9 +465,9 @@ const cancelOrder=async(req,res)=>{
         const orderId = req.params.id;
         console.log('ii:',orderId);
         const order = await collection.findOneAndUpdate(
-            { 'orders._id': orderId }, // Search condition
-            { $set: { 'orders.$.status': 'Cancelled' } }, // Update status to 'Cancelled'
-            { new: true } // To get the updated order
+            { 'orders._id': orderId }, 
+            { $set: { 'orders.$.status': 'Cancelled' } }, 
+            { new: true } 
         );
        
         res.redirect('/user/orders')
@@ -423,21 +523,13 @@ const addToCart = async (req, res) => {
                 
             }else{
             const newCart = {
-                product:productId, 
-                
+                product:productId,  
                 quantity: 1,
             };
-            console.log('4');
-        
-            
             user.cart.push(newCart)
-
-
             }
             await user.save();
-
-
-            console.log('5');
+            
             console.log('Successfully added to cart');
           res.redirect('/')
         } else {
@@ -523,14 +615,11 @@ const quantityUpdate=async (req, res) => {
     //   const productItem=products.find()
       // Find the specific product in the user's cart and update its quantity
       const cartItem = User.cart.find(item => item.product.toString() === productId);
-      console.log('it',cartItem);
+
       if (cartItem) {
-        console.log('ne',newQuantity);
         cartItem.quantity = newQuantity;
-        console.log('a:',cartItem.quantity)
+        
         await User.save(); 
-
-
         let totalPrices=0;
         
         User.cart.forEach(item=>{
@@ -690,13 +779,13 @@ const conformLoad=async(req,res)=>{
 
 
 module.exports={
-    loginLoad,signupLoad,
+    loginLoad,signupLoad,forgotLoad,verifyEmail,forgototpverify,setnewpassword,
     homeLoad,productsLoad,verifyLogin,
     insertUser,otpLoad,
     verifyOtp,userLogout,
-    productdetail,cancelOrder,profileLoad,
+    productdetail,cancelOrder,profileLoad,resetLoad,
     addaddressLoad,updateAddress,editAddress
-    ,addressUpdate,editProfile,updateProfile,
+    ,addressUpdate,editProfile,updateProfile,resetCheck,
     cartLoad,addToCart,removeFromCart,quantityUpdate,
     checkoutLoad,checkoutAddAddress,updateCheckoutAddress,
     conformLoad,editCheckoutLoad,updateeditCheckoutAddress,

@@ -115,8 +115,15 @@ const productsLoad = async (req, res) => {
 
 
 const addProduct=async(req,res)=>{
-   let error='';
-    res.render('addproducts',{error})
+    try {
+        const categories = await categorycollection.find({}, 'category description'); // Fetch categories from the database
+
+        let error = '';
+        res.render('addproducts', { error, categories });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
 }
 
 // const insertProduct=async(req,res)=>{
@@ -250,9 +257,13 @@ const updateProduct=async(req,res)=>{
 }
 
 const categoryLoad=async(req,res)=>{
-   
-    const category=await categorycollection.find()
+    try {
+    const category=await categorycollection.find({ isDeleted: false })
     res.render('category',{category})
+} catch (error) {
+    console.log(error);
+    res.status(500).send('Internal Server Error');
+}
 }
 
 
@@ -325,7 +336,7 @@ const updateCategory=async(req,res)=>{
 const deletecategory=async(req,res)=>{
     try{
         const id=req.params.id;
-        const result= await categorycollection.findByIdAndRemove({_id:id});
+        const result= await categorycollection.findByIdAndUpdate(id,{ isDeleted: true });
         if(result){
             res.redirect('/admin/category')
         }else{
@@ -337,10 +348,13 @@ const deletecategory=async(req,res)=>{
 }
 
 const ordersLoad=async(req,res)=>{
+    const page=parseInt(req.query.page) || 1;
+    const perPage = 4;
     try {
-        const users = await collection.find({ orders: { $exists: true, $ne: [] } }).populate('orders.product');
+        const totalOrders = await collection.countDocuments({ orders: { $exists: true, $ne: [] } })
+        const users = await collection.find({ orders: { $exists: true, $ne: [] } }).skip((page - 1) * perPage).limit(perPage).populate('orders.product');
 
-        res.render('orders', { users:users });
+        res.render('orders', { users:users,currentPage: page, pages: Math.ceil(totalOrders / perPage) });
     } catch (error) {
         console.error('Error:', error);
         res.status(500).send('Internal Server Error');

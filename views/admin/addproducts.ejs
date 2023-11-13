@@ -180,11 +180,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                   <div class="form-group">
                     <label for="productCategory"><i class="fas fa-tags"></i> Category of product</label>
                     <select name="category" class="form-control" id="productCategory">
-                        <option value="Analog watch">Analog Watch</option>
-                        <option value="Digital watch">Digital Watch</option>
-                        <option value="Smart watch">Smart watch</option>
-                        <option value="Smart watch">Fitness watch</option>
-
+                        <% categories.forEach(category => { %>
+                            <option value="<%= category.category %>"><%= category.category %></option>
+                        <% }); %>
                     </select>
                 </div>
                 

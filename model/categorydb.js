@@ -8,7 +8,11 @@ const categorySchema=new mongoose.Schema({
     description:{
         type:String,
         require:true,
-    }
+    },
+    isDeleted: {
+        type: Boolean,
+        default: false,
+    },
 })
 
 const categorycollection=new mongoose.model('category',categorySchema)

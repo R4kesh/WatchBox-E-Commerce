@@ -119,7 +119,11 @@
     if (password.trim() === '') {
         errorPassword.innerHTML = 'Please Enter Your Password.';
         isValid = false;
+    }else if(password.length < 6){
+        errorPassword.innerHTML = "Your password must be at least 6 characters long.";
+        isValid = false;
     }
+    
 
     if (password !== conpassword) {
         errorConPassword.innerHTML = 'Passwords Do Not Match.';

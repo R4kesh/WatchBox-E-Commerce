@@ -39,13 +39,14 @@ user_Routes.get('/signup',userController.signupLoad)
 user_Routes.get('/',userController.homeLoad)
 
 user_Routes.post("/login",userController.verifyLogin)
-
- 
 user_Routes.post('/signup',userController.insertUser)
 
+user_Routes.get('/forgot',userController.forgotLoad)
+user_Routes.post('/emailverify',userController.verifyEmail)
+user_Routes.post('/passwordotp/:id',userController.forgototpverify)
+user_Routes.post('/newpassword/:id',userController.setnewpassword)
 
 user_Routes.get("/otp",userController.otpLoad) 
-
 user_Routes.post("/otp",userController.verifyOtp)
 
 
@@ -67,6 +68,8 @@ user_Routes.post('/user/address/update/:id',userController.addressUpdate)
 
 user_Routes.get('/user/profile/edit/:id',userController.editProfile)
 user_Routes.post('/user/Profile/update/:id',userController.updateProfile)
+user_Routes.get('/resetpassword',userController.resetLoad)
+user_Routes.post('/resetpassword',userController.resetCheck)
 
 user_Routes.get('/user/orders',userController.ordersLoad)
 user_Routes.get('/cancelOrder/:id',userController.cancelOrder)

@@ -33,49 +33,49 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!--dropdown-->
 <script src="/js/jquery.easydropdown.js"></script>			
 </head>
-<body> 
-	<!--top-header-->
-	<div class="top-header">
-		<div class="container">
-			<div class="top-header-main">
-				<div class="col-md-6 top-header-left">
-					<div class="drop">
-						<div class="box">
-							<h1 style="color: white;">WatchBox</h1>	
-						</div>
-						<div class="clearfix"></div>
+<nav class="top-header">
+	<div class="container">
+		<div class="top-header-main">
+			<!-- Logo -->
+			<div class="col-md-6 top-header-left">
+				<div class="drop">
+					<div class="box">
+						<h1 style="color: white;">WatchBox</h1>
 					</div>
+					<div class="clearfix"></div>
 				</div>
-				<div class="col-md-6 top-header-left">
-					<div class="cart box_1">
-						<a href="/user/cart">
-							 <div class="total">
-								<span class="simpleCart_total"></span></div>
-								<img src="images/cart-1.png" alt="" />
-						</a>
-						
-						<br><br>
+			</div>
 
+			<!-- Cart and User Profile/Logout -->
+			<div class="col-md-6 top-header-left">
+				<div class="cart box_1">
+					<ul class="nav pull-right top-menu"></ul>
 
-						<form action="/logout" method="post">
-							<button class="btn btn-white" type="submit">Logout</button>
-							
-						</form>
-						
-						  <br>
+					<a href="/user/cart">
+						<div class="total">
+							<span class="simpleCart_total"></span>
+						</div>
+						<img src="images/cart-1.png" alt="" />
+					</a>
+					
 
-						<a style="background-color: aliceblue;" href="/user/profile" class="btn btn-white">
-							<i class="fas fa-user"></i> Profile
-						</a>
-						
-					</div>
+					<a style="background-color: aliceblue; margin-left: 10px; padding: 8px 12px;" href="/user/profile" class="btn btn-white">
+						<i class="fas fa-user" style="margin-right: 5px;"></i> Profile
+					</a>
+
+					<form action="/logout" method="post" style="display: inline;">
+						<button class="btn btn-white" type="submit">Logout</button>
+					</form>
+					
+
 					
 				</div>
-				
-				<div class="clearfix"></div>
 			</div>
+
+			<div class="clearfix"></div>
 		</div>
 	</div>
+</nav>
 	<!--top-header-->
 	<!--start-logo-->
 	<div class="logo">
@@ -256,7 +256,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<div class="col-md-3 product-left" style="margin-bottom: 20px;">
 							<div class="product-main simpleCart_shelfItem">
 								<a href="/productdetails/<%= row._id %>" class="mask">
-									<img class="img-responsive zoom-img" src="/productimg/<%= row.image %>" alt="<%= row.image %>" />
+									<img class="img-responsive zoom-img" src="/productimg/<%= row.image.length > 0 ? row.image[0] : 'default-image.jpg' %>" alt="<%= row.image %>" />
 								</a>
 								<div class="">
 									<h3><%= row.name %></h3>

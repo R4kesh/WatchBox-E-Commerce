@@ -17,14 +17,18 @@ const productSchema=new mongoose.Schema({
         type:String,
         require:true,
     },
-    image:{
+    image:[{
         type:String,
         // require:true,
-    },
+    }],
     stock:{
         type:Number,
         require:true,
-    }
+    },
+    isDeleted: {
+        type: Boolean,
+        default: false,
+    },
 })
 
 const productcollection=new mongoose.model('products',productSchema)

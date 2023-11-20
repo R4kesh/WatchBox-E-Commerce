@@ -23,6 +23,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- calendar -->
 <link rel="stylesheet" href="/admin/monthly.css">
 <!-- //calendar -->
+
+
+
+
 <!-- //font-awesome icons -->
 <script src="/js/admin/jquery2.0.3.min.js"></script>
 <script src="/js/admin/raphael-min.js"></script>
@@ -192,33 +196,45 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 </tr>
                             </thead>
                             <tbody>
-                                <% category.forEach((row, index) => { %>
+                                <% category.forEach((cat, index) => { %>
                                     <tr class='align-middle'>
                                         <td style="color: black;"><%= index+1 %></td>
-                                        <td style="color: black;"><%= row.category %></td>
-                                        <td style="color: black;"><%= row.description %></td>
+                                        <td style="color: black;"><%= cat.category %></td>
+                                        <td style="color: black;"><%= cat.description %></td>
                                     
                                         <td>
-                                            <a href="/admin/category/edit/<%= row._id %>"class="text-success"><i class="fas fa-edit fa-lg mx-1"></i></a>
-                                            <a href="/admin/category/delete/<%= row._id %>" class="text-danger" onclick="checker(event)">
-                                              <i class="fas fa-trash fa-lg mx-1"></i>
+                                            <a href="/admin/category/edit/<%=cat._id%>"class="text-success"><i class="fas fa-edit fa-lg mx-1"></i></a>
+                                            <% if (cat.isDeleted) { %>
+                                            <a href="/admin/category/delete/<%=cat._id%>" class="btn btn-success" >
+                                              List
                                             </a>
+                                            <% } else { %>
+                                                <a href="/admin/category/undelete/<%= cat._id %>" class="btn btn-danger" >
+                                                    UnList
+                                                  </a>
+                                                  <% } %>
                                         </td>
                                       
-    
-                                        
+
                                     </tr>
+
+
+
                                     <% }) %>
 
                             
                             </tbody>
                         </table>
+                        
                     </div>
                 </div>
             </div>
         </div>
     </section>
 </section>
+
+
+
 
 
 <!--main content end-->
@@ -232,6 +248,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="/js/admin/jquery.scrollTo.js"></script>
 <!-- ///////////////////////-->
 
+    
 <script>
     function checker(event) {
       const result=confirm('Are You Sure You Want to Delete?');
@@ -239,7 +256,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         event.preventDefault();
       }
     }
-  </script>
+  </script> 
 <script>
     // Add an event listener for all buttons with the class "block-button"
     const buttons = document.querySelectorAll('.block-button');
@@ -273,5 +290,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         });
     });
 </script>
+
 </body>
 </html>

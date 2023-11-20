@@ -4,6 +4,9 @@ const nodemailer=require("nodemailer");
 const generateOtp=require("generate-otp");
 const productcollection = require('../model/productdb');
 const mongoose = require('mongoose');
+const Razorpay = require('razorpay');
+const bodyParser=require('body-parser');
+const nodemon = require('nodemon');
 
 const loginLoad=async(req,res)=>{
     const error=''
@@ -29,12 +32,12 @@ const signupLoad=async(req,res)=>{
 const PAGE_SIZE = 4;
 const homeLoad = async (req, res) => {
     try {
-        if (req.session.user) {
+        
             const currentPage = parseInt(req.query.page) || 1;
             const skip = (currentPage - 1) * PAGE_SIZE;
 
             const products = await productcollection
-                .find()
+                .find({ isDeleted: false })
                 .skip(skip)
                 .limit(PAGE_SIZE)
                 .exec(); // Use .exec() to execute the query
@@ -43,9 +46,9 @@ const homeLoad = async (req, res) => {
             const users = await collection.findOne({ email: req.session.user });
 
             res.render('home', { products, users, currentPage });
-        } else {
-            res.redirect('/login');
-        }
+       
+          
+        
     } catch (error) {
         console.error(error);
         res.status(500).send('Internal Server Error');
@@ -54,7 +57,7 @@ const homeLoad = async (req, res) => {
 const PAGESIZE = 8;
 const productsLoad= async (req, res) => {
     try {
-        if (req.session.user) {
+        
             const currentPage = parseInt(req.query.page) || 1;
             const skip = (currentPage - 1) * PAGESIZE;
 
@@ -67,9 +70,7 @@ const productsLoad= async (req, res) => {
             const users = await collection.findOne({ email: req.session.user });
 
             res.render('products', { products, users, currentPage });
-        } else {
-            res.redirect('/');
-        }
+        
     } catch (error) {
         console.error(error);
         res.status(500).send('Internal Server Error');
@@ -509,10 +510,8 @@ const addToCart = async (req, res) => {
     try {
         const product = await productcollection.findOne({ _id: productId });
         const user = await collection.findOne({ email: userId });
-        console.log(product);
-        
-        
-        console.log('2');
+       
+   
         if (user && product) {
             //
             const existingProductIndex = user.cart.findIndex(item => item.product.toString() === productId);
@@ -742,39 +741,128 @@ const updateeditCheckoutAddress=async(req,res)=>{
 
 const conformLoad=async(req,res)=>{
     try{
+        
+        
         const userId = req.session.user; 
         const user = await collection.findOne({ email: userId }).populate('cart.product').populate('orders.product');
         if(user){
-            // user.orders = user.orders.concat(user.cart);
-            for (const item of user.cart) {
-                user.orders.push(item);
-            }
-                
-            for (const order of user.orders) {
-                const product = order.product;
-                const orderedQuantity = order.quantity;
-                console.log('qu',orderedQuantity)
-                product.stock -= orderedQuantity;
-                await product.save();
-            }
+            console.log('uus:',user);
+            const method=req.body.method;
+            console.log('met:',method);
            
-                user.cart = [];
-                
-                await user.save();
 
+            if (req.body.razorpay_payment_id) {
+                const payorderid = req.body.razorpay_payment_id
+                var instance = new Razorpay({ key_id: 'rzp_test_dnwNaYmhWn2A9y', key_secret: 'I2lfM5HtAYtRkJ0xwFpRbLCw' })
+        
+                instance.payments.fetch(payorderid).then(async (data) => {
+                    const customerId=user._id
+                    const CustomerName = user.name;
+                    const totalAmount = user.totalPrice
+                    const paymentmethod = data.notes.paymentmethod;
+                    try {
+
+                        for (const item of user.cart) {
+                            const orderItem = {
+                                product: item.product,
+                                productName: item.productName,
+                                quantity: item.quantity,
+                                paymentmethod:paymentmethod,
+                                totalPrice: item.totalPrice,
+                                // Add other fields as needed
+                            };
+        
+                            user.orders.push(orderItem);
+                        }
+                            
+                        for (const order of user.orders) {
+                            const product = order.product;
+                            const orderedQuantity = order.quantity;
+                            product.stock -= orderedQuantity;
+                            await product.save();
+                        }
+                       
+        
+                        
+                            user.cart = [];
+                            await user.save();
+                            res.render('conform')
+                    
+
+                     
+                    } catch (error) {
+                        console.log("Error due to successful page rendering error:", error);
+                        res.status(500).send("Error due to successful page rendering error");
+                    }
+                })
+            
+        
+            
+        }else if(method=='Cash On Delivery'){
+
+                for (const item of user.cart) {
+                    const orderItem = {
+                        product: item.product,
+                        productName: item.productName,
+                        quantity: item.quantity,
+                        paymentmethod: method,
+                        totalPrice: item.totalPrice,
+                        // Add other fields as needed
+                    };
+
+                    user.orders.push(orderItem);
+                }
+                    
+                for (const order of user.orders) {
+                    const product = order.product;
+                    const orderedQuantity = order.quantity;
+                    product.stock -= orderedQuantity;
+                    await product.save();
+                }
+               
+
+                
+                    user.cart = [];
+                    await user.save();
+                    res.render('conform')
+            
+            }
+   
         }else{
             throw 'User not logged in'
         }
 
-
     } catch (error) {
         console.error('Error loading cart:', error);
         res.status(500).send('Internal Server Error');
-      }
-
-
-    res.render('conform')
+      }  
 }
+var instance = new Razorpay({
+    key_id: 'rzp_test_dnwNaYmhWn2A9y',
+    key_secret: 'I2lfM5HtAYtRkJ0xwFpRbLCw',
+  });
+
+const paypost = async(req, res) => {
+    const userId = req.session.user; 
+    const user = await collection.findOne({ email: userId })
+    const total=user.totalPrice
+    instance.orders.create({
+        amount: (total+50)*100,
+        currency: "INR",
+        receipt: "receipt#1",
+        notes: {
+            key1: "value3",
+            key2: "value2"
+        }
+    }).then((data) => {
+
+        return res.json(data)
+    })
+}
+
+
+
+
 
 
 
@@ -789,5 +877,5 @@ module.exports={
     cartLoad,addToCart,removeFromCart,quantityUpdate,
     checkoutLoad,checkoutAddAddress,updateCheckoutAddress,
     conformLoad,editCheckoutLoad,updateeditCheckoutAddress,
-    ordersLoad,
+    ordersLoad,paypost,
 }

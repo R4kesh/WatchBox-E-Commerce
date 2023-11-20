@@ -1,14 +1,20 @@
 const mongoose = require('mongoose')
+require('dotenv').config();
 
-// connecting the mongodb server
-mongoose.connect("mongodb://127.0.0.1:27017/User_watchbox")
-.then(()=>{
-    console.log("Mongodb is connected properly");
-}).catch(()=>{
-    console.log("Mongodb is not connected properly");
+
+mongoose.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
 })
+.then(() => {
+    console.log("MongoDB is connected properly");
+})
+.catch((err) => {
+    console.error("MongoDB connection error:", err.message);
+});
 
-// declaring the schema for the database
+
+
 const watchUsers= new mongoose.Schema({
     name:{
         type:String,
@@ -76,6 +82,10 @@ const watchUsers= new mongoose.Schema({
             required:true,
             default: 1 
         },
+        paymentmethod:{
+            type:String,
+            default:''
+        },
          totalPrice: {
         type: Number,
         default: 0  
@@ -102,6 +112,10 @@ const watchUsers= new mongoose.Schema({
     status:{
         type:String,
         default:'Pending',
+    },
+    paymentmethod:{
+        type:String,
+        default:''
     },
     orderDate: {
         type: Date,

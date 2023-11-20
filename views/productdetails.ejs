@@ -25,6 +25,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script type="text/javascript"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/elevatezoom/3.0.8/jquery.elevatezoom.min.js"></script>
+<!-- Add jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<!-- Add Slick Carousel CSS and JS files -->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
+
 
 </head>
 <body> 
@@ -145,28 +152,47 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="col-md-9 single-main-left">
 				<div class="sngl-top">
 					<div class="col-md-5 single-top-left">	
-						<div class="flexslider">
-							  <ul class="slides">
+						<!-- <div class="flexslider"> -->
+							<ul id="imageCarousel" class="slides">
 								<li data-thumb="images/s-1.jpg"> 
-									<div class="thumb-image"> <img src="/productimg/<%=products.image%>" data-imagezoom="true" class="img-responsive" alt="<%=products.image%>"/> </div>
+									<div class="thumb-image large-image">
+										<img src="/productimg/<%= products.image.length > 0 ? products.image[0] : 'default-image.jpg' %>" data-imagezoom="true" class="img-responsive" alt="<%= products.image %>" />
+									</div>
 								</li>
-								
-							  </ul>
-						</div>
+								<li>
+									<div class="thumb-image small-image">  
+										<img src="/productimg/<%= products.image.length > 1 ? products.image[1] : 'default-image.jpg' %>" data-imagezoom="true" alt="<%= products.image %>" />
+									</div>
+								</li>
+								<li>
+									<div class="thumb-image small-image">  
+										<img src="/productimg/<%= products.image.length > 2 ? products.image[2] : 'default-image.jpg' %>" data-imagezoom="true" alt="<%= products.image %>" />
+									</div>
+								</li> 
+							</ul>
+						<!-- </div> -->
+						
 						<!-- FlexSlider -->
+						<script>
+							$(document).ready(function(){
+								// Initialize Slick Carousel
+								$('#imageCarousel').slick({
+									slidesToShow: 1,
+									slidesToScroll: 1,
+									autoplay: true,
+									autoplaySpeed: 2000, // Set the autoplay speed in milliseconds
+									dots: false, // Hide dots navigation
+									arrows: false // Hide arrow navigation
+								});
+							});
+						</script>
+						
+						
 						<script src="../js/imagezoom.js"></script>
 						<script defer src="../js/jquery.flexslider.js"></script>
 						<link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen" />
 
-						<!-- <script>
-						// Can also be used with $(document).ready()
-						$(window).load(function() {
-						  $('.flexslider').flexslider({
-							animation: "slide",
-							controlNav: "thumbnails"
-						  });
-						});
-						</script> -->
+						
 						
 					</div>	
 					<div class="col-md-7 single-top-right">

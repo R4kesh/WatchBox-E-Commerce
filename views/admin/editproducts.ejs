@@ -119,31 +119,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!--main content start-->
 
 
-
-<!-- 
-<section id="main-content">
-    <section class="wrapper">
-        <div class="market-updates"></div>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-                <a class="nav-link" href="/admin/products/add">Add-product</a>
-            </button>
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-                <a class="nav-link" href="/admin/logout">Log-out</a>
-            </button>
-        </nav>
-        You may want to remove or replace the above navbar with your preferred navigation. -->
-
-        <!-- <div class="container2"> I noticed you had commented this out, you can uncomment if needed. -->
-            <!-- <div class="row my-4">
-                <div class="col-lg-12">
-                   
-                </div>
-            </div>
-        </div>
-    </section>
-</section> -->
-
     
 <section id="main-content">
     <section class="wrapper">
@@ -151,7 +126,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <div class="container">
             <div class="row justify-content-center">
               <div class="col-md-6">
-                <form action="/admin/Products/update/<%= product._id %>" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+                <form action="/admin/Products/update/<%=product._id%>" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
                   <div class="form-group">
                     <label for="productName"><i class="fas fa-user"></i> Name</label>
                     <input type="text" name="name" class="form-control" value="<%= product.name %>" id="productName" placeholder="Enter product name">
@@ -177,13 +152,21 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <div id="errorCategory" class="error-message"></div>
 
                   </div>
+                 
                   <div class="form-group">
-                    <label for="productImage"><i class="fas fa-image"></i> Image</label>
-                    <input type="file" name="image" class="form-cproductImageontrol-file" id="productImage" ><br>
-                    <img src="/productimg/<%= product.image %>" width="100px" height="100px" alt="<%= product.image %>">
-                    <div id="errorImage" class="error-message"></div>
-
+                    <label for="productImages"><i class="fas fa-image"></i> Image Update</label>
+                    <input type="file" name="image" class="form-control-file" id="productImages" multiple>
                     
+                    <div id="errorImages" class="error-message"></div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <label>Current Images:</label>
+                        <% product.image.forEach((img) => { %>
+                          <img src="/productimg/<%= img %>" width="100px" height="100px" alt="<%= img %>">
+                        <% }) %>
+                      </div>
+
                   </div>
                   <div class="form-group">
                     <label for="productStock"><i class="fas fa-cubes"></i> Stock</label>

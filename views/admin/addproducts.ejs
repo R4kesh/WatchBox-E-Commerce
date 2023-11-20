@@ -13,7 +13,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- Custom CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
 <link href="/admin/style.css" rel='stylesheet' type='text/css' />
 <link href="/admin/style-responsive.css" rel="stylesheet"/>
 <!-- font CSS -->
@@ -22,6 +22,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <link rel="stylesheet" href="/admin/font.css" type="text/css"/>
 <link href="/admin/font-awesome.css" rel="stylesheet"> 
 <link rel="stylesheet" href="/admin/morris.css" type="text/css"/>
+
+
+<!-- Cropper.js dependencies -->
+
+
 <style>
     .error-message {
         color: red;
@@ -188,9 +193,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 
                   <div class="form-group">
                     <label for="productImage"><i class="fas fa-image"></i> Image of product</label>
-                    <input type="file" name="image" class="form-control-file" id="productImage">
+                    <input type="file" name="image" class="form-control-file" id="productImage" onchange="previewImage(this)" multiple>
                     <div id="errorImage" class="error-message"></div>
+                    <img id="imagePreview" src="#" alt="Image Preview" style="max-width: 25%; display: none;">
                   </div>
+                  
                   <div class="form-group">
                     <label for="productStock"><i class="fas fa-cubes"></i> Stock of product</label>
                     <input type="number" name="stock" class="form-control" id="productStock" placeholder="Enter product stock">
@@ -203,11 +210,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
           </div>
         
         
-
-
-
-
-
 
 
     </section>
@@ -230,8 +232,31 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/flot-chart/excanvas.min.js"></script><![endif]-->
 <script src="/js/admin/jquery.scrollTo.js"></script>
 <!--     ///////////////////////-->
+<!-- ----------------image preview---------------- -->
+<script>
+    function previewImage(input) {
+        var preview = document.getElementById('imagePreview');
+        var fileInput = input.files[0];
+
+        if (fileInput) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            };
+
+            reader.readAsDataURL(fileInput);
+        } else {
+            preview.src = '#';
+            preview.style.display = 'none';
+        }
+    }
+</script>
 
 
+
+<!-- -------------------------------------------- -->
   <script>
 function validateForm() {
             let isValid = true;

@@ -174,7 +174,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<div class="col-md-3 product-left" style="margin-bottom: 20px;">
 							<div class="product-main simpleCart_shelfItem">
 								<a href="/productdetails/<%= row._id %>" class="mask">
-									<img class="img-responsive zoom-img" src="/productimg/<%= row.image %>" alt="<%= row.image %>" />
+									<img class="img-responsive zoom-img" src="/productimg/<%= row.image.length > 0 ? row.image[0] : 'default-image.jpg' %>" alt="<%= row.image %>" />
 								</a>
 								<div class="">
 									<h3><%= row.name %></h3>

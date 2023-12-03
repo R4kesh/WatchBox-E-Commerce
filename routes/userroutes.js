@@ -51,11 +51,12 @@ user_Routes.post("/otp",userController.verifyOtp)
 
 
 
-user_Routes.get('/user/profile',userAuth.isLogin,userController.profileLoad)
+user_Routes.get('/user/profile',userAuth.isLogin,userController.profileLoad);
 
 user_Routes.get('/products',userAuth.isLogin,userController.productsLoad)
 user_Routes.get('/productdetails/:id',userAuth.isLogin,userController.productdetail)
 
+user_Routes.get('/product/category/:id',userController.categorywiseLoad)
 
 user_Routes.get('/profile/addaddress',userAuth.isLogin,userController.addaddressLoad)
 user_Routes.post('/user/addaddress',userAuth.isLogin,userController.updateAddress)
@@ -66,22 +67,37 @@ user_Routes.get('/user/profile/edit/:id',userAuth.isLogin,userController.editPro
 user_Routes.post('/user/Profile/update/:id',userAuth.isLogin,userController.updateProfile)
 user_Routes.get('/resetpassword',userController.resetLoad)
 user_Routes.post('/resetpassword',userController.resetCheck)
+user_Routes.get('/invoice/:id',userController.invoice)
+
+user_Routes.get('/profile/wallet',userController.walletLoad)
 
 user_Routes.get('/user/orders',userAuth.isLogin,userController.ordersLoad)
 user_Routes.get('/cancelOrder/:id',userAuth.isLogin,userController.cancelOrder)
+user_Routes.get('/viewMore/:id',userAuth.isLogin,userController.viewMore)
 
-user_Routes.get('/user/cart',userController.cartLoad)
-user_Routes.get('/addtocart/:id',userController.addToCart)
-user_Routes.get('/cart/remove/:id',userController.removeFromCart)
+user_Routes.get('/returnOrder/:id',userController.returnOrder)
 
+user_Routes.get('/user/cart',userAuth.isLogin,userController.cartLoad)
+user_Routes.get('/addtocart/:id',userAuth.isLogin,userController.addToCart)
+user_Routes.get('/cart/remove/:id',userAuth.isLogin,userController.removeFromCart)
 user_Routes.post('/cart/update/:productId',userController.quantityUpdate)
+user_Routes.post('/user/cart',userController.checkoutLoad)
+
+user_Routes.get('/user/wishlist',userController.wishLoad)
+user_Routes.get('/addtowish/:id',userController.addToWish)
+user_Routes.get('/wishlist/remove/:id',userController.removeFromWishlist)
+user_Routes.get('/wishlist/cart/:id',userController.wishlistAddCart)
+
+
+user_Routes.get("/apply-coupon",userController.couponAdd)
+
 
 
 user_Routes.get('/user/checkout',userAuth.isLogin,userController.checkoutLoad)
 user_Routes.get('/user/checkout/address',userAuth.isLogin,userController.checkoutAddAddress)
 user_Routes.post('/user/checkoutaddaddress',userAuth.isLogin,userController.updateCheckoutAddress)
 
-user_Routes.get('/user/checkout/editaddress/:id',userAuth.isLogin,userController.editCheckoutLoad)
+user_Routes.get('/user/checkout/editaddress/:id',userController.editCheckoutLoad)
 user_Routes.post('/user/checkout/updateaddress/:id',userAuth.isLogin,userController.updateeditCheckoutAddress)
 
 

@@ -29,6 +29,13 @@ const productSchema=new mongoose.Schema({
         type: Boolean,
         default: false,
     },
+    OfferPrice: Number,
+    Discount: Number,
+    offerExpiration: {
+        type: Date,
+        required: false,
+    },
+
 })
 
 const productcollection=new mongoose.model('products',productSchema)

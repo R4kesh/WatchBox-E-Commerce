@@ -12,7 +12,7 @@
 background: #cd9cf2;
 
 /* Chrome 10-25, Safari 5.1-6 */
-background: -webkit-linear-gradient(to top left, rgba(205, 156, 242, 1), rgba(246, 243, 255, 1));
+background: -webkit-linear-gradient(to top left, rgb(186, 144, 218), rgba(246, 243, 255, 1));
 
 /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 background: linear-gradient(to top left, rgba(205, 156, 242, 1), rgba(246, 243, 255, 1))
@@ -72,11 +72,12 @@ background: linear-gradient(to top left, rgba(205, 156, 242, 1), rgba(246, 243, 
                   <h5 class="text-muted mb-0">Thanks for your Order, <span style="color: #a8729a;"><%=user.name%></span>!</h5>
                 </div>
                 <div class="card-body p-4">
-                  <!-- <div class="d-flex justify-content-between align-items-center mb-4">
+					<%orderItems.forEach(item =>{%>
+                  <div class="d-flex justify-content-between align-items-center mb-4">
                     <p class="lead fw-normal mb-0" style="color: #a8729a;">Receipt</p>
                     <p class="small text-muted mb-0">Receipt Voucher : 1KAU9-84UIL</p>
-                  </div> -->
-                  <%orderItems.forEach(item =>{%>
+                  </div>
+                  
 
                  
                   <div class="card shadow-0 border mb-4">
@@ -100,20 +101,29 @@ background: linear-gradient(to top left, rgba(205, 156, 242, 1), rgba(246, 243, 
                         </div>
                         <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
                           <p class="text-muted mb-0 small">₹<%= item.product.price %></p>
+						  <a href="/viewMore/<%= item._id %>" class="btn-primary btn-sm ms-2">View More</a>
                         </div>
 						<div class="col-md-2 text-center d-flex justify-content-center align-items-center">
 							<% if (item.status !== 'Cancelled') { %>
 								<% if (item.status === 'Delivered') { %>
 									<!-- If status is Delivered, display Return button -->
 									<a href="/returnOrder/<%= item._id %>" class="btn btn-outline-primary">Return</a>
+								<% } else if (item.status === 'Returned') { %>
+									<!-- If status is Returned, display Returned Successfully message -->
+									<p class="text-success mb-0 small">Returned Successfully</p>
 								<% } else { %>
-									<!-- If status is not Cancelled or Delivered, display Cancel Order button -->
+									<!-- If status is not Cancelled, Delivered, or Returned, display Cancel Order button -->
 									<a href="/cancelOrder/<%= item._id %>" class="btn btn-outline-primary">Cancel Order</a>
 								<% } %>
 							<% } else { %>
 								<!-- If status is Cancelled, display Cancelled message -->
 								<p class="text-muted mb-0 small">Cancelled</p>
 							<% } %>
+						</div>
+						<div class="col-md-2 text-center d-flex justify-content-between align-items-center">
+							<a href="/invoice/<%=item._id%>" class="btn btn-outline-primary btn-sm" download="invoice.pdf">Invoice</a>
+							
+						</div>
 						</div>
 						
                       </div>
@@ -178,10 +188,10 @@ background: linear-gradient(to top left, rgba(205, 156, 242, 1), rgba(246, 243, 
                         </div>
                       </div>
                     </div>
-                  </div>
+                 
 
                   <% })%>
-                 
+				</div>
       
                   <!-- <div class="d-flex justify-content-between pt-2">
                     <p class="fw-bold mb-0">Order Details</p>

@@ -44,6 +44,10 @@ const watchUsers= new mongoose.Schema({
         required : true,
         default : Date.now,
     },
+    referral:{
+        type:String,
+       
+    },
     address: [{
         houseName: {
             type: String,
@@ -76,6 +80,7 @@ const watchUsers= new mongoose.Schema({
             ref: 'products' ,
             required: true,
         },
+        addressId:String,
         productName:String,
         quantity: {
             type: Number,
@@ -98,6 +103,8 @@ const watchUsers= new mongoose.Schema({
         default: 0  
     },
    orders:[{
+    addressId:String,
+    orderID : {type: mongoose.Schema.Types.ObjectId,ref:'orders'},
         product: {
         type:mongoose.Schema.Types.ObjectId,
         ref: 'products' ,
@@ -117,12 +124,25 @@ const watchUsers= new mongoose.Schema({
         type:String,
         default:''
     },
+     totalPrice: {
+        type: Number,
+        default: 0  
+    },
     orderDate: {
         type: Date,
         required: true,
         default: Date.now
     },
    }],
+   redeemedCoupons: [
+    {
+        couponCode: String,
+        redeemedAt: {
+            type: Date,
+            default: Date.now,
+        },
+    },
+],
   
   
 

@@ -133,6 +133,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </a>
                    
                 </li>
+                <li class="sub-menu">
+                    <a href="/admin/Coupon">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span>Coupon</span>
+                    </a>
+                   
+                </li>
                 
             </ul>            </div>
         <!-- sidebar menu end-->
@@ -160,7 +167,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <table class="table table-bordered">
                             <thead>
                                 <tr class="table-dark">
-                                    <th scope="col">ID</th>
+                                   
                                     <th scope="col">User_Name</th>
                                     <th scope="col">Address</th>
                                     <th scope="col">Order ID</th>
@@ -175,12 +182,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 <% users.forEach((user, index) => { %>
                                     <% user.orders.forEach((order, orderIndex) => { %>
                                         <tr class='align-middle'>
-                                            <td style="color: black;"><%= index + 1 %></td>
+                                            
                                             <td style="color: black;"><%= user.name %></td>
                                             <td style="color: black;">
-                                                <% if (user.address && user.address.length > 0) { %>
-                                                    <% const firstAddress = user.address[0]; %>
-                                                    <%= firstAddress.houseName %>, <%= firstAddress.street %>, <%= firstAddress.city %>, <%= firstAddress.state %>, <%= firstAddress.pincode %>, <%= firstAddress.country %>
+                                                <% if (order.addressId && address.length > 0) { %>
+                                                    <% const specificAddress = address.find(addr => addr._id.toString() === order.addressId.toString()); %>
+                                                    <% if (specificAddress) { %>
+                                                        <%= specificAddress.houseName %>, <%= specificAddress.street %>, <%= specificAddress.city %>, <%= specificAddress.state %>, <%= specificAddress.pincode %>, <%= specificAddress.country %>
+                                                    <% } else { %>
+                                                        <!-- Handle case where address is not found -->
+                                                        Address not found
+                                                    <% } %>
+                                                <% } else { %>
+                                                    <!-- Handle case where addressId is not present or address array is empty -->
+                                                    No address available
                                                 <% } %>
                                             </td>
                                             

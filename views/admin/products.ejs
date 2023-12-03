@@ -109,7 +109,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <!--search & user info start-->
     <ul class="nav pull-right top-menu">
         <li>
-            <input type="text" class="form-control search" placeholder=" Search">
+            <input type="text" class="form-control search" placeholder=" Search" id="searchInput">
         </li>
         <!-- user login dropdown start-->
         <li class="dropdown">
@@ -173,6 +173,13 @@ views/admin/category.ejs                <li><a href="#"><i class=" fa fa-suitcas
                     </a>
                    
                 </li>
+                <li class="sub-menu">
+                    <a href="/admin/Coupon">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span>Coupon</span>
+                    </a>
+                   
+                </li>
                 
             </ul>            </div>
         <!-- sidebar menu end-->
@@ -212,11 +219,13 @@ views/admin/category.ejs                <li><a href="#"><i class=" fa fa-suitcas
                                     <th>Category</th>
                                     <th>image</th>
                                     <th>Stockes</th>
+                                    <th>OfferPrice</th>
+                                    <th>Discount</th>
                                     <th>Actions</th>
 
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="tableBody">
                                 <% products.slice().reverse().forEach((row, index) => { %>
                                 <tr class='align-middle'>
                                     <td style="color: black;"><%= index +1 %></td>
@@ -226,6 +235,10 @@ views/admin/category.ejs                <li><a href="#"><i class=" fa fa-suitcas
                                     <td style="color: black;"><%= row.category %></td>
                                     <td ><img src="/productimg/<%= row.image.length > 0 ? row.image[0] : 'default-image.jpg' %>" width="100px" height="100px" alt="<%= row.image %>"></td>
                                     <td style="color: black;"><%= row.stock %></td>
+                                    <td style="color: black;"><%= row.OfferPrice %></td>
+                                    <td style="color: black;"><%= row.Discount %></td>
+
+
                                     <td>
                                         <a href="/admin/products/edit/<%= row._id %>"class="text-success"><i class="fas fa-edit fa-lg mx-1"></i></a>
                                         <% if (row.isDeleted) { %>
@@ -291,6 +304,32 @@ views/admin/category.ejs                <li><a href="#"><i class=" fa fa-suitcas
 <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/flot-chart/excanvas.min.js"></script><![endif]-->
 <script src="/js/admin/jquery.scrollTo.js"></script>
 
+<script>
+    document.getElementById('searchInput').addEventListener('input', function () {
+        const searchValue = this.value.toLowerCase();
+        const tableBody = document.getElementById('tableBody');
+        const rows = tableBody.getElementsByTagName('tr');
+
+        for (let i = 0; i < rows.length; i++) {
+            const cells = rows[i].getElementsByTagName('td');
+            let found = false;
+
+            for (let j = 1; j < cells.length - 1; j++) {
+                const cellText = cells[j].innerText.toLowerCase();
+                if (cellText.includes(searchValue)) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (found) {
+                rows[i].style.display = '';
+            } else {
+                rows[i].style.display = 'none';
+            }
+        }
+    });
+</script>
 <!-- <script>
 
 onclick="checker(event)"

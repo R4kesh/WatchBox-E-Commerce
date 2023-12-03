@@ -213,10 +213,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								</div>
 							<div class="clearfix"> </div>
 							</div>
-							
-							<h5 class="item_price" style="font-size: 18px; color: dimgray;">Price=₹<%= products.price %></h5>
+							<%if(products.OfferPrice){%>
+							<h5 class="item_price" style="font-size: 18px; color: dimgray;"><s> Price=₹<%= products.price %></s></h5>
+							<h5 class="item_price" style="font-size: 18px; color: dimgray;"> Price=₹<%= products.OfferPrice %></h5>
 
 
+							<% }else{ %>
+								<h5 class="item_price" style="font-size: 18px; color: dimgray;"> Price=₹<%= products.price %></h5>
+								<% } %>	
 							<p><%= products.description %></p>
 							<div class="available">
 								<ul>

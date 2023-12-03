@@ -20,13 +20,51 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <link href="/memenu.css" rel="stylesheet" type="text/css" media="all" />
 <script type="text/javascript" src="js/memenu.js"></script>
 <script>$(document).ready(function(){$(".memenu").memenu();});</script>	
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-eqy1Hx1aT4/IqBq/NzWmETPmow8wvaVWpwhrZoN+Uo0WQdhhn8kFJyAg80QzB8wK7WY4Gz5+iIsK7FEH5J3RjQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+ 
 
 <style>
 	.added-to-cart {
     background-color: green;
-    color: white;
+    color: rgb(255, 255, 255);
+}
+.btns {
+   background-color: #edfaed; /* Green */
+   color: rgb(0, 0, 0);
+   
+   padding: 15px 32px;
+   text-align: center;
+   text-decoration: none;
+   display: inline-block;
+   font-size: 12px;
+   margin: 1px 2px;
+   cursor: pointer;
+   border: none;
+   border-radius: 5px;
+   transition: background-color 0.3s;
+}
+.btns:hover {
+   background-color: #142014; /* Darker green */
+   color: #ffffff;
+}
+.btns-blue {
+   background-color: #ffffff; /* Blue */
+}
+
+.btns-red {
+   background-color: #ffffff; /* Red */
+}
+.wishlist-icon {
+   position: absolute;
+   top: 10px;
+   right: 10px;
+}
+
+.wishlist-icon a {
+   font-size: 20px;
 }
 </style>
 
@@ -55,18 +93,28 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<div class="total">
 							<span class="simpleCart_total"></span>
 						</div>
-						<img src="images/cart-1.png" alt="" />
+						<img src="images/cart6.png" alt="" />
+					</a>
+
+					<a href="/user/wishlist">
+						<div class="total">
+							<span class="simpleCart_total"></span>
+						</div>
+						<img src="images/wish4.png" alt="" />
 					</a>
 					
 
-					<a style="background-color: aliceblue; margin-left: 10px; padding: 8px 12px;" href="/user/profile" class="btn btn-white">
-						<i class="fas fa-user" style="margin-right: 5px;"></i> Profile
-					</a>
-
-					<form action="/logout" method="post" style="display: inline;">
-						<button class="btn btn-white" type="submit">Logout</button>
-					</form>
-					
+					<a href="/user/profile" class="btns btn-blue custom-btn">
+						 Profile
+					 </a>
+					 
+					 
+					 <form action="/logout" method="post" style="display: inline;">
+						<button class="btns btn-red custom-btn" type="submit">
+							<i class="fas fa-sign-out-alt" style="margin-right: 5px;"></i> Logout
+						</button>
+					 </form>
+					 
 
 					
 				</div>
@@ -79,7 +127,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<!--top-header-->
 	<!--start-logo-->
 	<div class="logo">
-		<a href=""><h1>Luxury Watches</h1></a>
+		<a href="https://watchbox-sfcc.imgix.net/og/watchbox-og-full.png"><h1>Luxury Watches</h1></a>
 	</div>
 	<!--start-logo-->
 	<!--bottom-header-->
@@ -107,39 +155,22 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								</div>
 							</div>
 						</li>
-						<li class="grid"><a href="#">Categories</a>
-							<div class="mepanel">
-								<div class="row">
-									<div class="col1 me-one">
-										<h4>Shop</h4>
-										
-									</div>
-									<div class="col1 me-one">
-										<h4>Style Zone</h4>
-										
-									</div>
-									<div class="col1 me-one">
-										<h4>Popular Brands</h4>
-										
-									</div>
-								</div>
-							</div>
-						</li>
 						
-						<li class="grid"><a href="typo.html">Blog</a>
+						
+						<li class="grid"><a href="" onclick="scrollToBottom()">Blog</a>
 						</li>
-						<li class="grid"><a href="contact.html">Contact</a>
+						<li class="grid"><a href="" onclick="scrollToBottom()">Contact</a>
 						</li>
 					</ul>
 				</div>
 				<div class="clearfix"> </div>
 			</div>
 			<div class="col-md-3 header-right"> 
-				<div class="search-bar">
+				<!-- <div class="search-bar">
 					<form action="/search" method="GET">
 					<input type="text" value="Search" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}">
 					<input type="submit" value="">
-				</div>
+				</div> -->
 			</div>
 			<div class="clearfix"> </div>
 			</div>
@@ -148,47 +179,50 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<!--bottom-header-->
 	<!--banner-starts-->
 	<div class="bnr" id="home">
-		<div  id="top" class="callbacks_container">
+		<div id="top" class="callbacks_container">
 			<ul class="rslides" id="slider4">
-			    <li>
-					<img src="images/bnr-1.jpg" alt=""/>
+				<li>
+					<img src="images/bnr-1.jpg" alt="Banner 1"/>
 				</li>
 				<li>
-					<img src="images/bnr-2.jpg" alt=""/>
+					<img src="images/bnr-2.jpg" alt="Banner 2"/>
 				</li>
 				<li>
-					<img src="images/bnr-3.jpg" alt=""/>
+					<img src="images/bnr-3.jpg" alt="Banner 3"/>
 				</li>
-				
 			</ul>
 		</div>
-		<div class="clearfix"> </div>
+		<div class="clearfix"></div>
 	</div>
-	<!--banner-ends--> 
-	<!--Slider-Starts-Here-->
-				<script src="/js/responsiveslides.min.js"></script>
-				<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-			 <script>
-			    // You can also use "$(window).load(function() {"
-			    $(function () {
-			      // Slideshow 4
-			      $("#slider4").responsiveSlides({
-			        auto: true,
-			        pager: true,
-			        nav: true,
-			        speed: 500,
-			        namespace: "callbacks",
-			        before: function () {
-			          $('.events').append("<li>before event fired.</li>");
-			        },
-			        after: function () {
-			          $('.events').append("<li>after event fired.</li>");
-			        }
-			      });
-			
-			    });
-			  </script>
+	
+	<!-- Include jQuery -->
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+	
+	<!-- Include ResponsiveSlides.js -->
+		
+	<!-- ResponsiveSlides.js Initialization -->
+	<script>
+		// You can also use "$(window).load(function() {"
+		$(function () {
+		  // Slideshow 4
+		  $("#slider4").responsiveSlides({
+			auto: true,
+			pager: true,
+			nav: true,
+			speed: 500,
+			namespace: "callbacks",
+			before: function () {
+			  $('.events').append("<li>before event fired.</li>");
+			},
+			after: function () {
+			  $('.events').append("<li>after event fired.</li>");
+			}
+		  });
+	
+		});
+	  </script>
+	
+ 
 			<!--End-slider-script-->
 	<!--about-starts-->
 	
@@ -200,15 +234,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			  
 			<div class="about-top grid-1">
 				<div class="col-md-3 about-left">
-					<figure class="effect-bubba">
-						<img class="img-responsive" src="images/abt-1.jpg" alt=""/>
-						<figcaption>
-							<h2>Analog Watches</h2>
-							<p>Analog luxury watches are exquisite timepieces that combine both functionality and aesthetics.</p>	
-						</figcaption>			
-					</figure>
+					<a href="/product/category/Analog watch" class="category-link">
+						<figure class="effect-bubba">
+							<img class="img-responsive" src="images/abt-1.jpg" alt=""/>
+							<figcaption>
+								<h2>Analog Watches</h2>
+								<p>Analog luxury watches are exquisite timepieces that combine both functionality and aesthetics.</p>	
+							</figcaption>
+						</figure>
+					</a>
+					<div class="clearfix"></div>
 				</div>
+				
 				<div class="col-md-3 about-left">
+					<a href="/product/category/Digital watch" class="category-link">
 					<figure class="effect-bubba">
 						<img class="img-responsive" src="images/abt-2.jpg" alt=""/>
 						<figcaption>
@@ -216,8 +255,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<p>A digital luxury watch is a timepiece that combines the functionality of a digital display </p>	
 						</figcaption>			
 					</figure>
+					</a>
+					<div class="clearfix"></div>
 				</div>
 				<div class="col-md-3 about-left">
+					<a href="/product/category/Smart watch" class="category-link">
 					<figure class="effect-bubba">
 						<img class="img-responsive" src="images/abt-3.jpg" alt=""/>
 						<figcaption>
@@ -225,8 +267,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<p> smartwatches are a category of wearable technology that combines advanced features and functionality </p>	
 						</figcaption>			
 					</figure>
+				</a>
 				</div>
 				<div class="col-md-3 about-left">
+					<a href="/product/category/Fitness Watch" class="category-link">
 					<figure class="effect-bubba">
 						<img class="img-responsive" src="images/abt-3.jpg" alt=""/>
 						<figcaption>
@@ -234,6 +278,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<p>fitness watches combine the functionality of a fitness tracker with the style and quality </p>	
 						</figcaption>			
 					</figure>
+				</a>
 				</div>
 				
 				
@@ -251,17 +296,28 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<div class="product">
 		<div class="container">
 			<div class="product-top">
+				
 				<div class="row">
 					<% products.slice().reverse().forEach((row, index) => { %>
 						<div class="col-md-3 product-left" style="margin-bottom: 20px;">
 							<div class="product-main simpleCart_shelfItem">
+								
 								<a href="/productdetails/<%= row._id %>" class="mask">
 									<img class="img-responsive zoom-img" src="/productimg/<%= row.image.length > 0 ? row.image[0] : 'default-image.jpg' %>" alt="<%= row.image %>" />
 								</a>
-								<div class="">
+								<div class="wishlist-icon">
+									<a href="/addtowish/<%=row._id%>" class="btn btn-outline-danger"><i class="fa fa-heart"></i></a>
+								 </div>
+								
+									<div class="row">
 									<h3><%= row.name %></h3>
 									<p>Explore Now</p>
-									<h4><span class="item_price">&#8377;<%= row.price %></span></h4>
+									<%if(row.OfferPrice){%>
+										<h4><span class="item_price">&#8377;<s><%= row.price %></s></span><span>  &#8377;<%= row.OfferPrice %></span></h4>
+										<!-- <h4><span class="item_price">&#8377;</span></h4> -->
+									<% }else{ %>
+										<h4><span class="item_price">&#8377;<%= row.price %></span></h4>
+										<% } %>	
 									<h4>
 										
 										<a class="btn btn-secondary" href="/productdetails/<%= row._id %>">View Details</a>
@@ -270,11 +326,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										
 									</h4>
 									
+									
 								</div>
+								<%if(row.Discount>0){%>
 								<div class="srch">
-									<span>-60%</span>
+									<span>Save up to<%=row.Discount%>%</span>
 								</div>
+								<% } %>
 							</div>
+							
 						</div>
 					<% }) %>
 				</div>
@@ -327,27 +387,27 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<li><a href="#"><p>Specials</p></a></li>
 						<li><a href="#"><p>New Products</p></a></li>
 						<li><a href="#"><p>Our Stores</p></a></li>
-						<li><a href="contact.html"><p>Contact Us</p></a></li>
-						<li><a href="#"><p>Top Sellers</p></a></li>
+						<li><a href=""><p>Contact Us</p></a></li>
+						<li><a href=""><p>Top Sellers</p></a></li>
 					</ul>
 				</div>
 				<div class="col-md-3 infor-left">
 					<h3>My Account</h3>
 					<ul>
-						<li><a href="account.html"><p>My Account</p></a></li>
-						<li><a href="#"><p>My Credit slips</p></a></li>
-						<li><a href="#"><p>My Merchandise returns</p></a></li>
-						<li><a href="#"><p>My Personal info</p></a></li>
-						<li><a href="#"><p>My Addresses</p></a></li>
+						<li><a href="user/profile"><p>My Account</p></a></li>
+						<li><a href="user/profile"><p>My orders</p></a></li>
+						<li><a href="user/profile"><p>My Wallet</p></a></li>
+						<li><a href="user/profile"><p>My Personal info</p></a></li>
+						<li><a href="user/profile"><p>My Addresses</p></a></li>
 					</ul>
 				</div>
 				<div class="col-md-3 infor-left">
 					<h3>Store Information</h3>
 					<h4>The company name,
-						<span>Lorem ipsum dolor,</span>
-						Glasglow Dr 40 Fe 72.</h4>
-					<h5>+955 123 4567</h5>	
-					<p><a href="mailto:example@email.com">contact@example.com</a></p>
+						<span>WatchBox,</span>
+						Trivandrum.</h4>
+					<h5>+91 99999999</h5>	
+					<p><a href="">WatchBox@gmail.com</a></p>
 				</div>
 				<div class="clearfix"></div>
 			</div>
@@ -359,43 +419,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<div class="container">
 			<div class="footer-top">
 				<div class="col-md-6 footer-left">
-					<form>
-						<input type="text" value="Enter Your Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Enter Your Email';}">
-						<input type="submit" value="Subscribe">
-					</form>
+					
 				</div>
 				<div class="col-md-6 footer-right">					
-					<p>© 2015 Luxury Watches. All Rights Reserved | Design by  <a href="http://w3layouts.com/" target="_blank">W3layouts</a> </p>
+					<p>© 2023 WatchBox. All Rights Reserved | Design by  <a href="" target="_blank">WB</a> </p>
 				</div>
 				<div class="clearfix"></div>
 			</div>
 		</div>
 	</div>
 	<!--footer-end-->	
-	<script>
-		
-
-		// JavaScript code
-// document.addEventListener('DOMContentLoaded', function() {
-//     const addToCartButtons = document.querySelectorAll('.btn-primary'); // Select all "Add to Cart" buttons
-
-//     addToCartButtons.forEach(button => {
-//         button.addEventListener('click', function(event) {
-//             event.preventDefault(); // Prevent the default form submission
-
-//             const productName = this.getAttribute('data-product-name'); // Get the product name (you may need to add this attribute in your button)
-//             const cartMessage = document.getElementById('cartMessage');
-
-//             cartMessage.textContent = `${productName} added to cart`; // Set the message
-
-//             // Clear the message after a few seconds (for example, 5 seconds)
-//             setTimeout(function() {
-//                 cartMessage.textContent = '';
-//             }, 5000); // 5000 milliseconds = 5 seconds
-//         });
-//     });
-// });
-
-	</script>
+	
 </body>
 </html>

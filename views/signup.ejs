@@ -14,6 +14,7 @@
             text-align: left;
             margin-top: 5px;
         }
+
     </style>
 </head>
 
@@ -40,13 +41,30 @@
                                 <p class="text-head">Email</p>
                                 <input type="email" name="email" class="input" />
                                 <div class="error-message" id="error-email"></div>
-                                <h3 style="color:red;"><%=message%></h3>
+                                <% if (typeof message == 'undefined') { %>
+                                    <h3></h3>
+                                <% } else { %>
+                                    <!-- Default content when message doesn't exist -->
+                                    <h3 style="color:red;"><%= message %></h3> <!-- You can replace "&nbsp;" with any default content -->
+                                <% } %>
                                 
                             </div>
+                            
                             <div>
                                 <p class="text-head">Phone Number</p>
                                 <input type="text" name="phone" class="input" />
                                 <div class="error-message" id="error-phone"></div>
+                            </div>
+                            <div id="referralCodeContainer" class="optional-field">
+                                <p class="text-head">Referral Code (Optional)</p>
+                                <input type="text" name="referralCode" class="input"/>
+                                <div class="error-message" id="error-referral"></div>
+                                <% if (typeof message1 == 'undefined') { %>
+                                    <h3></h3>
+                                <% } else { %>
+                                    <!-- Default content when message doesn't exist -->
+                                    <h3 style="color:red;"><%= message1 %></h3> <!-- You can replace "&nbsp;" with any default content -->
+                                <% } %>
                             </div>
                             <div>
                                 <p class="text-head">Password</p>
@@ -134,6 +152,7 @@
 }
 
     </script>
+    
 </body>
 
 </html>

@@ -1,419 +1,4 @@
-<!-- <% user.forEach((row, index) => { %>
-    <tr class='align-middle'>
-        <td style="color: black;"><%= index+1 %></td>
-        <td style="color: black;"><%= row.username %></td>
-        <td style="color: black;"><%= row.email %></td>
-        <td>
-            <% if (row.isblocked) { %>
-                User is blocked, show unblock button -->
-            
-    
-                  <form method="post" action="/admin/unblock/<%= row._id %>">
-                    <button type="submit" class="btn btn-success">Unblock</button>
-                  </form>
-              <% } else { %>
-                <!-- User is not blocked, show block button -->
-                <form method="post" action="/admin/block/<%= row._id %>">
-                    <button type="submit" class="btn btn-danger">Block</button>
-                  </form>
-               
-           
-              <% } %>
-              
-        </td>
-    </tr>
-    <% }) %>
-
-
-
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Your Cart - Your E-Commerce Website</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-
-    <style>
-        body {
-            background-image: url('https://th.bing.com/th/id/R.0b3441917b0cb5bb8120f88b444621de?rik=dmPsLnjHlUWxiA&riu=http%3a%2f%2fgetwallpapers.com%2fwallpaper%2ffull%2f9%2f0%2f4%2f589375.jpg&ehk=ErYzeUkvRrV7Ubd6ox5Aj7z5dtjmvGLIxLqkA%2fyjO04%3d&risl=&pid=ImgRaw&r=0');
-            /* Replace 'path-to-your-background-image.jpg' with the actual path to your image */
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            background-position: center;
-        }
-    </style>
-</head>
-
-<body>
-    <header>
-    </header>
-    <div class="container mt-5">
-        <h1 class="mb-4">Your Shopping Cart</h1>
-        <div class="table-responsive">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th scope="col">Product</th>
-                        <th scope="col">Image</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Quantity</th>
-                        <th scope="col">Total</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% let total=0 %>
-                    <% for (const item of cart.items) { %>
-                        <tr>
-
-                            <td>
-                                <h4>
-                                   <% let product=products.find((ele)=>ele._id.equals(item.product)) %> <%= product.productname%>
-                                </h4>
-                            </td>
-                            <td>
-                                <% let image=products.find((ele)=>ele._id.equals(item.product))%>
-                                    <img src="<%=image.productimage[0]%>" alt="Product Image"
-                                        style="width: 100px; height: 100px;" />
-                            </td>
-                            <td>
-                                <% singleprice=item.single_product_total_price / item.quantity %>
-                                    <%= singleprice %>
-                            </td>
-                            <td class="">
-                                <div class="d-flex">
-                                    <div class="minus plus-minus" data-item-id="<%=item.product%>">
-                                        <svg width="12" height="4" xmlns="http://www.w3.org/2000/svg"
-                                            xmlns:xlink="http://www.w3.org/1999/xlink">
-                                            <defs>
-                                                <path
-                                                    d="M11.357 3.332A.641.641 0 0 0 12 2.69V.643A.641.641 0 0 0 11.357 0H.643A.641.641 0 0 0 0 .643v2.046c0 .357.287.643.643.643h10.714Z"
-                                                    id="a" />
-                                            </defs>
-                                            <use fill="#FF7E1B" fill-rule="nonzero" xlink:href="#a" />
-                                        </svg>
-                                    </div>
-                                    <span id="" data-item-id="<%=item.product %>" class="amount">
-                                        <%= item.quantity %>
-                                    </span>
-                                    <div class="plus plus-minus" data-item-id="<%=item.product%>">
-                                        <svg width="12" height="12" xmlns="http://www.w3.org/2000/svg"
-                                            xmlns:xlink="http://www.w3.org/1999/xlink" id="plus">
-                                            <defs>
-                                                <path
-                                                    d="M12 7.023V4.977a.641.641 0 0 0-.643-.643h-3.69V.643A.641.641 0 0 0 7.022 0H4.977a.641.641 0 0 0-.643.643v3.69H.643A.641.641 0 0 0 0 4.978v2.046c0 .356.287.643.643.643h3.69v3.691c0 .356.288.643.644.643h2.046a.641.641 0 0 0 .643-.643v-3.69h3.691A.641.641 0 0 0 12 7.022Z"
-                                                    id="b" />
-                                            </defs>
-                                            <use fill="#FF7E1B" fill-rule="nonzero" xlink:href="#b" id="plus" />
-                                        </svg>
-                                    </div>
-                                </div>
-                            </td>
-                            <!-- <td>
-                                <input type="number" value="" class="form-control">
-                            </td> -->
-                            <td>₹<%= item.single_product_total_price %>
-                            </td>
-                            <td>
-                                <button class="btn btn-danger">Remove</button>
-                            </td>
-                        </tr>
-                        <%  total+= item.single_product_total_price %>  
-                        <% } %>
-
-
-                </tbody>
-
-            </table>
-        </div>
-        <div class="row justify-content-end">
-            <div class="col-md-4">
-                <h4>Total: ₹<%=total.toFixed(2) %>
-                </h4>
-                <button class="btn btn-success btn-block mt-3">Checkout</button>
-            </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-md-12 text-center">
-                <a href="shop.html" class="btn btn-primary">Continue Shopping</a>
-                <button class="btn btn-info">Update Cart</button>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        <!-- Include your website's footer here -->
-    </footer>
-
-    <!-- item amount toggle  -->
-    <script>
-        let pluses = document.getElementsByClassName("plus");
-        let minuses = document.getElementsByClassName("minus");
-        let amounts = document.getElementsByClassName("amount");
-
-        for (let i = 0; i < pluses.length; i++) {
-            pluses[i].addEventListener("click", function () {
-                amounts[i].innerHTML = parseInt(amounts[i].innerHTML) + 1;
-
-                let itemId = this.dataset.itemId;
-
-                let newAmount = parseInt(amounts[i].innerHTML);
-
-                // Send the updated amount to the server
-                fetch('/updateCart', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ itemId: itemId, amount: newAmount }),
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log('Success:', data);
-                    })
-                    .catch((error) => {
-                        console.error('Error:', error);
-                    });
-                window.location.reload()
-
-
-            });
-
-            minuses[i].addEventListener("click", function () {
-
-                if (parseInt(amounts[i].innerHTML) >= 0) {
-                    amounts[i].innerHTML = parseInt(amounts[i].innerHTML) - 1;
-
-                    let itemId = this.dataset.itemId;
-                    let newAmount = parseInt(amounts[i].innerHTML);
-                    // chek if its less than 0
-                    if (newAmount <= 0) {
-                        window.location.href = `/removeProduct/${itemId}`
-                    } else {
-                        // Send the updated amount to the server
-                        fetch('/updateCart', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({ itemId: itemId, amount: newAmount }),
-                        })
-                            .then(response => response.json())
-                            .then(data => {
-                                console.log('Success:', data);
-                            })
-                            .catch((error) => {
-                                console.error('Error:', error);
-                            });
-                        window.location.reload()
-
-                    }
-                }
-            });
-        }
-
-    </script>
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script>
-    </script>
-</body>
-
-</html>
-
-<script>
-    const productaddtocart = async (req, res) => {
-    const userid = req.session.user;
-    const productId = req.params.productId;
-
-    try {
-        const isuser = await collection1.findOne({ _id: userid });
-        const isproduct = await productcollection.findById(productId);
-        const iscart = await cartcollection.findOne({ userId: isuser._id });
-
-        if (!iscart) {
-            const addtocart = new cartcollection({
-                userId: isuser._id,
-                items: [{
-                    product: isproduct._id,
-                    quantity: 1,
-                    single_product_total_price: isproduct.productprice,
-                }],
-                total: isproduct.productprice,
-                totalQuantity: 1,
-            });
-
-            await addtocart.save();
-        } else {
-            const isProductInCart = iscart.items.find(
-                item => item.product.toString() === productId
-            );
-
-            if (isProductInCart) {
-                isProductInCart.quantity += 1;
-                isProductInCart.single_product_total_price += isproduct.productprice;
-            } else {
-                iscart.items.push({
-                    product: isproduct._id,
-                    quantity: 1,
-                    single_product_total_price: isproduct.productprice,
-                });
-            }
-
-            iscart.total += isproduct.productprice;
-            iscart.totalQuantity += 1;
-
-            await iscart.save();
-        }
-
-        res.redirect('back');
-
-    } catch (error) {
-        console.log("carterror", error);
-    }
-}
-
-const cart = async (req, res) => {
-    if (req.session.user) { 
-        const cartData = await cartcollection.findOne({userId:req.session.user}); // Replace this with your actual function to fetch cart data
-        const productData = await productcollection.find({}); 
-        // Fetch product data
-        console.log(`helloo thuis usi caretjk ${productData}`);
-        res.render('cart', { cart: cartData, products:productData}); 
-    } else {
-        res.render('home');
-    }
-}
-const updateCart=async (req,res)=>{
-    let {itemId,amount}=req.body
-    let userId=req.session.user
-    try {
-        const cart = await cartcollection.findOne({ userId });
-
-        if (!cart) {
-            return res.json({ success: false, message: 'Cart not found' });
-        }
-
-        const itemToUpdate = cart.items.find(item => item.product.toString() === itemId);
-
-        if (!itemToUpdate) {
-            return res.json({ success: false, message: 'Item not found in the cart' });
-        }
-
-        itemToUpdate.quantity = amount;
-        // console.log(typeof(itemToUpdate.product.productPrice));
-        let products=await Productcollection.findById(itemId)
-        itemToUpdate.single_product_total_price=amount * products.productprice;
-
-        // Update the total, totalQuantity, or any other relevant fields in the cart if needed
-        // cart.total = 
-        // cart.totalQuantity = ...
-        // ...
-
-        await cart.save(); // Save the updated cart
-
-        res.json({ success: true, message: 'Item quantity updated in the cart', cart });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ success: false, message: 'Internal Server Error' });
-    }
-}
-</script>
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-<script>
-const mongoose = require('mongoose');
-
-const CartSchema = new mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Collection1',
-    required: true,
-  },
-  items: [
-    {
-      product: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Productcollection',
-        required: true,
-      },
-      productName: String, // Add this field for product name
-      quantity: {
-        type: Number,
-        required: true,
-        default: 1,
-      },
-      single_product_total_price: {
-        type: Number,
-        // required: true,
-        default: 0,
-      },
-    },
-  ],
-  discount: {
-    type: Number,
-    default: 0,
-  },
-  total: {
-    type: Number,
-    default: 0,
-  },
-  totalQuantity: {
-    type: Number,
-    default: 0,
-  },
-
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-});
-
-const Cart = mongoose.model('Cart', CartSchema);
-
-module.exports = Cart;
-
-
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="">
-    <select style="width: 100px;" class="form-select me-4">
-      <option><%= item.quantity %></option>
-      <!-- Other quantity options can be added here -->
-    </select>
-  </div>
-
-
-
-
-
-
-
-  my cart///////////////////////
-
-  <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
@@ -422,6 +7,8 @@ module.exports = Cart;
 	<title>Document</title>
 	<link rel="stylesheet" href="/cart.css">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/html-minifier/4.0.0/htmlminifier.min.js">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/html-minifier/4.0.0/htmlminifier.js">
 </head>
 <body>
 	
@@ -444,35 +31,27 @@ module.exports = Cart;
 		  <!-- Left elements -->
   
 		  <!-- Center elements -->
-		  <div class="order-lg-last col-lg-5 col-sm-8 col-8">
+		  <!-- <div class="order-lg-last col-lg-5 col-sm-8 col-8">
 			<div class="d-flex float-end">
 			  <a href="https://github.com/mdbootstrap/bootstrap-material-design" class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center" target="_blank">
 				<i class="fas fa-user-alt m-1 me-md-2"></i>
 				<p class="d-none d-md-block mb-0">Sign in</p>
-			  </a>
-			  <a href="https://github.com/mdbootstrap/bootstrap-material-design" class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center" target="_blank">
+			  </a> -->
+			  <!-- <a href="https://github.com/mdbootstrap/bootstrap-material-design" class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center" target="_blank">
 				<i class="fas fa-heart m-1 me-md-2"></i>
 				<p class="d-none d-md-block mb-0">Wishlist</p>
-			  </a>
-			  <a href="https://github.com/mdbootstrap/bootstrap-material-design" class="border rounded py-1 px-3 nav-link d-flex align-items-center" target="_blank">
+			  </a> -->
+			  <!-- <a href="https://github.com/mdbootstrap/bootstrap-material-design" class="border rounded py-1 px-3 nav-link d-flex align-items-center" target="_blank">
 				<i class="fas fa-shopping-cart m-1 me-md-2"></i>
 				<p class="d-none d-md-block mb-0">My cart</p>
 			  </a>
 			</div>
-		  </div>
+		  </div> -->
 		  <!-- Center elements -->
   
 		  <!-- Right elements -->
 		  <div class="col-lg-5 col-md-12 col-12">
-			<div class="input-group float-center">
-			  <div class="form-outline">
-				<input type="search" id="form1" class="form-control" />
-				<label class="form-label" for="form1">Search</label>
-			  </div>
-			  <button type="button" class="btn btn-primary shadow" style="height: 40px;">
-				<i class="fas fa-search"></i>
-			  </button>
-			</div>
+			
 		  </div>
 		  <!-- Right elements -->
 		</div>
@@ -481,12 +60,12 @@ module.exports = Cart;
 	<!-- Jumbotron -->
   
 	<!-- Heading -->
-	<div class="bg-primary">
+	<div class="bg-black">
 	  <div class="container py-4" style="color: black;">
 		<!-- Breadcrumb -->
 		<nav class="d-flex">
 		  <h6 class="mb-0">
-			<a href="" class="text-white-50">Home</a>
+			<a href="/" class="text-white-50">Home</a>
 			<span class="text-white-50 mx-2"> > </span>
 			<a href="" class="text-white"><u>Shopping cart</u></a>
 		  </h6>
@@ -506,23 +85,30 @@ module.exports = Cart;
       <div class="col-lg-9">
         <div class="card border shadow-0">
           <div class="m-4">
-            <h4 class="card-title mb-4">Your shopping cart</h4>
+			<% if (cartItems.length === 0) { %>
+				<h1>Cart is Empty</h1>
+            
+			
+				<% } else { %>
+					<h4 class="card-title mb-4">Your shopping cart</h4>
+			
             <% cartItems.forEach(item => { %>
-              <div class="row gy-3 mb-4">
+              <div class="each_row gy-3 mb-4">
                 <div class="col-lg-5">
                   <div class="me-lg-5">
                     <div class="d-flex">
-                      <img src="/productimg/<%= item.product.image %>" class="border rounded me-3" style="width: 96px; height: 96px;" />
+                      <img src="/productimg/<%= item.product.image.length> 0 ? item.product.image[0] : 'default-image.jpg' %>" class="border rounded me-3" style="width: 96px; height: 96px;" />
                       <div class="">
                         <a href="#" class="nav-link">
                           <h3><%= item.product.name %></h3>
                         </a>
                         <p class="text-muted">Category: <%= item.product.category %></p>
+						<!-- <p class="text-muted" >Quantity:</p> -->
                       </div>
                     </div>
                   </div>
                 </div>
-
+				
 
 				
 
@@ -530,65 +116,99 @@ module.exports = Cart;
                 <div class="col-lg-2 col-sm-6 col-6 d-flex flex-row flex-lg-column flex-xl-row text-nowrap">
                  
 
-					<div class="d-flex">
-						<div class="minus plus-minus" data-item-id="<%=item.product%>">
-							<svg width="12" height="4" xmlns="http://www.w3.org/2000/svg"
-								xmlns:xlink="http://www.w3.org/1999/xlink">
-								<defs>
-									<path
-										d="M11.357 3.332A.641.641 0 0 0 12 2.69V.643A.641.641 0 0 0 11.357 0H.643A.641.641 0 0 0 0 .643v2.046c0 .357.287.643.643.643h10.714Z"
-										id="a" />
-								</defs>
-								<use fill="#FF7E1B" fill-rule="nonzero" xlink:href="#a" />
-							</svg>
-						</div>
-						<span id="" data-item-id="<%=item.product %>" class="amount">
-							<%= item.quantity %>
-						</span>
-						<div class="plus plus-minus" data-item-id="<%=item.product%>">
-							<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg"
-								xmlns:xlink="http://www.w3.org/1999/xlink" id="plus">
-								<defs>
-									<path
-										d="M12 7.023V4.977a.641.641 0 0 0-.643-.643h-3.69V.643A.641.641 0 0 0 7.022 0H4.977a.641.641 0 0 0-.643.643v3.69H.643A.641.641 0 0 0 0 4.978v2.046c0 .356.287.643.643.643h3.69v3.691c0 .356.288.643.644.643h2.046a.641.641 0 0 0 .643-.643v-3.69h3.691A.641.641 0 0 0 12 7.022Z"
-										id="b" />
-								</defs>
-								<use fill="#FF7E1B" fill-rule="nonzero" xlink:href="#b" id="plus" />
-							</svg>
-						</div>
+					
+					<form>
+						<div class="count_container" data-productid="<%= item.product._id %>" data-price="<%=totalprice%>">
+						<div class="decrebutton btn" >-</div>
+						<input type="number" class="count" id="number_<%=item.product._id%>" value="<%=item.quantity%>" readonly/>
+						<div class="incrbutton" >+</div>
+						<div class="incrbutton2">+</div>
+
 					</div>
-
-
-
-
+					  </form>
 
                   <div class="">
-                    <text class="h6">₹<%= item.product.price %></text> <br />
+                    <text class="h5">Price:₹<%= item.product.price %></text> <br />
                   </div>
                 </div>
+
+
+				
                 <div class="col-lg col-sm-6 d-flex justify-content-sm-center justify-content-md-start justify-content-lg-center justify-content-xl-end mb-2">
+					<div class="">
+						<text class="total-price"><h6>TotalPrice:₹<%= item.product.price*item.quantity %></h6></text> <br />
+					  </div>
                   <div class="float-md-end">
-                    <a href="#!" class="btn btn-light border px-2 icon-hover-primary">
-                      <i class="fas fa-heart fa-lg px-1 text-secondary"></i>
-                    </a>
-                    <a href="#" class="btn btn-light border text-danger icon-hover-danger"> Remove</a>
+                    
+                    <a href="/cart/remove/<%=item.product._id%>" class="btn btn-light border text-danger icon-hover-danger"> Remove</a>
                   </div>
                 </div>
               </div>
 			  
-            <% }); %>
+			    <br />
+				
+				
+				<% }); %>
           </div>
           <!-- Other cart details can be added here -->
         </div>
       </div>
+	  
+	  <div class="col-lg-3">
+				<div class="card shadow-0 border">
+		  <div class="card-body">
+			<form id="couponadd">
+				<div class="form-group">
+				  <label class="form-label">Have coupon?</label>
+				  <div class="input-group">
+					<input type="text" class="form-control border" id="couponid" name="" placeholder="Coupon code" />
+					<button class="btn btn-light border" type="button" id="buttons">Apply</button>
+				  </div>
+				  <p class="text-danger" id="error-message"></p>
+				</div>
+			  </form>
+			</div>
+		  </div>
+		  <div class="card shadow-0 border">
+			<div class="card-body">
+			<div class="d-flex justify-content-between">
+			  <p class="price_container">Total price:<%=totalprice%></p>
+			  <!-- Add this element in the HTML where you want to display the total price -->
+			  <form action="/user/cart" method="post">
+<div id="totalDisplay">Total Amount: ₹<span id="totalPriceValue"><%= totalprice %></span></div>
+         <input type="hidden" name="totalAmount" value="?">
+
+			</div>
+
+			<hr />
+			
+			<div class="mt-3">
+				<button class="btn btn-success w-100 shadow-0 mb-2">Check Out</button>
+			  
+			  <a href="/" class="btn btn-light w-100 border mt-2"> Back to shop </a>
+			</div>
+		</form>
+		  </div>
+		</div>
+	  </div>
+	
       <!-- Other sections of the cart page can be added here -->
     </div>
   </div>
-</section>
+  
 
+  <% } %>
+
+
+
+
+
+</section>
 <!-- cart + summary -->
 
   <!-- cart + summary -->
+
+
   <section>
 	<div class="container my-5">
 	  <header class="mb-4">
@@ -682,7 +302,7 @@ module.exports = Cart;
   <!-- Recommended -->
   
   <!-- Footer -->
-  <footer class="text-center text-lg-start text-muted bg-primary mt-3">
+  <footer class="text-center text-lg-start text-muted bg-black mt-3">
 	<!-- Section: Links  -->
 	<section class="">
 	  <div class="container text-center text-md-start pt-4 pb-4">
@@ -692,10 +312,10 @@ module.exports = Cart;
 		  <div class="col-12 col-lg-3 col-sm-12 mb-2">
 			<!-- Content -->
 			<a href="https://mdbootstrap.com/" target="_blank" class="text-white h2">
-			  MDB
+			  WatchBox
 			</a>
 			<p class="mt-1 text-white">
-			  © 2023 Copyright: MDBootstrap.com
+			  
 			</p>
 		  </div>
 		  <!-- Grid column -->
@@ -816,5 +436,251 @@ module.exports = Cart;
 	  </div>
 	</div>
   </footer>
+  <script>
+	const error1 = document.getElementById('error-message')
+	const coupon = document.getElementById('couponid')
+	const Botton = document.getElementById('buttons')
+	const displayTotal = document.getElementById('totalDisplay')
+	const checkouttotal = document.getElementById('TotalDisplay')
+	let totalAmount = document.getElementById('total').value
+
+	// let totalAmount = Number(total.value)
+	Botton.addEventListener("click", (eve) => {
+	  ;
+	  const data = coupon.value;
+	  fetch("/addcouponcart", {
+		method: "POST", // Use "POST" or "GET" depending on your requirements
+		body: JSON.stringify({ coupon: data }),
+		headers: {
+		  "Content-Type": "application/json",
+		},
+	  }).then((response) => {
+
+		if (response.status === 400) {
+		  return response.json().then((data) => {
+			error1.innerText = "Enter a valid coupon code.";
+			throw new Error("Invalid coupon code");
+		  })
+		} else if (response.status === 404) {
+		  return response.json().then((data) => {
+			error1.innerText = "Coupon has expired";
+			throw new Error("Invalid coupon code");
+		  })
+		} else if (response.status === 403) {
+		  return response.json().then((data) => {
+			error1.innerText = "Coupon already used";
+			throw new Error("Invalid coupon code");
+		  })
+		}
+		else if (response.status === 200) {
+		  return response.json();
+		}
+	  }).then((data) => {
+
+	  if (data > totalAmount) {
+		  error1.innerText = "Coupon not allowed in this Totalamount .";
+		  throw new Error("Invalid coupon amount");
+		} else {
+		  totalAmount = totalAmount - data;
+			
+		  checkouttotal.href = `/checkoutpage?totalAmount=${totalAmount}`<!-- value assign in url---->
+		  displayTotal.innerText = totalAmount;
+		  Botton.disabled = true;
+		}
+	  })
+		.catch((error) => {
+		  console.log(error);
+		});
+	}) 
+  </script>
+  <script>
+	document.querySelectorAll('.each_row').forEach(product => {
+	  const incrementbutton = product.querySelector('.incrbutton')
+	  const decreasebutton = product.querySelector('.decrebutton')
+	  const quantityinput = product.querySelector('.count')
+	  const priceinput = product.querySelector('.total-price')
+	  const container = product.querySelector('.count_container')
+	  const Pricecontainer = product.querySelector('.price_container')
+	  const secondButton = product.querySelector('.incrbutton2');
+	  secondButton.style.display = 'none'
+
+	  const AAmount = priceinput.textContent
+
+
+
+	  decreasebutton.addEventListener('click', async () => {
+		const productId = container.dataset.productid
+		let quantity = parseFloat(quantityinput.value)
+
+		if (quantity > 1) {
+		  quantityinput.value = parseInt(quantityinput.value) - 1;
+		  quantity = parseFloat(quantityinput.value)
+		  console.log('quantity is', quantity);
+
+		  // Check if quantity is greater than 0 before decrementing
+
+		  const response = await fetch(`/CartMinusebutton/${productId}`, {
+			method: 'get',
+			headers: {
+			  'Content-Type': 'application/json'
+			},
+
+		  });
+		  // window.location.reload()
+		  if (response.status === 200) {
+			incrementbutton.style.display = 'block';
+			secondButton.style.display = 'none'
+			updateTotalPricem();
+		  }
+		}
+	  });
+
+	  incrementbutton.addEventListener('click', async () => {
+		const productId = container.dataset.productid
+		quantityinput.value = parseInt(quantityinput.value) + 1;
+		const quantity = parseFloat(quantityinput.value)
+		console.log('quantity is', quantity);
+
+
+
+		const response = await fetch(`/CartPluseButton/${productId}/${quantity}`, {
+		  method: 'get',
+		  headers: {
+			'Content-Type': 'application/json'
+		  },
+		});
+
+		if (response.status === 200) {
+		  updateTotalPrice();
+		}
+		 else if (response.status === 400) {
+		  quantityinput.value = parseInt(quantityinput.value) - 1;
+		  console.log('toast');
+		  toastr.info('Insuficent stock!');
+		  incrementbutton.style.display = 'none';
+		  secondButton.style.display = 'block'
+
+		}
+	  });
+	  // Implement this function to update the total price based on the updated quantity
+	  function updateTotalPrice() {
+		const price = parseFloat(container.dataset.price)
+		const quantity = parseInt(quantityinput.value)
+		const total = price * quantity
+		priceinput.textContent = `${total}/-`
+
+		const totalprice = document.getElementById('totalpricess');
+		let dataTotalprice = parseFloat(totalprice.getAttribute('data-totalprice'));
+
+		// Access the data attribute here
+		const parsedPrice = parseInt(price)
+		console.log('dataTotalprice', dataTotalprice);
+
+
+		let parseddataTotalprice = parseInt(dataTotalprice)
+		const subtotal = parseddataTotalprice + parsedPrice
+		totalprice.innerText = `${subtotal}/-`
+		totalprice.setAttribute('data-totalprice', subtotal);
+		const totalDisplay = document.getElementById('totalDisplay')
+		const dicountvalue = subtotal - (subtotal * 0.20)
+		console.log("dicountvalue", dicountvalue);
+		const discounttt = subtotal - (subtotal * 0.20)
+		totalDisplay.innerText = `${discounttt}/-`
+		console.log('price is', parseddataTotalprice, parsedPrice);
+
+
+	  }
+
+	  function updateTotalPricem() {
+
+		const price = parseFloat(container.dataset.price)
+		const quantity = parseInt(quantityinput.value)
+		const total = price * quantity
+		priceinput.textContent = `${total}/-`
+
+		const totalprice = document.getElementById('totalpricess');
+		let dataTotalprice = parseFloat(totalprice.getAttribute('data-totalprice'));
+
+		// Access the data attribute here
+		const parsedPrice = parseInt(price)
+		console.log('dataTotalprice', dataTotalprice);
+
+
+		let parseddataTotalprice = parseInt(dataTotalprice)
+		const subtotal = parseddataTotalprice - parsedPrice
+		totalprice.innerText = `${subtotal}/-`
+		totalprice.setAttribute('data-totalprice', subtotal);
+		const totalDisplay = document.getElementById('totalDisplay')
+		const dicountvalue = subtotal - (subtotal * 0.20)
+		console.log("dicountvalue", dicountvalue);
+		const discounttt = subtotal - (subtotal * 0.20)
+		totalDisplay.innerText = `${discounttt}/-`
+		console.log('price is', parseddataTotalprice, parsedPrice);
+
+
+	  }
+
+	});
+  </script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+  
+       
+        
+                <h2 class="text-3xl font-bold mb-4">Wallet</h2>
+            </div>
+            <div class="flex justify-center items-center space-x-4 mb-4">
+                <!-- Wallet Balance -->
+                <div>
+                    <h3 class="text-lg font-semibold">Wallet Balance:</h3>
+                    <p class="text-2xl font-bold text-[#FE5401]">₹<%= walletBalance.toFixed(2) %></p>
+                </div>
+                <!-- Add Fund Button -->
+                
+                <!-- Withdraw Button -->
+                <button
+                    class="flex items-center gap-2 rounded-lg bg-[#FE5401] px-4 py-2.5 text-xl font-bold text-white hover:bg-[#FF7308]">
+                    <span>Withdraw</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 5a3 3 0 00-3 3v10a3 3 0 006 0V8a3 3 0 00-3-3z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 10V3M7 7a2 2 0 012-2h3a2 2 0 012 2m0 0v10a2 2 0 01-2 2H9a2 2 0 01-2-2m0 0V7"></path>
+                    </svg>
+                </button>
+            </div>
+            <hr class="dark:border-gray-400">
+            <div>
+                <h3 class="text-2xl font-bold mb-2">Transaction History</h3>                                 
+                <ul>
+                    <% transactions.reverse().forEach(transaction => { %>
+                        <li class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <% if(transaction.type == 'credit'){ %>
+                                <span class="text-green-500">₹<%= transaction.amount.toFixed(2) %> </span>
+                                <% }else{ %>
+                                    <span class="text-red-500">₹<%= transaction.amount.toFixed(2) %> </span>
+                                    <% }%>
+                            </div>
+                            <span><%= transaction.time.toDateString() %></span>
+                        </li>
+                    <% }); %>
+                </ul>
+            </div>
+        
+
+   
+</body>
 </body>
 </html>

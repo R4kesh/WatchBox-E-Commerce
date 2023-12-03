@@ -43,15 +43,9 @@ admin_Routes.get('/admin/users',adminAuth.isLogin,adminController.usersLoad)
 admin_Routes.post('/admin/block/:id',adminAuth.isLogin,adminController.userBlock)
 admin_Routes.post('/admin/unblock/:id',adminAuth.isLogin,adminController.userUnblock)
 
-
-
 admin_Routes.get('/admin/category',adminAuth.isLogin,adminController.categoryLoad)
-
 admin_Routes.get('/admin/category/add',adminAuth.isLogin,adminController.addcategory)
 admin_Routes.post('/admin/category/add',adminAuth.isLogin,adminController.insertCategory)
-
-
-
 
 admin_Routes.get('/admin/products',adminAuth.isLogin,adminController.productsLoad)
 admin_Routes.get('/admin/products/add',adminAuth.isLogin,adminController.addProduct)
@@ -64,14 +58,20 @@ admin_Routes.post('/admin/products/update/:id',adminAuth.isLogin,upload,adminCon
 
 admin_Routes.get('/admin/category/delete/:id',adminAuth.isLogin,adminController.deletecategory)
 admin_Routes.get('/admin/category/undelete/:id',adminAuth.isLogin,adminController.undeletecategory)
-
 admin_Routes.get('/admin/category/edit/:id',adminAuth.isLogin,adminController.editCategory)
 admin_Routes.post('/admin/category/update/:id',adminAuth.isLogin,adminController.updateCategory)
 
 admin_Routes.get('/admin/orders',adminAuth.isLogin,adminController.ordersLoad)
 admin_Routes.get('/updateOrderStatus/:userId/:orderId/:newStatus',adminAuth.isLogin,adminController.updateOrderStatus)
-
 admin_Routes.get("/exportOrdersToExcel", adminController.excelsheet)
+
+admin_Routes.get("/admin/Coupon",adminController.couponLoad)
+admin_Routes.get("/admin/coupon/add",adminController.addCoupon)
+admin_Routes.post("/admin/coupon/add",adminController.insertCoupon)
+admin_Routes.get("/admin/coupon/edit/:id",adminController.couponEditLoad)
+admin_Routes.post("/admin/coupon/update/:id",adminController.couponUpdate)
+admin_Routes.get("/admin/coupon/delete/:id",adminController.couponDelete)
+admin_Routes.get("/admin/coupon/undelete/:id",adminController.couponUndelete)
 
 admin_Routes.get('/admin/logout',adminController.adminLogout);
 

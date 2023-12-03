@@ -84,22 +84,22 @@
 														<h6 class="mb-0">Select Address:</h6>
 													</div>
 													<div class="col-sm-9 text-secondary">
-														<% if (user.address && user.address.length> 0) { %>
-															<select id="addressSelect" class="form-select mb-2">
-																<% user.address.forEach((address, index)=> { %>
-																	<option value="<%= index %>">
+														<% if (address && address.length> 0) { %>
+															<select name="selectedAddress" id="addressSelect" class="form-select mb-2" >
+																<%address.forEach((address, index)=> { %>
+																	<option value="<%=address._id%>">
 																		<%= address.houseName %>, <%= address.street %>,
-																				<%= address.city %>, <%= address.state
-																						%>,
-																						<%= address.pincode %>, <%=
-																								address.country %>
+																				<%= address.city %>, <%= address.state%>,<%= address.pincode %>, <%=address.country %>
 																	</option>
 																	<% }) %>
+																	
 															</select>
 
-															<% } else { %>
-																No addresses found!
-																<% } %>
+											
+									<% } else { %>
+										No addresses found!
+										<% } %>
+															
 													</div>
 												</div>
 											</div>
@@ -109,13 +109,14 @@
 
 										<div class="form-outline">
 											<a class="btn btn-info " href="/user/checkout/address">Add Address</a>
-											<a class="btn btn-info <% if (user.address.length === 0) { %>disabled<% } %>"
-												href="/user/checkout/editaddress/<%=user._id%>">Edit Address</a>
+											<a class="btn btn-info <% if (address.length === 0) { %>disabled<% } %>"
+												href="#" id="editAddressButton">Edit Address</a>
 
 										</div>
 									</div>
+									
 							</div>
-
+							
 
 
 							<hr class="my-4" />
@@ -149,24 +150,39 @@
 										</div>
 									</div>
 								</div>
+								<div class="col-lg-4 mb-3">
+									<!-- Default checked radio -->
+									<div class="form-check h-100 border rounded-3">
+										<div class="p-3">
+											<input class="form-check-input" type="radio" name="method"
+												id="flexRadioDefault3" value="Wallet" <%= wallet >= total ? '' : 'disabled' %>/>
+												
+											<label class="form-check-label" for="flexRadioDefault1">
+												Wallet<br />
+												<small class="text-muted"></small>
+												<p>Amount:₹ <%=wallet%></p>
+											</label>
+										</div>
+									</div>
+								</div>
 
 							</div>
 
 							<div class="float-end">
 								<a href="/user/cart" class="btn btn-outline-primary shadow-0 border">Go to Cart</a>
-								<% if (user.address && user.address.length> 0) { %>
-									<input type="hidden" name="totalAmount" value="<%= (total) %>">
+								<% if (address && address.length> 0) { %>
+									
 									<button class="btn btn-success shadow-0 border placeorder ">
 										Place Order
 									</button>
 									
 									<% } else { %>
 										<button class="btn btn-success shadow-0 border" disabled>
-											Conform Order
+											Confirm Order
 										</button>
-										<p style="color: red;">Please add an address first.</p>
+										<p style="color: red;">Please add an address first</p>
 										<% } %>
-											</form>
+											<!-----------</form>---------------->
 											</div>
 							
 						</div>
@@ -182,7 +198,7 @@
 						<h6 class="mb-3">Summary</h6>
 						<div class="d-flex justify-content-between">
 							<p class="mb-2">Total price:</p>
-							<p class="mb-2">₹<%=user.totalPrice%>
+							<p class="mb-2">₹<%=totalAmount%>
 							</p>
 						</div>
 						<!-- <div class="d-flex justify-content-between">
@@ -192,7 +208,7 @@
 						<div class="d-flex justify-content-between">
 							<p class="mb-2">Shipping cost:</p>
 							<%ship=50%>
-								<%total=ship+user.totalPrice%>
+								<%total=ship+totalAmount%>
 									<p class="mb-2">+₹50.00</p>
 						</div>
 						<hr />
@@ -201,7 +217,8 @@
 							<p class="mb-2 fw-bold">₹<%=total%>
 							</p>
 						</div>
-
+						<input type="hidden" name="totalAmount" value="<%=total%>">
+					</form>
 						<!-- <div class="input-group mt-3 mb-4">
 				  <input type="text" class="form-control border" name="" placeholder="Promo code" />
 				  <button class="btn btn-light text-primary border">Apply</button>
@@ -395,8 +412,8 @@
 		formVALUE.addEventListener("submit", (data) => {
 			data.preventDefault();
 			const payment = formVALUE.method.value
-			console.log('payment')
-			if(payment == 'Cash On Delivery'){
+			const address=formVALUE.selectedAddress.value
+			if(payment == 'Cash On Delivery'|| payment === 'Wallet'){
 				formVALUE.submit()
 			}
 			fetch("/paypost", {
@@ -431,6 +448,7 @@
 
                   "order_id": payorderid,
                   "paymentmethod": payment,
+				  "address": address,
                   'totalamount': '<%=total*100 %>'
                 },
                 "theme": {
@@ -445,7 +463,7 @@
 
 		
 </script>
-	<!-- ---------------------------------------------------------- -->
+	<!--------------------------------------------->
 	<script>
 		type = "text/javascript"
 		src = "https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js" ></script>
@@ -460,6 +478,18 @@
 					event.preventDefault(); 
 				}
 			}
+	</script>
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+    const editAddressButton = document.querySelector("#editAddressButton");
+    editAddressButton.addEventListener("click", function () {
+        const selectedAddressId = document.querySelector("#addressSelect").value;
+        if (selectedAddressId) {
+            window.location.href = `/user/checkout/editaddress/${selectedAddressId}`;
+        }
+    });
+});
+
 	</script>
 </body>
 

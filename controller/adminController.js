@@ -1,6 +1,7 @@
 const collection = require("../model/userdb");
 const productcollection=require('../model/productdb');
 const categorycollection = require("../model/categorydb");
+const couponCollection=require("../model/coupondb")
 const sharp=require('sharp')
 const dotenv=require('dotenv').config();
 
@@ -185,7 +186,7 @@ const productsLoad = async (req, res) => {
 const addProduct=async(req,res)=>{
     try {
         const categories = await categorycollection.find({ isDeleted: false }); 
-
+        
         let error = '';
         res.render('addproducts', { error, categories });
     } catch (error) {
@@ -198,14 +199,14 @@ const addProduct=async(req,res)=>{
 const insertProduct = async (req, res) => {
     try {
         const enteredProductName = req.body.name.toLowerCase();
-
+        const categories = await categorycollection.find({ isDeleted: false }); 
        
         const existingProduct = await productcollection.findOne({
             name: { $regex: new RegExp('^' + enteredProductName + '$', 'i') }
         });
 
         if (existingProduct) {
-            res.render('addproducts', { error: 'Product already exists' });
+            res.render('addproducts', { error: 'Product already exists',categories });
         } else {
             const price = Number(req.body.price);
 
@@ -217,6 +218,8 @@ const insertProduct = async (req, res) => {
                     category: req.body.category,
                     image:req.files.map(file=>file.filename),
                     stock: req.body.stock,
+                    OfferPrice:req.body.offerprice,
+                    Discount:req.body.discount,
                 };
                
                 await productcollection.insertMany([productdata]);
@@ -289,6 +292,8 @@ const updateProduct=async(req,res)=>{
             category:req.body.category,
             image:req.files.map(file=>file.filename),
             stock:req.body.stock,
+            
+
         })
         if(!result){
             console.log('not found')
@@ -316,8 +321,6 @@ const addcategory=async(req,res)=>{
     const error='';
     res.render('addcategory',{error})
 }
-
-
 
 const insertCategory=async(req,res)=>{
     try{
@@ -411,9 +414,10 @@ const ordersLoad=async(req,res)=>{
     const perPage = 4;
     try {
         const totalOrders = await collection.countDocuments({ orders: { $exists: true, $ne: [] } })
-        const users = await collection.find({ orders: { $exists: true, $ne: [] } }).skip((page - 1) * perPage).limit(perPage).populate('orders.product');
-
-        res.render('orders', { users:users,currentPage: page, pages: Math.ceil(totalOrders / perPage) });
+        const users = await collection.find({ orders: { $exists: true, $ne: [] } }).sort({ 'orders.orderDate': -1 }).skip((page - 1) * perPage).limit(perPage).populate('orders.product')
+        const address=await addressCollection.find({})
+        console.log('add:',address);
+        res.render('orders', { users:users,address:address,currentPage: page, pages: Math.ceil(totalOrders / perPage) });
     } catch (error) {
         console.error('Error:', error);
         res.status(500).send('Internal Server Error');
@@ -444,10 +448,9 @@ const updateOrderStatus=async(req,res)=>{
 
 
 
-
-
 const excel = require('exceljs'); 
 const stream = require('stream'); 
+const addressCollection = require("../model/addressdb");
 
 const excelsheet = async (req, res) => {
   try {
@@ -457,12 +460,15 @@ const excelsheet = async (req, res) => {
     const usersWithOrders = await collection.find({
         'orders': {
           $exists: true,
-          $not: { $size: 0 },
-          $elemMatch: {
-            'orderDate': { $gte: startDate, $lte: endDate }
-          }
+        //   $not: { $size: 0 },
+        //   $elemMatch: {
+        //     'orderDate': { $gte: startDate, $lte: endDate }
+        //   }
         }
       });
+      const add= await addressCollection.find({})
+      console.log('addr:',add);
+     
 
 
     if (!usersWithOrders) {
@@ -488,7 +494,9 @@ const excelsheet = async (req, res) => {
     ];
 
     usersWithOrders.forEach((order) => {
+        
         order.orders.forEach((singleOrder) => {
+            
           const itemDetails = singleOrder.productName + `, Quantity: ${singleOrder.quantity}`;
       
           worksheet.addRow({
@@ -523,8 +531,116 @@ const excelsheet = async (req, res) => {
 };
 
 
+const couponLoad=async (req,res)=>{
+    try{
+        const coupons = await couponCollection.find({})
+    return res.render("coupon", { coupons })
+        
+    }catch(error){
+        console.error("Error due to render coupon:", error);
+    res.status(500).send("Error due to coupon");
+    }
+} 
+
+const addCoupon=async(req,res)=>{
+    try{
+
+        res.render('addcoupon')
+
+    }catch(error){
+        console.log("Error due to add Coupon: ",error);
+        res.status(500).send("Error due to add Coupon");
+    }
+}
 
 
+const insertCoupon=async(req,res)=>{
+    let data={
+        couponName:req.body.couponName,
+        couponCode:req.body.couponCode,
+        discountAmount:req.body.discountAmount,
+        expirationDate: req.body.expirationDate,
+        description:req.body.description,
+    }
+    try{
+        const result=await couponCollection.insertMany([data]);
+        if(!result){
+            res.status(400).send("Coupon not added");
+            }
+            res.redirect('/admin/coupon')
+    }catch(error){
+        console.log("Error due to Insert Coupon: ",error);
+        res.status(500).send("Error due to Add Coupon");
+    }
+}
+
+const couponEditLoad=async(req,res)=>{
+    try{
+        const result=await couponCollection.findOne({_id:req.params.id})
+        if(!result){
+            res.status(400).send("Coupon not found");
+            }
+            console.log('res:',result);
+            res.render('editcoupon',{result})
+    }catch(error){
+        console.log("Error due to Edit Coupon: ",error);
+        res.status(500).send("Error due to Edit Coupon");
+    }
+}
+
+const couponUpdate=async(req,res)=>{
+    try{
+        let id=req.params.id;
+        const result=await couponCollection.findByIdAndUpdate(id,{
+            couponName:req.body.couponName,
+        couponCode:req.body.couponCode,
+        discountAmount:req.body.discountAmount,
+        expirationDate: req.body.expirationDate,
+        description:req.body.description,
+        })
+        if(!result){
+            console.log('not found')
+        }else{
+            res.redirect('/admin/coupon')
+        }
+
+    }catch(error){
+        console.log("Error due to Update Coupon: ",error);
+        res.status(500).send("Error due to Update Coupon");
+    }
+}
+
+const couponDelete=async(req,res)=>{
+    try{
+        const id=req.params.id;
+        const result= await couponCollection.findByIdAndUpdate(id,{ isDeleted: false });
+        if(!result){
+            console.log('not found')
+        }else{
+            res.redirect('/admin/coupon');
+        }
+
+    }catch(error){
+        console.log("Error due to Delete Coupon: ",error);
+        res.status(500).send("Error due to Delete Coupon");
+    }
+}
+
+
+const couponUndelete=async(req,res)=>{
+    try{
+        const id=req.params.id;
+        const result= await couponCollection.findByIdAndUpdate(id,{ isDeleted: true });
+        if(!result){
+            console.log('not found')
+            }else{
+                res.redirect('/admin/coupon');
+                }
+    }catch(error){
+        console.log("Error due to unDelete Coupon: ",error);
+        res.status(500).send("Error due to unDelete Coupon");
+    }
+}
 
 const adminLogout=async(req,res)=>{
     req.session.destroy(function (err) {
@@ -538,6 +654,8 @@ const adminLogout=async(req,res)=>{
         }
       });
 }
+
+
 
 
 
@@ -562,6 +680,9 @@ module.exports={
     userBlock,
     userUnblock,
     ordersLoad,
-    updateOrderStatus,excelsheet
+    updateOrderStatus,excelsheet,
+    couponLoad,addCoupon,insertCoupon
+    ,couponEditLoad,couponUpdate,
+    couponDelete,couponUndelete
     
 }

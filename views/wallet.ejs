@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallet Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #e3e3e3;
+        }
+
+        .gradient-custom {
+            background: linear-gradient(to top left, rgba(205, 156, 242, 1), rgba(246, 243, 255, 1));
+        }
+
+        .card {
+            border-radius: 10px;
+        }
+
+        .receipt-header {
+            background-color: #343a40;
+            color: #a8729a;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .receipt-header h5 {
+            margin-bottom: 0;
+        }
+
+        .transaction-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #dee2e6;
+            padding: 10px 0;
+        }
+
+        .transaction-item .amount {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .transaction-item .date {
+            color: #6c757d;
+        }
+
+        .footer {
+            background-color: #343a40;
+            color: white;
+            padding: 20px 0;
+        }
+
+        .footer a {
+            color: white;
+        }
+
+        .flag {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <!-- Jumbotron -->
+        <div class="p-3 text-center bg-white border-bottom">
+            <div class="container">
+                <div class="d-flex justify-content-between">
+                    <div class="">
+                        <h3>WatchBox</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Jumbotron -->
+
+        <!-- Heading -->
+        <div class="bg-black">
+            <div class="container py-4">
+                <!-- Breadcrumb -->
+                <nav class="d-flex">
+                    <h6 class="mb-0">
+                        <a href="/" class="text-white-50">Home</a>
+                        <span class="text-white-50 mx-2"> > </span>
+                        <a href="/user/profile" class="text-white-50">Profile</a>
+                        <span class="text-white-50 mx-2"> > </span>
+                        <a href="" class="text-white"><u></u></a>
+                        <span class="text-white-50 mx-2"> </span>
+                    </h6>
+                </nav>
+                <!-- Breadcrumb -->
+            </div>
+        </div>
+        <!-- Heading -->
+    </header>
+
+    <section class="h-100 gradient-custom">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-lg-10 col-xl-8">
+                    <div class="card">
+                        <div class="card-header px-4 py-5 receipt-header">
+                            <h5 class="text-muted mb-0" style="color: #dee2e6;">Wallet Balance, <span style="color: #a8729a;">₹<%=walletBalance%></span>!</h5>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <p class="lead fw-normal mb-0" style="color: #a8729a;">Transaction History</p>
+                                <p class="small text-muted mb-0"></p>
+                            </div>
+                            <ul class="transaction-list">
+                                <% transactions.reverse().forEach(transaction => { %>
+                                    <li class="transaction-item">
+                                        <div class="flex items-center">
+                                            <% if(transaction.type == 'Refund'){ %>
+                                                <span class="text-success amount">₹<%= transaction.amount.toFixed(2) %></span>
+                                            <% } else { %>
+                                                <span class="text-danger amount">₹<%= transaction.amount.toFixed(2) %></span>
+                                            <% } %>
+                                        </div>
+                                        <span class="date"><%= transaction.time.toDateString() %></span>
+                                    </li>
+                                <% }); %>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="text-center text-lg-start text-muted bg-black mt-3">
+        <!-- Section: Links  -->
+        <section class="">
+            <div class="container text-center text-md-start pt-4 pb-4">
+                <!-- Grid row -->
+                <div class="row mt-3">
+                    <div class="col-12 col-lg-3 col-sm-12 mb-2">
+                        <a href="https://mdbootstrap.com/" target="_blank" class="text-white h2">WatchBox</a>
+                        <p class="mt-1 text-white"></p>
+                    </div>
+                    <div class="col-6 col-sm-4 col-lg-2">
+                        <h6 class="text-uppercase text-white fw-bold mb-2">Store</h6>
+                        <ul class="list-unstyled mb-4">
+                            <li><a class="text-white-50" href="#">About us</a></li>
+                            <li><a class="text-white-50" href="#">Find store</a></li>
+                            <li><a class="text-white-50" href="#">Categories</a></li>
+                            <li><a class="text-white-50" href="#">Blogs</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-6

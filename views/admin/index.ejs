@@ -188,6 +188,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </a>
                    
                 </li>
+				<li class="sub-menu">
+                    <a href="/admin/Coupon">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span>Coupon</span>
+                    </a>
+                   
+                </li>
                 
             </ul>            </div>
         <!-- sidebar menu end-->
@@ -280,73 +287,95 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			  </div>
 			</div>
 		  </div>
+		  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+		  <script>
+			const repotlistdiv = document.getElementById("repotlistdiv");
+			const reportbtn = document.getElementById("reportbtn");
 		
-		<script>
-		  const repotlistdiv = document.getElementById("repotlistdiv");
-		  const reportbtn = document.getElementById("reportbtn");
-		
-		  reportbtn.addEventListener("click", (event) => {
-			if (repotlistdiv.style.display === "none") {
-			  repotlistdiv.style.display = "block";
-			} else {
-			  repotlistdiv.style.display = "none";
-			}
-		  });
-		</script>
-		
-		<script>
-		  const dateFilterForm = document.getElementById("dateFilterForm");
-		  const exportButton = document.getElementById("exportButton");
-		  const exportExcelButton = document.getElementById("exportExcel");
-		
-		  dateFilterForm.addEventListener("submit", async function (event) {
-			event.preventDefault();
-		
-			// Get selected start and end dates
-			const startDate = document.getElementById("startDate").value;
-			const endDate = document.getElementById("endDate").value;
-		
-			// Check if both dates are selected
-			if (startDate && endDate) {
-			  // Construct the URL for the Excel export route with the selected dates
-			  const url = `/exportOrdersToExcel?startDate=${startDate}&endDate=${endDate}`;
-		
-			  // Log the URL for debugging
-			  console.log("URL:", url);
-		
-			  // Fetch the Excel data from the server
-			  try {
-				const response = await fetch(url);
-		
-				// Log the response for debugging
-				console.log("Response:", response);
-		
-				if (response.ok) {
-				  // Create a blob with the Excel data
-				  const blob = await response.blob();
-		
-				  // Log the blob for debugging
-		
-				  // Create a URL for the blob and set it as the download link for the export button
-				  const blobUrl = URL.createObjectURL(blob);
-				  exportExcelButton.href = blobUrl;
-		
-				  console.log("Blob:", blob);
-				  // Display the export button
-				  exportButton.style.display = "block";
-				  exportExcelButton.style.display = "block";
-				  console.log(exportButton);
+			reportbtn.addEventListener("click", (event) => {
+				if (repotlistdiv.style.display === "none") {
+					repotlistdiv.style.display = "block";
 				} else {
-				  console.error("Error fetching Excel data");
+					repotlistdiv.style.display = "none";
 				}
-			  } catch (error) {
-				console.error("Error:", error);
-			  }
-			} else {
-			  alert("Please select both start and end dates.");
-			}
-		  });
+			});
+		
+			const dateFilterForm = document.getElementById("dateFilterForm");
+			const exportButton = document.getElementById("exportButton");
+			const exportExcelButton = document.getElementById("exportExcel");
+		
+			dateFilterForm.addEventListener("submit", async function (event) {
+				event.preventDefault();
+		
+				// Get selected start and end dates
+				const startDate = document.getElementById("startDate").value;
+				const endDate = document.getElementById("endDate").value;
+		
+				// Check if start date is empty
+				if (!startDate) {
+					Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Please select a start date.',
+            });
+            return;
+				}
+		
+				// Check if end date is not greater than the present date
+				const currentDate = new Date();
+				const selectedEndDate = new Date(endDate);
+		
+				if (selectedEndDate > currentDate) {
+					Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'End date cannot be greater than the present date.',
+            });
+            return;
+				}
+		
+				// Check if both dates are selected
+				if (startDate && endDate) {
+					// Construct the URL for the Excel export route with the selected dates
+					const url = `/exportOrdersToExcel?startDate=${startDate}&endDate=${endDate}`;
+		
+					// Log the URL for debugging
+					console.log("URL:", url);
+		
+					// Fetch the Excel data from the server
+					try {
+						const response = await fetch(url);
+		
+						// Log the response for debugging
+						console.log("Response:", response);
+		
+						if (response.ok) {
+							// Create a blob with the Excel data
+							const blob = await response.blob();
+		
+							const blobUrl = URL.createObjectURL(blob);
+							exportExcelButton.href = blobUrl;
+		
+							
+							exportButton.style.display = "block";
+							exportExcelButton.style.display = "block";
+							console.log(exportButton);
+						} else {
+							console.error("Error fetching Excel data");
+						}
+					} catch (error) {
+						console.error("Error:", error);
+					}
+				} else {
+					Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Please select both start and end dates.',
+            });
+				}
+			});
 		</script>
+		
 		
 	
 
@@ -449,18 +478,27 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="clearfix"> </div>
 			</div>
 		<!-- //tasks -->
+		<div class="chart-selection">
+			<label for="chartType">Select Chart Type:</label>
+			<select id="chartType" onchange="toggleCharts()">
+				<option value="bar" selected>Bar Chart</option>
+				<option value="line">Line Chart</option>
+				<option value="radar">Radar Chart</option>
+			</select>
+		</div>
+		
 		<div class="agileits-w3layouts-stats">
-					<div class="col-md-4 stats-info widget">
+					<div class="col-md-4 stats-info widget" id="barChartDiv">
 						<canvas
 						id="myChart"
 						style="width: 100%; max-width: 420px"
 						height="300%"
 					  ></canvas>
 					</div>
-					<div class="col-md-4 stats-info widget">
+					<div class="col-md-4 stats-info widget" id="lineChartDiv">
 						<canvas id="barchart" style="width: 100%; max-width: 420px" height="300%"></canvas>
 					</div>
-					<div class="col-md-4 stats-info widget">
+					<div class="col-md-4 stats-info widget" id="radarChartDiv">
 						<canvas id="yearlyChart" style="width: 20%; max-width: 420px" height="100%" ></canvas>
 					</div>
 					
@@ -479,6 +517,26 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 <script src="/js/admin/jquery.scrollTo.js"></script>
 <!-- morris JavaScript -->	
+
+<script>
+    function toggleCharts() {
+        var chartType = document.getElementById("chartType").value;
+        
+        // Hide all chart divs
+        document.getElementById("barChartDiv").style.display = "none";
+        document.getElementById("lineChartDiv").style.display = "none";
+        document.getElementById("radarChartDiv").style.display = "none";
+
+        // Show the selected chart div
+        if (chartType === "bar") {
+            document.getElementById("barChartDiv").style.display = "block";
+        } else if (chartType === "line") {
+            document.getElementById("lineChartDiv").style.display = "block";
+        } else if (chartType === "radar") {
+            document.getElementById("radarChartDiv").style.display = "block";
+        }
+    }
+</script>
 
 <script>
     const xValues = <%- JSON.stringify(dayCounts.map(day => day.date)) %>;

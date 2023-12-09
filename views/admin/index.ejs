@@ -35,18 +35,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
-	<style>
-  #repotlistdiv {
-    display: none;
-    position: absolute;
-    top: 6rem;
-    right: 14rem;
-    background-color: #333;
-    color: white;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-    width: 280px;
-  }
+	
+
 
   #dateFilterForm {
     margin-bottom: 20px;
@@ -123,13 +113,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <li>
             <input type="text" class="form-control search" placeholder=" Search">
         </li>
+		&ensp;&ensp;
         <!-- user login dropdown start-->
         <li class="dropdown">
-            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                <img alt="" src="/images/2.png">
-                <span class="username">John Doe</span>
-                <b class="caret"></b>
-            </a>
+            
             <ul class="dropdown-menu extended logout">
                 <!-- <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
                 <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
@@ -195,6 +182,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </a>
                    
                 </li>
+				<li class="sub-menu">
+                    <a href="/admin/return">
+                        <i class="fas fa-undo"></i>
+                        <span>Return Order</span>
+                    </a>
+                   
+                </li>
                 
             </ul>            </div>
         <!-- sidebar menu end-->
@@ -217,6 +211,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					 <div class="col-md-8 market-update-left">
 					 <h4>Visitors</h4>
 					<h3>13,500</h3>
+					<p>Total Visitors</p>
 					<p></p>
 				  </div>
 				  <div class="clearfix"> </div>
@@ -269,8 +264,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 		
 		<button id="reportbtn">Sales Report</button>
-
+		
+		
 		<div id="repotlistdiv" style="display: none;">
+			
 			<div class="d-flex">
 			  <form id="dateFilterForm">
 				<label for="startDate">Start Date:</label>
@@ -284,8 +281,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			  <br>
 			  <div id="exportButton" class="w-100" style="display: none;">
 				<a id="exportExcel" download="exported_data.xlsx" style="width: 150px;">Export Now</a>
-			  </div>
+			 
 			</div>
+		</div>
 		  </div>
 		  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 		  <script>
@@ -382,8 +380,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<!-- //market-->
 		
 		<div class="agil-info-calendar">
-	
-	
+			<div class="agil-info-calendar">
+	</div>
 		
 			<div class="clearfix"> </div>
 		</div>
@@ -481,29 +479,36 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<div class="chart-selection">
 			<label for="chartType">Select Chart Type:</label>
 			<select id="chartType" onchange="toggleCharts()">
-				<option value="bar" selected>Bar Chart</option>
-				<option value="line">Line Chart</option>
-				<option value="radar">Radar Chart</option>
+				<option value="bar" selected>Weekly</option>
+				<option value="line" >Monthly</option>
+				<option value="radar">Yearly</option>
+				<option value="barr">Category</option>
+
 			</select>
 		</div>
 		
 		<div class="agileits-w3layouts-stats">
-					<div class="col-md-4 stats-info widget" id="barChartDiv">
+					<div class="col-md-3 stats-info widget" id="barChartDiv" style="display: block;">
 						<canvas
 						id="myChart"
 						style="width: 100%; max-width: 420px"
 						height="300%"
 					  ></canvas>
 					</div>
-					<div class="col-md-4 stats-info widget" id="lineChartDiv">
+					<div class="col-md-3 stats-info widget" id="lineChartDiv" >
 						<canvas id="barchart" style="width: 100%; max-width: 420px" height="300%"></canvas>
 					</div>
-					<div class="col-md-4 stats-info widget" id="radarChartDiv">
+					<div class="col-md-3 stats-info widget" id="radarChartDiv" >
 						<canvas id="yearlyChart" style="width: 20%; max-width: 420px" height="100%" ></canvas>
 					</div>
-					
+						<div class="col-md-3 stats-info widget" id="CategoryDiv">
+							<canvas id="category" style="width: 100%; max-width: 420px" height="300%"></canvas>
+						</div>
 					<div class="clearfix"> </div>
-				</div>
+				
+
+
+				
 </section>
 
 </section>
@@ -518,7 +523,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="/js/admin/jquery.scrollTo.js"></script>
 <!-- morris JavaScript -->	
 
-<script>
+<script> 
     function toggleCharts() {
         var chartType = document.getElementById("chartType").value;
         
@@ -526,7 +531,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         document.getElementById("barChartDiv").style.display = "none";
         document.getElementById("lineChartDiv").style.display = "none";
         document.getElementById("radarChartDiv").style.display = "none";
-
+		document.getElementById("CategoryDiv").style.display = "none";
         // Show the selected chart div
         if (chartType === "bar") {
             document.getElementById("barChartDiv").style.display = "block";
@@ -534,9 +539,37 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             document.getElementById("lineChartDiv").style.display = "block";
         } else if (chartType === "radar") {
             document.getElementById("radarChartDiv").style.display = "block";
+        }else if (chartType === "barr") {
+            document.getElementById("radarChartDiv").style.display = "block";
         }
     }
 </script>
+
+<script>
+	const xXValues =  <%- JSON.stringify(categorySalesData.map(cat =>cat.category)) %>;
+	const yYValues = <%- JSON.stringify(categorySalesData.map(cat => cat.totalOrders)) %>;
+	const bBarColors = ["red", "green", "blue", "orange", "brown","yellow","blue"];
+
+	new Chart("category", {
+	  type: "bar",
+	  data: {
+		labels: xXValues,
+		datasets: [
+		  {
+			backgroundColor: bBarColors,
+			data: yYValues,
+		  },
+		],
+	  },
+	  options: {
+		legend: { display: false },
+		title: {
+		  display: true,
+		  text: "World Wine Production 2018",
+		},
+	  },
+	});
+  </script>
 
 <script>
     const xValues = <%- JSON.stringify(dayCounts.map(day => day.date)) %>;
@@ -611,11 +644,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             },
         },
     };
-
     new Chart(chart, config);
 </script>
 
-	<!-- //calendar -->
+	
 	<script>
 		const charty = document.getElementById("yearlyChart");
 	

@@ -239,9 +239,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								<span class="women1">: CK09</span></li>
 							</ul>
 								<!-- <a href="" class="add-cart item_add">ADD TO CART</a> -->
-								<a class="btn btn-primary" href="/addtocart/<%=products._id%>" >Add to Cart</a>
-
-							
+								<% if (products.stock > 0) { %>
+									<a class="btn btn-primary" href="/addtocart/<%= products._id %>">Add to Cart</a>
+								<% } else { %>
+									<button class="btn btn-primary" disabled>Out of Stock</button>
+								<% } %>
 						</div>
 					</div>
 					<div class="clearfix"> </div>
@@ -328,7 +330,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					</div>
 				</div>
 			</div>
-				<div class="col-md-3 single-right">
+				<!-- <div class="col-md-3 single-right">
 					<div class="w_sidebar">
 						<section  class="sky-form">
 							<h4>Catogories</h4>
@@ -384,7 +386,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							</div>						
 						</section>
 					</div>
-				</div>
+				</div> -->
 				<div class="clearfix"> </div>
 			</div>
 		</div>
@@ -441,8 +443,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="footer-top">
 				<div class="col-md-6 footer-left">
 					<form>
-						<input type="text" value="Enter Your Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Enter Your Email';}">
-						<input type="submit" value="Subscribe">
+						
 					</form>
 				</div>
 				

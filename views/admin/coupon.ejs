@@ -106,13 +106,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <li>
                         <input type="text" class="form-control search" placeholder=" Search">
                     </li>
+                    &emsp;
                     <!-- user login dropdown start-->
                     <li class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <!-- <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <img alt="" src="/images/2.png">
                             <span class="username">John Doe</span>
                             <b class="caret"></b>
-                        </a>
+                        </a> -->
                         <ul class="dropdown-menu extended logout">
                             <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
                             <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
@@ -149,7 +150,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
                         </li>
                         <li>
-                            <a class="active" href="/admin/category">
+                            <a href="/admin/category">
                                 <i class="fas fa-shopping-cart"></i>
                                 <span>Category </span>
                             </a>
@@ -167,6 +168,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 <span>Orders</span>
                             </a>
 
+                        </li>
+                        <li class="sub-menu">
+                            <a  class="active" href="/admin/Coupon">
+                                <i class="fas fa-shopping-bag"></i>
+                                <span>Coupon</span>
+                            </a>
+                           
+                        </li>
+                        <li class="sub-menu">
+                            <a href="/admin/return">
+                                <i class="fas fa-undo"></i>
+                                <span>Return Order</span>
+                            </a>
+                           
                         </li>
 
                     </ul>
@@ -210,9 +225,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <% coupons.forEach(coupon => { %>
+                                        <% coupons.forEach((coupon,index) => { %>
                                             <tr class='align-middle'>
-                                                <td style="color: black;"><%= coupon._id %></td>
+                                                <td style="color: black;"><%= index +1 %></td>
                                                 <td style="color: black;"><%= coupon.couponCode %></td>
                                                 <td style="color: black;">
                                                     <% if (coupon && coupon.expirationDate) { %>

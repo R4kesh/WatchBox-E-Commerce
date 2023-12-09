@@ -4,683 +4,367 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
-	<link rel="stylesheet" href="/cart.css">
+	<title>WatchBox_Luxury Watches A Ecommerce Category Flat Bootstrap Resposive Website </title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/html-minifier/4.0.0/htmlminifier.min.js">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/html-minifier/4.0.0/htmlminifier.js">
+    <style>
+        .gradient-custom {
+/* fallback for old browsers */
+background: #cd9cf2;
+
+/* Chrome 10-25, Safari 5.1-6 */
+background: -webkit-linear-gradient(to top left, rgb(186, 144, 218), rgba(246, 243, 255, 1));
+
+/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+background: linear-gradient(to top left, rgba(205, 156, 242, 1), rgba(246, 243, 255, 1))
+}
+    </style>
 </head>
 <body>
-	
-
-
-
-
-<header>
-	<!-- Jumbotron -->
-	<div class="p-3 text-center bg-white border-bottom">
-	  <div class="container">
-		<div class="row gy-3">
-		  <!-- Left elements -->
-		  <div class="col-lg-2 col-sm-4 col-4">
-			<h1>WatchBox</h1>
-			<!-- <a href="https://mdbootstrap.com/" target="_blank" class="float-start">
-			  <img src="https://mdbootstrap.com/img/logo/mdb-transaprent-noshadows.png" height="35" />
-			</a> -->
-		  </div>
-		  <!-- Left elements -->
-  
-		  <!-- Center elements -->
-		  <!-- <div class="order-lg-last col-lg-5 col-sm-8 col-8">
-			<div class="d-flex float-end">
-			  <a href="https://github.com/mdbootstrap/bootstrap-material-design" class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center" target="_blank">
-				<i class="fas fa-user-alt m-1 me-md-2"></i>
-				<p class="d-none d-md-block mb-0">Sign in</p>
-			  </a> -->
-			  <!-- <a href="https://github.com/mdbootstrap/bootstrap-material-design" class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center" target="_blank">
-				<i class="fas fa-heart m-1 me-md-2"></i>
-				<p class="d-none d-md-block mb-0">Wishlist</p>
-			  </a> -->
-			  <!-- <a href="https://github.com/mdbootstrap/bootstrap-material-design" class="border rounded py-1 px-3 nav-link d-flex align-items-center" target="_blank">
-				<i class="fas fa-shopping-cart m-1 me-md-2"></i>
-				<p class="d-none d-md-block mb-0">My cart</p>
-			  </a>
+	<header>
+		<!-- Jumbotron -->
+		<div class="p-3 text-center bg-white border-bottom">
+		  <div class="container">
+			<div class="d-flex justify-content-between">
+			  <!-- Left elements -->
+			  <div class="">
+				
+				  <h3>WatchBox</h3>
+				
+			  </div>
+			  <!-- Left elements -->
+	  
+			  <!-- right elements -->
+			  
+			  <!-- right elements -->
 			</div>
-		  </div> -->
-		  <!-- Center elements -->
-  
-		  <!-- Right elements -->
-		  <div class="col-lg-5 col-md-12 col-12">
-			
 		  </div>
-		  <!-- Right elements -->
 		</div>
-	  </div>
-	</div>
-	<!-- Jumbotron -->
-  
-	<!-- Heading -->
-	<div class="bg-black">
-	  <div class="container py-4" style="color: black;">
-		<!-- Breadcrumb -->
-		<nav class="d-flex">
-		  <h6 class="mb-0">
-			<a href="/" class="text-white-50">Home</a>
-			<span class="text-white-50 mx-2"> > </span>
-			<a href="" class="text-white"><u>Shopping cart</u></a>
-		  </h6>
-		</nav>
-		<!-- Breadcrumb -->
-	  </div>
-	</div>
-	<!-- Heading -->
-  </header>
-  
-  <!-- cart + summary -->
-  <!-- cart + summary -->
-<section class="bg-light my-5">
-  <div class="container">
-    <div class="row">
-      <!-- cart -->
-      <div class="col-lg-9">
-        <div class="card border shadow-0">
-          <div class="m-4">
-			<% if (cartItems.length === 0) { %>
-				<h1>Cart is Empty</h1>
-            
-			
-				<% } else { %>
-					<h4 class="card-title mb-4">Your shopping cart</h4>
-			
-            <% cartItems.forEach(item => { %>
-              <div class="each_row gy-3 mb-4">
-                <div class="col-lg-5">
-                  <div class="me-lg-5">
-                    <div class="d-flex">
-                      <img src="/productimg/<%= item.product.image.length> 0 ? item.product.image[0] : 'default-image.jpg' %>" class="border rounded me-3" style="width: 96px; height: 96px;" />
-                      <div class="">
-                        <a href="#" class="nav-link">
-                          <h3><%= item.product.name %></h3>
-                        </a>
-                        <p class="text-muted">Category: <%= item.product.category %></p>
-						<!-- <p class="text-muted" >Quantity:</p> -->
+		<!-- Jumbotron -->
+	  
+		<!-- Heading -->
+		<div class="bg-black">
+		  <div class="container py-4">
+			<!-- Breadcrumb -->
+			<nav class="d-flex">
+			  <h6 class="mb-0">
+				<a href="/" class="text-white-50">Home</a>
+				<span class="text-white-50 mx-2"> > </span>
+				<a href="/user/profile" class="text-white-50">Profile</a>
+				<span class="text-white-50 mx-2"> > </span>
+				<a href="" class="text-white"><u> Order info</u></a>
+				<span class="text-white-50 mx-2"> </span>
+				
+			  </h6>
+			</nav>
+			<!-- Breadcrumb -->
+		  </div>
+		</div>
+		<!-- Heading -->
+	  </header>
+
+      <section class="h-100 gradient-custom">
+        <div class="container py-5 h-100">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-lg-10 col-xl-8">
+              <div class="card" style="border-radius: 10px;">
+                <div class="card-header px-4 py-5">
+					
+                  <h5 class="text-muted mb-0">Thanks for your Order, <span style="color: #a8729a;"><%=user.name%></span>!</h5>
+                </div>
+                <div class="card-body p-4">
+					<%orderItems.reverse().forEach(item =>{%>
+                  <div class="d-flex justify-content-between align-items-center mb-4">
+                    <p class="lead fw-normal mb-0" style="color: #a8729a;">Receipt</p>
+                    <p class="small text-muted mb-0">Receipt Voucher : 1KAU9-84UIL</p>
+                  </div>
+                  
+
+                 
+                  <div class="card shadow-0 border mb-4">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-2">
+                            <img src="/productimg/<%= item.product.image.length > 0 ? item.product.image[0] : 'default-image.jpg' %>" class="border rounded me-3" style="width: 96px; height: 96px;" />
+                            
+                        </div>
+                        <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                          <p class="text-muted mb-0"><%=item.product.name%></p>
+                        </div>
+                        <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                          <p class="text-muted mb-0 small"><%=item.product.category%></p>
+                        </div>
+                        <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                          <p class="text-muted mb-0 small"><%=item.product.description%></p>
+                        </div>
+                        <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                          <p class="text-muted mb-0 small">Qty: <%=item.quantity%></p>
+                        </div>
+                        <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                          <p class="text-muted mb-0 small">₹<%= item.product.price %></p>
+						  <a href="/viewMore/<%= item._id %>" class="btn-primary btn-sm ms-2">View More</a>
+                        </div>
+						<div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+							<% if (item.status !== 'Cancelled') { %>
+								<% if (item.status === 'Delivered') { %>
+									<% const sevenDaysAgo = new Date(); %>
+									<% sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7); %>
+									<% if (new Date(item.orderDate) > sevenDaysAgo && item.status !== 'Returned') { %>
+									<a href="/returnOrder/<%=item._id%>" class="btn btn-outline-primary">Return</a>
+									<% } %>
+								<% } else if (item.status === 'Returned') { %>
+									
+									<p class="text-success mb-0 small">Returned Successfully</p>
+								<% } else { %>
+									<!-- If status is not Cancelled, Delivered, or Returned, display Cancel Order button -->
+									<a href="/cancelOrder/<%= item._id %>" class="btn btn-outline-primary">Cancel Order</a>
+								<% } %>
+							<% } else { %>
+								<!-- If status is Cancelled, display Cancelled message -->
+								<p class="text-muted mb-0 small">Cancelled</p>
+							<% } %>
+						</div>
+						<div class="col-md-2 text-center d-flex justify-content-between align-items-center">
+							<% if (item.status === 'Delivered') { %>
+								<a href="/invoice/<%= item._id %>" class="btn btn-outline-primary btn-sm" download="invoice.pdf">Invoice</a>
+							<% } %>
+						</div>
+						</div>
+						
+                      </div>
+					  <p class="text-muted mb-0 small mt-2">Replacement available within 7 days after delivery</p>
+                      <hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">
+                      <div class="row d-flex align-items-center">
+                        <div class="col-md-2">
+                          <p class="text-muted mb-0 small">Track Order</p>
+                        </div>
+                        <div class="col-md-10">
+
+
+                          <div class="progress" style="height: 6px; border-radius: 16px;">
+        <div class="progress-bar" role="progressbar"
+            style="width: <% 
+                switch (item.status) {
+                    case 'Pending':
+                        %>0<%
+                        break;
+                    case 'Order Confirmed':
+                        %>25<%
+                        break;
+                    case 'Shipped':
+                        %>50<%
+                        break;
+                    case 'Out For Delivery':
+                        %>75<%
+                        break;
+                    case 'Delivered':
+                        %>100<%
+                        break;
+                    default:
+                        %>0<%
+                }
+            %>%; border-radius: 16px; background-color: #a8729a;" aria-valuenow="<% 
+                switch (item.status) {
+                    case 'Pending':
+                        %>0<%
+                        break;
+                    case 'Order Confirmed':
+                        %>25<%
+                        break;
+                    case 'Shipped':
+                        %>50<%
+                        break;
+                    case 'Out For Delivery':
+                        %>75<%
+                        break;
+                    case 'Delivered':
+                        %>100<%
+                        break;
+                    default:
+                        %>0<%
+                }
+            %>" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+                          <div class="d-flex justify-content-around mb-1">
+                            <p class="text-muted mt-1 mb-0 small ms-xl-5"></p>
+                            <p class="text-muted mt-1 mb-0 small ms-xl-5"><%=item.status%></p>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-				
-
-				
-
-
-                <div class="col-lg-2 col-sm-6 col-6 d-flex flex-row flex-lg-column flex-xl-row text-nowrap">
                  
 
-					
-					<form>
-						<div class="count_container" data-productid="<%= item.product._id %>" data-price="<%=totalprice%>">
-						<div class="decrebutton btn" >-</div>
-						<input type="number" class="count" id="number_<%=item.product._id%>" value="<%=item.quantity%>" readonly/>
-						<div class="incrbutton" >+</div>
-						<div class="incrbutton2">+</div>
-
-					</div>
-					  </form>
-
-                  <div class="">
-                    <text class="h5">Price:₹<%= item.product.price %></text> <br />
-                  </div>
-                </div>
-
-
-				
-                <div class="col-lg col-sm-6 d-flex justify-content-sm-center justify-content-md-start justify-content-lg-center justify-content-xl-end mb-2">
-					<div class="">
-						<text class="total-price"><h6>TotalPrice:₹<%= item.product.price*item.quantity %></h6></text> <br />
-					  </div>
-                  <div class="float-md-end">
-                    
-                    <a href="/cart/remove/<%=item.product._id%>" class="btn btn-light border text-danger icon-hover-danger"> Remove</a>
-                  </div>
-                </div>
-              </div>
-			  
-			    <br />
-				
-				
-				<% }); %>
-          </div>
-          <!-- Other cart details can be added here -->
-        </div>
-      </div>
-	  
-	  <div class="col-lg-3">
-				<div class="card shadow-0 border">
-		  <div class="card-body">
-			<form id="couponadd">
-				<div class="form-group">
-				  <label class="form-label">Have coupon?</label>
-				  <div class="input-group">
-					<input type="text" class="form-control border" id="couponid" name="" placeholder="Coupon code" />
-					<button class="btn btn-light border" type="button" id="buttons">Apply</button>
-				  </div>
-				  <p class="text-danger" id="error-message"></p>
+                  <% })%>
 				</div>
-			  </form>
-			</div>
-		  </div>
-		  <div class="card shadow-0 border">
-			<div class="card-body">
-			<div class="d-flex justify-content-between">
-			  <p class="price_container">Total price:<%=totalprice%></p>
-			  <!-- Add this element in the HTML where you want to display the total price -->
-			  <form action="/user/cart" method="post">
-<div id="totalDisplay">Total Amount: ₹<span id="totalPriceValue"><%= totalprice %></span></div>
-         <input type="hidden" name="totalAmount" value="?">
-
-			</div>
-
-			<hr />
-			
-			<div class="mt-3">
-				<button class="btn btn-success w-100 shadow-0 mb-2">Check Out</button>
-			  
-			  <a href="/" class="btn btn-light w-100 border mt-2"> Back to shop </a>
-			</div>
-		</form>
-		  </div>
-		</div>
-	  </div>
-	
-      <!-- Other sections of the cart page can be added here -->
-    </div>
-  </div>
-  
-
-  <% } %>
-
-
-
-
-
-</section>
-<!-- cart + summary -->
-
-  <!-- cart + summary -->
-
-
-  <section>
-	<div class="container my-5">
-	  <header class="mb-4">
-		<h3>Recommended items</h3>
-	  </header>
-  
-	  <div class="row">
-		<div class="col-lg-3 col-md-6 col-sm-6">
-		  <div class="card px-4 border shadow-0 mb-4 mb-lg-0">
-			<div class="mask px-2" style="height: 50px;">
-			  <div class="d-flex justify-content-between">
-				<h6><span class="badge bg-danger pt-1 mt-3 ms-2">New</span></h6>
-				<a href="#"><i class="fas fa-heart text-primary fa-lg float-end pt-3 m-2"></i></a>
-			  </div>
-			</div>
-			<a href="#" class="">
-			  <img src="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/7.webp" class="card-img-top rounded-2" />
-			</a>
-			<div class="card-body d-flex flex-column pt-3 border-top">
-			  <a href="#" class="nav-link">Gaming Headset with Mic</a>
-			  <div class="price-wrap mb-2">
-				<strong class="">$18.95</strong>
-				<del class="">$24.99</del>
-			  </div>
-			  <div class="card-footer d-flex align-items-end pt-3 px-0 pb-0 mt-auto">
-				<a href="#" class="btn btn-outline-primary w-100">Add to cart</a>
-			  </div>
-			</div>
-		  </div>
-		</div>
-		<div class="col-lg-3 col-md-6 col-sm-6">
-		  <div class="card px-4 border shadow-0 mb-4 mb-lg-0">
-			<div class="mask px-2" style="height: 50px;">
-			  <a href="#"><i class="fas fa-heart text-primary fa-lg float-end pt-3 m-2"></i></a>
-			</div>
-			<a href="#" class="">
-			  <img src="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/5.webp" class="card-img-top rounded-2" />
-			</a>
-			<div class="card-body d-flex flex-column pt-3 border-top">
-			  <a href="#" class="nav-link">Apple Watch Series 1 Sport </a>
-			  <div class="price-wrap mb-2">
-				<strong class="">$120.00</strong>
-			  </div>
-			  <div class="card-footer d-flex align-items-end pt-3 px-0 pb-0 mt-auto">
-				<a href="#" class="btn btn-outline-primary w-100">Add to cart</a>
-			  </div>
-			</div>
-		  </div>
-		</div>
-		<div class="col-lg-3 col-md-6 col-sm-6">
-		  <div class="card px-4 border shadow-0">
-			<div class="mask px-2" style="height: 50px;">
-			  <a href="#"><i class="fas fa-heart text-primary fa-lg float-end pt-3 m-2"></i></a>
-			</div>
-			<a href="#" class="">
-			  <img src="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/9.webp" class="card-img-top rounded-2" />
-			</a>
-			<div class="card-body d-flex flex-column pt-3 border-top">
-			  <a href="#" class="nav-link">Men's Denim Jeans Shorts</a>
-			  <div class="price-wrap mb-2">
-				<strong class="">$80.50</strong>
-			  </div>
-			  <div class="card-footer d-flex align-items-end pt-3 px-0 pb-0 mt-auto">
-				<a href="#" class="btn btn-outline-primary w-100">Add to cart</a>
-			  </div>
-			</div>
-		  </div>
-		</div>
-		<div class="col-lg-3 col-md-6 col-sm-6">
-		  <div class="card px-4 border shadow-0">
-			<div class="mask px-2" style="height: 50px;">
-			  <a href="#"><i class="fas fa-heart text-primary fa-lg float-end pt-3 m-2"></i></a>
-			</div>
-			<a href="#" class="">
-			  <img src="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/10.webp" class="card-img-top rounded-2" />
-			</a>
-			<div class="card-body d-flex flex-column pt-3 border-top">
-			  <a href="#" class="nav-link">Mens T-shirt Cotton Base Layer Slim fit </a>
-			  <div class="price-wrap mb-2">
-				<strong class="">$13.90</strong>
-			  </div>
-			  <div class="card-footer d-flex align-items-end pt-3 px-0 pb-0 mt-auto">
-				<a href="#" class="btn btn-outline-primary w-100">Add to cart</a>
-			  </div>
-			</div>
-		  </div>
-		</div>
-	  </div>
-	</div>
-  </section>
-  <!-- Recommended -->
-  
-  <!-- Footer -->
-  <footer class="text-center text-lg-start text-muted bg-black mt-3">
-	<!-- Section: Links  -->
-	<section class="">
-	  <div class="container text-center text-md-start pt-4 pb-4">
-		<!-- Grid row -->
-		<div class="row mt-3">
-		  <!-- Grid column -->
-		  <div class="col-12 col-lg-3 col-sm-12 mb-2">
-			<!-- Content -->
-			<a href="https://mdbootstrap.com/" target="_blank" class="text-white h2">
-			  WatchBox
-			</a>
-			<p class="mt-1 text-white">
-			  
-			</p>
-		  </div>
-		  <!-- Grid column -->
-  
-		  <!-- Grid column -->
-		  <div class="col-6 col-sm-4 col-lg-2">
-			<!-- Links -->
-			<h6 class="text-uppercase text-white fw-bold mb-2">
-			  Store
-			</h6>
-			<ul class="list-unstyled mb-4">
-			  <li><a class="text-white-50" href="#">About us</a></li>
-			  <li><a class="text-white-50" href="#">Find store</a></li>
-			  <li><a class="text-white-50" href="#">Categories</a></li>
-			  <li><a class="text-white-50" href="#">Blogs</a></li>
-			</ul>
-		  </div>
-		  <!-- Grid column -->
-  
-		  <!-- Grid column -->
-		  <div class="col-6 col-sm-4 col-lg-2">
-			<!-- Links -->
-			<h6 class="text-uppercase text-white fw-bold mb-2">
-			  Information
-			</h6>
-			<ul class="list-unstyled mb-4">
-			  <li><a class="text-white-50" href="#">Help center</a></li>
-			  <li><a class="text-white-50" href="#">Money refund</a></li>
-			  <li><a class="text-white-50" href="#">Shipping info</a></li>
-			  <li><a class="text-white-50" href="#">Refunds</a></li>
-			</ul>
-		  </div>
-		  <!-- Grid column -->
-  
-		  <!-- Grid column -->
-		  <div class="col-6 col-sm-4 col-lg-2">
-			<!-- Links -->
-			<h6 class="text-uppercase text-white fw-bold mb-2">
-			  Support
-			</h6>
-			<ul class="list-unstyled mb-4">
-			  <li><a class="text-white-50" href="#">Help center</a></li>
-			  <li><a class="text-white-50" href="#">Documents</a></li>
-			  <li><a class="text-white-50" href="#">Account restore</a></li>
-			  <li><a class="text-white-50" href="#">My orders</a></li>
-			</ul>
-		  </div>
-		  <!-- Grid column -->
-  
-		  <!-- Grid column -->
-		  <div class="col-12 col-sm-12 col-lg-3">
-			<!-- Links -->
-			<h6 class="text-uppercase text-white fw-bold mb-2">Newsletter</h6>
-			<p class="text-white">Stay in touch with latest updates about our products and offers</p>
-			<div class="input-group mb-3">
-			  <input type="email" class="form-control border" placeholder="Email" aria-label="Email" aria-describedby="button-addon2" />
-			  <button class="btn btn-light border shadow-0" type="button" id="button-addon2" data-mdb-ripple-color="dark">
-				Join
-			  </button>
-			</div>
-		  </div>
-		  <!-- Grid column -->
-		</div>
-		<!-- Grid row -->
-	  </div>
-	</section>
-	<!-- Section: Links  -->
-  
-	<div class="">
-	  <div class="container">
-		<div class="d-flex justify-content-between py-4 border-top">
-		  <!--- payment --->
-		  <div>
-			<i class="fab fa-lg fa-cc-visa text-white"></i>
-			<i class="fab fa-lg fa-cc-amex text-white"></i>
-			<i class="fab fa-lg fa-cc-mastercard text-white"></i>
-			<i class="fab fa-lg fa-cc-paypal text-white"></i>
-		  </div>
-		  <!--- payment --->
-  
-		  <!--- language selector --->
-		  <div class="dropdown dropup">
-			<a class="dropdown-toggle text-white" href="#" id="Dropdown" role="button" data-mdb-toggle="dropdown" aria-expanded="false"> <i class="flag-united-kingdom flag m-0 me-1"></i>English </a>
-  
-			<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="Dropdown">
-			  <li>
-				<a class="dropdown-item" href="#"><i class="flag-united-kingdom flag"></i>English <i class="fa fa-check text-success ms-2"></i></a>
-			  </li>
-			  <li><hr class="dropdown-divider" /></li>
-			  <li>
-				<a class="dropdown-item" href="#"><i class="flag-poland flag"></i>Polski</a>
-			  </li>
-			  <li>
-				<a class="dropdown-item" href="#"><i class="flag-china flag"></i>中文</a>
-			  </li>
-			  <li>
-				<a class="dropdown-item" href="#"><i class="flag-japan flag"></i>日本語</a>
-			  </li>
-			  <li>
-				<a class="dropdown-item" href="#"><i class="flag-germany flag"></i>Deutsch</a>
-			  </li>
-			  <li>
-				<a class="dropdown-item" href="#"><i class="flag-france flag"></i>Français</a>
-			  </li>
-			  <li>
-				<a class="dropdown-item" href="#"><i class="flag-spain flag"></i>Español</a>
-			  </li>
-			  <li>
-				<a class="dropdown-item" href="#"><i class="flag-russia flag"></i>Русский</a>
-			  </li>
-			  <li>
-				<a class="dropdown-item" href="#"><i class="flag-portugal flag"></i>Português</a>
-			  </li>
-			</ul>
-		  </div>
-		  <!--- language selector --->
-		</div>
-	  </div>
-	</div>
-  </footer>
-  <script>
-	const error1 = document.getElementById('error-message')
-	const coupon = document.getElementById('couponid')
-	const Botton = document.getElementById('buttons')
-	const displayTotal = document.getElementById('totalDisplay')
-	const checkouttotal = document.getElementById('TotalDisplay')
-	let totalAmount = document.getElementById('total').value
-
-	// let totalAmount = Number(total.value)
-	Botton.addEventListener("click", (eve) => {
-	  ;
-	  const data = coupon.value;
-	  fetch("/addcouponcart", {
-		method: "POST", // Use "POST" or "GET" depending on your requirements
-		body: JSON.stringify({ coupon: data }),
-		headers: {
-		  "Content-Type": "application/json",
-		},
-	  }).then((response) => {
-
-		if (response.status === 400) {
-		  return response.json().then((data) => {
-			error1.innerText = "Enter a valid coupon code.";
-			throw new Error("Invalid coupon code");
-		  })
-		} else if (response.status === 404) {
-		  return response.json().then((data) => {
-			error1.innerText = "Coupon has expired";
-			throw new Error("Invalid coupon code");
-		  })
-		} else if (response.status === 403) {
-		  return response.json().then((data) => {
-			error1.innerText = "Coupon already used";
-			throw new Error("Invalid coupon code");
-		  })
-		}
-		else if (response.status === 200) {
-		  return response.json();
-		}
-	  }).then((data) => {
-
-	  if (data > totalAmount) {
-		  error1.innerText = "Coupon not allowed in this Totalamount .";
-		  throw new Error("Invalid coupon amount");
-		} else {
-		  totalAmount = totalAmount - data;
-			
-		  checkouttotal.href = `/checkoutpage?totalAmount=${totalAmount}`<!-- value assign in url---->
-		  displayTotal.innerText = totalAmount;
-		  Botton.disabled = true;
-		}
-	  })
-		.catch((error) => {
-		  console.log(error);
-		});
-	}) 
-  </script>
-  <script>
-	document.querySelectorAll('.each_row').forEach(product => {
-	  const incrementbutton = product.querySelector('.incrbutton')
-	  const decreasebutton = product.querySelector('.decrebutton')
-	  const quantityinput = product.querySelector('.count')
-	  const priceinput = product.querySelector('.total-price')
-	  const container = product.querySelector('.count_container')
-	  const Pricecontainer = product.querySelector('.price_container')
-	  const secondButton = product.querySelector('.incrbutton2');
-	  secondButton.style.display = 'none'
-
-	  const AAmount = priceinput.textContent
-
-
-
-	  decreasebutton.addEventListener('click', async () => {
-		const productId = container.dataset.productid
-		let quantity = parseFloat(quantityinput.value)
-
-		if (quantity > 1) {
-		  quantityinput.value = parseInt(quantityinput.value) - 1;
-		  quantity = parseFloat(quantityinput.value)
-		  console.log('quantity is', quantity);
-
-		  // Check if quantity is greater than 0 before decrementing
-
-		  const response = await fetch(`/CartMinusebutton/${productId}`, {
-			method: 'get',
-			headers: {
-			  'Content-Type': 'application/json'
-			},
-
-		  });
-		  // window.location.reload()
-		  if (response.status === 200) {
-			incrementbutton.style.display = 'block';
-			secondButton.style.display = 'none'
-			updateTotalPricem();
-		  }
-		}
-	  });
-
-	  incrementbutton.addEventListener('click', async () => {
-		const productId = container.dataset.productid
-		quantityinput.value = parseInt(quantityinput.value) + 1;
-		const quantity = parseFloat(quantityinput.value)
-		console.log('quantity is', quantity);
-
-
-
-		const response = await fetch(`/CartPluseButton/${productId}/${quantity}`, {
-		  method: 'get',
-		  headers: {
-			'Content-Type': 'application/json'
-		  },
-		});
-
-		if (response.status === 200) {
-		  updateTotalPrice();
-		}
-		 else if (response.status === 400) {
-		  quantityinput.value = parseInt(quantityinput.value) - 1;
-		  console.log('toast');
-		  toastr.info('Insuficent stock!');
-		  incrementbutton.style.display = 'none';
-		  secondButton.style.display = 'block'
-
-		}
-	  });
-	  // Implement this function to update the total price based on the updated quantity
-	  function updateTotalPrice() {
-		const price = parseFloat(container.dataset.price)
-		const quantity = parseInt(quantityinput.value)
-		const total = price * quantity
-		priceinput.textContent = `${total}/-`
-
-		const totalprice = document.getElementById('totalpricess');
-		let dataTotalprice = parseFloat(totalprice.getAttribute('data-totalprice'));
-
-		// Access the data attribute here
-		const parsedPrice = parseInt(price)
-		console.log('dataTotalprice', dataTotalprice);
-
-
-		let parseddataTotalprice = parseInt(dataTotalprice)
-		const subtotal = parseddataTotalprice + parsedPrice
-		totalprice.innerText = `${subtotal}/-`
-		totalprice.setAttribute('data-totalprice', subtotal);
-		const totalDisplay = document.getElementById('totalDisplay')
-		const dicountvalue = subtotal - (subtotal * 0.20)
-		console.log("dicountvalue", dicountvalue);
-		const discounttt = subtotal - (subtotal * 0.20)
-		totalDisplay.innerText = `${discounttt}/-`
-		console.log('price is', parseddataTotalprice, parsedPrice);
-
-
-	  }
-
-	  function updateTotalPricem() {
-
-		const price = parseFloat(container.dataset.price)
-		const quantity = parseInt(quantityinput.value)
-		const total = price * quantity
-		priceinput.textContent = `${total}/-`
-
-		const totalprice = document.getElementById('totalpricess');
-		let dataTotalprice = parseFloat(totalprice.getAttribute('data-totalprice'));
-
-		// Access the data attribute here
-		const parsedPrice = parseInt(price)
-		console.log('dataTotalprice', dataTotalprice);
-
-
-		let parseddataTotalprice = parseInt(dataTotalprice)
-		const subtotal = parseddataTotalprice - parsedPrice
-		totalprice.innerText = `${subtotal}/-`
-		totalprice.setAttribute('data-totalprice', subtotal);
-		const totalDisplay = document.getElementById('totalDisplay')
-		const dicountvalue = subtotal - (subtotal * 0.20)
-		console.log("dicountvalue", dicountvalue);
-		const discounttt = subtotal - (subtotal * 0.20)
-		totalDisplay.innerText = `${discounttt}/-`
-		console.log('price is', parseddataTotalprice, parsedPrice);
-
-
-	  }
-
-	});
-  </script>
-</body>
-</html>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-  
-       
-        
-                <h2 class="text-3xl font-bold mb-4">Wallet</h2>
-            </div>
-            <div class="flex justify-center items-center space-x-4 mb-4">
-                <!-- Wallet Balance -->
-                <div>
-                    <h3 class="text-lg font-semibold">Wallet Balance:</h3>
-                    <p class="text-2xl font-bold text-[#FE5401]">₹<%= walletBalance.toFixed(2) %></p>
+      
+                  <!-- <div class="d-flex justify-content-between pt-2">
+                    <p class="fw-bold mb-0">Order Details</p>
+                    <p class="text-muted mb-0"><span class="fw-bold me-4">Total</span> $898.00</p>
+                  </div>
+      
+                  <div class="d-flex justify-content-between pt-2">
+                    <p class="text-muted mb-0">Invoice Number : 788152</p>
+                    <p class="text-muted mb-0"><span class="fw-bold me-4">Discount</span> $19.00</p>
+                  </div>
+      
+                  <div class="d-flex justify-content-between">
+                    <p class="text-muted mb-0">Invoice Date : 22 Dec,2019</p>
+                    <p class="text-muted mb-0"><span class="fw-bold me-4">GST 18%</span> 123</p>
+                  </div>
+      
+                  <div class="d-flex justify-content-between mb-5">
+                    <p class="text-muted mb-0">Recepits Voucher : 18KU-62IIK</p>
+                    <p class="text-muted mb-0"><span class="fw-bold me-4">Delivery Charges</span> Free</p>
+                  </div>
                 </div>
-                <!-- Add Fund Button -->
-                
-                <!-- Withdraw Button -->
-                <button
-                    class="flex items-center gap-2 rounded-lg bg-[#FE5401] px-4 py-2.5 text-xl font-bold text-white hover:bg-[#FF7308]">
-                    <span>Withdraw</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M15 5a3 3 0 00-3 3v10a3 3 0 006 0V8a3 3 0 00-3-3z"></path>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M13 10V3M7 7a2 2 0 012-2h3a2 2 0 012 2m0 0v10a2 2 0 01-2 2H9a2 2 0 01-2-2m0 0V7"></path>
-                    </svg>
-                </button>
+                <div class="card-footer border-0 px-4 py-5"
+                  style="background-color: #a8729a; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+                  <h5 class="d-flex align-items-center justify-content-end text-white text-uppercase mb-0">Total
+                    paid: <span class="h2 mb-0 ms-2">$1040</span></h5>
+                </div> -->
+              </div>
             </div>
-            <hr class="dark:border-gray-400">
-            <div>
-                <h3 class="text-2xl font-bold mb-2">Transaction History</h3>                                 
-                <ul>
-                    <% transactions.reverse().forEach(transaction => { %>
-                        <li class="flex items-center justify-between mb-2">
-                            <div class="flex items-center">
-                                <% if(transaction.type == 'credit'){ %>
-                                <span class="text-green-500">₹<%= transaction.amount.toFixed(2) %> </span>
-                                <% }else{ %>
-                                    <span class="text-red-500">₹<%= transaction.amount.toFixed(2) %> </span>
-                                    <% }%>
-                            </div>
-                            <span><%= transaction.time.toDateString() %></span>
-                        </li>
-                    <% }); %>
-                </ul>
-            </div>
-        
-
-   
-</body>
+          </div>
+        </div>
+      </section>
+      <footer class="text-center text-lg-start text-muted bg-black mt-3">
+		<!-- Section: Links  -->
+		<section class="">
+		  <div class="container text-center text-md-start pt-4 pb-4">
+			<!-- Grid row -->
+			<div class="row mt-3">
+			  <!-- Grid column -->
+			  <div class="col-12 col-lg-3 col-sm-12 mb-2">
+				<!-- Content -->
+				<a href="https://mdbootstrap.com/" target="_blank" class="text-white h2">
+				  MDB
+				</a>
+				<p class="mt-1 text-white">
+				  © 2023 Copyright: MDBootstrap.com
+				</p>
+			  </div>
+			  <!-- Grid column -->
+	  
+			  <!-- Grid column -->
+			  <div class="col-6 col-sm-4 col-lg-2">
+				<!-- Links -->
+				<h6 class="text-uppercase text-white fw-bold mb-2">
+				  Store
+				</h6>
+				<ul class="list-unstyled mb-4">
+				  <li><a class="text-white-50" href="#">About us</a></li>
+				  <li><a class="text-white-50" href="#">Find store</a></li>
+				  <li><a class="text-white-50" href="#">Categories</a></li>
+				  <li><a class="text-white-50" href="#">Blogs</a></li>
+				</ul>
+			  </div>
+			  <!-- Grid column -->
+	  
+			  <!-- Grid column -->
+			  <div class="col-6 col-sm-4 col-lg-2">
+				<!-- Links -->
+				<h6 class="text-uppercase text-white fw-bold mb-2">
+				  Information
+				</h6>
+				<ul class="list-unstyled mb-4">
+				  <li><a class="text-white-50" href="#">Help center</a></li>
+				  <li><a class="text-white-50" href="#">Money refund</a></li>
+				  <li><a class="text-white-50" href="#">Shipping info</a></li>
+				  <li><a class="text-white-50" href="#">Refunds</a></li>
+				</ul>
+			  </div>
+			  <!-- Grid column -->
+	  
+			  <!-- Grid column -->
+			  <div class="col-6 col-sm-4 col-lg-2">
+				<!-- Links -->
+				<h6 class="text-uppercase text-white fw-bold mb-2">
+				  Support
+				</h6>
+				<ul class="list-unstyled mb-4">
+				  <li><a class="text-white-50" href="#">Help center</a></li>
+				  <li><a class="text-white-50" href="#">Documents</a></li>
+				  <li><a class="text-white-50" href="#">Account restore</a></li>
+				  <li><a class="text-white-50" href="#">My orders</a></li>
+				</ul>
+			  </div>
+			  <!-- Grid column -->
+	  
+			  <!-- Grid column -->
+			  <div class="col-12 col-sm-12 col-lg-3">
+				<!-- Links -->
+				<h6 class="text-uppercase text-white fw-bold mb-2">Newsletter</h6>
+				<p class="text-white">Stay in touch with latest updates about our products and offers</p>
+				<div class="input-group mb-3">
+				  <input type="email" class="form-control border" placeholder="Email" aria-label="Email" aria-describedby="button-addon2" />
+				  <button class="btn btn-light border shadow-0" type="button" id="button-addon2" data-mdb-ripple-color="dark">
+					Join
+				  </button>
+				</div>
+			  </div>
+			  <!-- Grid column -->
+			</div>
+			<!-- Grid row -->
+		  </div>
+		</section>
+		<!-- Section: Links  -->
+	  
+		<div class="">
+		  <div class="container">
+			<div class="d-flex justify-content-between py-4 border-top">
+			  <!--- payment --->
+			  <div>
+				<i class="fab fa-lg fa-cc-visa text-white"></i>
+				<i class="fab fa-lg fa-cc-amex text-white"></i>
+				<i class="fab fa-lg fa-cc-mastercard text-white"></i>
+				<i class="fab fa-lg fa-cc-paypal text-white"></i>
+			  </div>
+			  <!--- payment --->
+	  
+			  <!--- language selector --->
+			  <div class="dropdown dropup">
+				<a class="dropdown-toggle text-white" href="#" id="Dropdown" role="button" data-mdb-toggle="dropdown" aria-expanded="false"> <i class="flag-united-kingdom flag m-0 me-1"></i>English </a>
+	  
+				<ul class="dropdown-menu dropdown-menu-endp" aria-labelledby="Dropdown">
+				  <li>
+					<a class="dropdown-item" href="#"><i class="flag-united-kingdom flag"></i>English <i class="fa fa-check text-success ms-2"></i></a>
+				  </li>
+				  <li><hr class="dropdown-divider" /></li>
+				  <li>
+					<a class="dropdown-item" href="#"><i class="flag-poland flag"></i>Polski</a>
+				  </li>
+				  <li>
+					<a class="dropdown-item" href="#"><i class="flag-china flag"></i>中文</a>
+				  </li>
+				  <li>
+					<a class="dropdown-item" href="#"><i class="flag-japan flag"></i>日本語</a>
+				  </li>
+				  <li>
+					<a class="dropdown-item" href="#"><i class="flag-germany flag"></i>Deutsch</a>
+				  </li>
+				  <li>
+					<a class="dropdown-item" href="#"><i class="flag-france flag"></i>Français</a>
+				  </li>
+				  <li>
+					<a class="dropdown-item" href="#"><i class="flag-spain flag"></i>Español</a>
+				  </li>
+				  <li>
+					<a class="dropdown-item" href="#"><i class="flag-russia flag"></i>Русский</a>
+				  </li>
+				  <li>
+					<a class="dropdown-item" href="#"><i class="flag-portugal flag"></i>Português</a>
+				  </li>
+				</ul>
+			  </div>
+			  <!--- language selector --->
+			</div>
+		  </div>
+		</div>
+	  </footer>
+	  <!-- Footer -->
+	 
+<script
+  type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"></script>
 </body>
 </html>
+

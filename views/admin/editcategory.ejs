@@ -104,6 +104,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </a>
                    
                 </li>
+                <li class="sub-menu">
+                    <a href="/admin/orders">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span>Orders</span>
+                    </a>
+                   
+                </li>
+                <li class="sub-menu">
+                    <a href="/admin/Coupon">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span>Coupon</span>
+                    </a>
+                   
+                </li>
                 
             </ul>            </div>
         <!-- sidebar menu end-->
@@ -112,43 +126,77 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!--sidebar end-->
 <!--main content start-->
 
-    
 <section id="main-content">
     <section class="wrapper">
         <h1>Edit Category</h1>
         <div class="container">
             <div class="row justify-content-center">
-              <div class="col-md-6">
-                <form action="/admin/category/update/<%= category._id %>" method="post">
-                  <div class="form-group">
-                    <label for="categoryName"><i class="fas fa-user"></i>Category</label>
-                    <input type="text" name="category" class="form-control" value="<%= category.category %>" id="productName" placeholder="Enter product name" required>
-                  </div>
-                  <div class="form-group">
-                    <label for="productDescription"><i class="fas fa-file-alt"></i> Description</label>
-                    <textarea class="form-control" name="description" id="productDescription" required><%- category.description %></textarea>
+                <div class="col-md-6">
+                    <form action="/admin/category/update/<%=category._id%>" method="post">
+                        <div class="form-group">
+                            <label for="categoryName"><i class="fas fa-user"></i>Category</label>
+                            <input type="text" name="category" class="form-control" value="<%=category.category%>" id="productName" placeholder="Enter category name" >
+                            <!-- Display error message -->
+                            <% if (errors && errors.category) { %>
+                                <p class="text-danger"><%= errors.category.msg %></p>
+                            <% } %>
+                        </div>
 
-                  </div>
-                  
-                  <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> Submit</button>
-                </form>
-              </div>
+                        <div class="form-group">
+                            <label for="productDescription"><i class="fas fa-file-alt"></i> Description</label>
+                            <textarea class="form-control" name="description" id="productDescription" ><%- category.description %></textarea>
+                            <!-- Display error message -->
+                            <% if (errors && errors.description) { %>
+                                <p class="text-danger"><%= errors.description.msg %></p>
+                            <% } %>
+                        </div>
+
+                        <% if (message) { %>
+                            <div class="alert alert-danger" role="alert">
+                                <%= message %>
+                            </div>
+                        <% } %>
+
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> Submit</button>
+                    </form>
+                </div>
             </div>
-          </div>
-        
-        
-
-
-
-
-
-
-
+        </div>
     </section>
 </section>
 
 
 
+<script>
+    const updateCategory = async (req, res) => {
+    try {
+        const categoryId = req.params.id;
+        const enteredCategory = req.body.category;
+        const enteredDescription = req.body.description;
+
+        // Simple validation
+        const errors = {};
+        if (!enteredCategory || enteredCategory.trim() === '') {
+            errors.category = { msg: 'Category is required.' };
+        }
+        if (!enteredDescription || enteredDescription.trim() === '') {
+            errors.description = { msg: 'Description is required.' };
+        }
+
+        // Check if there are any validation errors
+        if (Object.keys(errors).length > 0) {
+            return res.render('your-edit-category-view', { category: req.body, errors });
+        }
+
+        // If no validation errors, proceed with updating category
+        // ... rest of the code ...
+    } catch (error) {
+        console.log("Error updating the Category: ", error);
+        res.redirect('/admin/category');
+    }
+};
+
+</script>
 
 
 

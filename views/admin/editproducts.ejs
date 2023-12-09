@@ -110,6 +110,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </a>
                    
                 </li>
+                <li class="sub-menu">
+                    <a href="/admin/orders">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span>Orders</span>
+                    </a>
+                   
+                </li>
+                <li class="sub-menu">
+                    <a href="/admin/Coupon">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span>Coupon</span>
+                    </a>
+                   
+                </li>
                 
             </ul>            </div>
         <!-- sidebar menu end-->
@@ -118,82 +132,144 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!--sidebar end-->
 <!--main content start-->
 
-
-    
 <section id="main-content">
     <section class="wrapper">
         <h1>Edit Products</h1>
         <div class="container">
             <div class="row justify-content-center">
-              <div class="col-md-6">
-                <form action="/admin/Products/update/<%=product._id%>" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
-                  <div class="form-group">
-                    <label for="productName"><i class="fas fa-user"></i> Name</label>
-                    <input type="text" name="name" class="form-control" value="<%= product.name %>" id="productName" placeholder="Enter product name">
-                    <div id="errorName" class="error-message"></div>
-                    <% if (errorMessage) { %>
-                        <p style="color: red;"><%= errorMessage %></p>
-                      <% } %>
-                  </div>
-                  <div class="form-group">
-                    <label for="productDescription"><i class="fas fa-file-alt"></i> Description</label>
-                    <textarea class="form-control" name="description" id="productDescription"><%- product.description %></textarea>
-                    <div id="errorDescription" class="error-message"></div>
-                  </div>
-                  <div class="form-group">
-                    <label for="productPrice"><i class="fas fa-dollar-sign"></i> Price</label>
-                    <input type="number" name="price" class="form-control" id="productPrice" value="<%= product.price %>" placeholder="Enter product price">
-                    <div id="errorPrice" class="error-message"></div>
-
-                  </div>
-                  <div class="form-group">
-                    <label for="productCategory"><i class="fas fa-tags"></i> Category</label>
-                    <input type="text" name="category" class="form-control" id="productCategory" value="<%= product.category %>" placeholder="Enter product category">
-                    <div id="errorCategory" class="error-message"></div>
-
-                  </div>
-                 
-                  <div class="form-group">
-                    <label for="productImages"><i class="fas fa-image"></i> Image Update</label>
-                    <input type="file" name="image" class="form-control-file" id="productImages" multiple>
-                    
-                    <div id="errorImages" class="error-message"></div>
+                <div class="col-md-6">
+                    <form action="/admin/Products/update/<%=product._id%>" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+                        <div class="form-group">
+                            <label for="productName"><i class="fas fa-user"></i> Name</label>
+                            <input type="text" name="name" class="form-control" value="<%= product.name %>" id="productName" placeholder="Enter product name">
+                        <div id="errorName" class="error-message"></div>
+                            <% if (errorMessage) { %>
+                                <p style="color: red;"><%= errorMessage %></p>
+                            <% } %>
+                        </div>
+                        <div class="form-group">
+                            <label for="productDescription"><i class="fas fa-file-alt"></i> Description</label>
+                            <textarea class="form-control" name="description" id="productDescription"><%- product.description %></textarea>
+                            <div id="errorDescription" class="error-message"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="productPrice"><i class="fas fa-dollar-sign"></i> Price</label>
+                            <input type="number" name="price" class="form-control" id="productPrice" value="<%= product.price %>" placeholder="Enter product price">
+                            <div id="errorPrice" class="error-message"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="productCategory"><i class="fas fa-tags"></i> Category</label>
+                            <input type="text" name="category" class="form-control" id="productCategory" value="<%= product.category %>" placeholder="Enter product category">
+                            <div id="errorCategory" class="error-message"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="productImages"><i class="fas fa-image"></i> Image Update</label>
+                            <input type="file" name="image" class="form-control-file" id="productImages" multiple>
+                            <div id="errorImages" class="error-message"></div>
+                        </div>
+                        <div class="form-group">
+                            <div>
+                                <label>Current Images:</label>
+                                <% product.image.forEach((img) => { %>
+                                  <img src="/productimg/<%= img %>" width="100px" height="100px" alt="<%= img %>">
+                                <% }) %>
+                              </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="productStock"><i class="fas fa-cubes"></i> Stock</label>
+                            <input type="number" name="stock" class="form-control" value="<%= product.stock %>" id="productStock" placeholder="Enter product stock">
+                        <div id="errorStock" class="error-message"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="productStock"><i class="fas fa-cubes"></i> Offer Price</label>
+                            <input type="text" name="offerprice" class="form-control" value="<%=product.OfferPrice%>" id="productOfferPrice" placeholder="Enter product offer Price">
+                        <div id="errorOfferPrice" class="error-message"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="discount"><i class="fas fa-cubes"></i> Discount</label>
+                            <input type="text" name="discount" class="form-control" id="productDiscount" value="<%=product.Discount%>" placeholder="Enter product Discount">
+                        <div id="errorDiscount" class="error-message"></div>
+                        </div>
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> Submit</button>
+                    </form>
                 </div>
-                <div class="form-group">
-                    <div>
-                        <label>Current Images:</label>
-                        <% product.image.forEach((img) => { %>
-                          <img src="/productimg/<%= img %>" width="100px" height="100px" alt="<%= img %>">
-                        <% }) %>
-                      </div>
-
-                  </div>
-                  <div class="form-group">
-                    <label for="productStock"><i class="fas fa-cubes"></i> Stock</label>
-                    <input type="number" name="stock" class="form-control" value="<%= product.stock %>" id="productStock" placeholder="Enter product stock">
-                    <div id="errorStock" class="error-message"></div>
-                  </div>
-                   <div class="form-group">
-                    <label for="productStock"><i class="fas fa-cubes"></i> Offer Price</label>
-                    <input type="text" name="offerprice" class="form-control" value="<%=product.OfferPrice%>" id="productStock" placeholder="Enter product offer Price">
-                    <div id="errorStock" class="error-message"></div>
-                  </div>
-                  <div class="form-group">
-                    <label for="discount"><i class="fas fa-cubes"></i> Discount</label>
-                    <input type="text" name="discount" class="form-control" id="productStock" value="<%=product.Discount%>" placeholder="Enter product Discount">
-                    <div id="errorStock" class="error-message"></div>
-                  </div>
-
-                  <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> Submit</button>
-                </form>
-              </div>
             </div>
-          </div>
-        
-       
-
+        </div>
     </section>
 </section>
+<script>
+    function validateForm() {
+        resetErrorMessages();
+
+        let isValid = true;
+
+        // Validate Name
+        const nameInput = document.getElementById('productName');
+        const errorName = document.getElementById('errorName');
+        if (nameInput.value.trim() === '') {
+            errorName.textContent = 'Name is required';
+            isValid = false;
+        }
+
+        // Validate Description
+        const descriptionInput = document.getElementById('productDescription');
+        const errorDescription = document.getElementById('errorDescription');
+        if (descriptionInput.value.trim() === '') {
+            errorDescription.textContent = 'Description is required';
+            isValid = false;
+        }
+
+        // Validate Price
+        const priceInput = document.getElementById('productPrice');
+        const errorPrice = document.getElementById('errorPrice');
+        if (priceInput.value.trim() === '') {
+            errorPrice.textContent = 'Price is required';
+            isValid = false;
+        }
+
+        // Validate Category
+        const categoryInput = document.getElementById('productCategory');
+        const errorCategory = document.getElementById('errorCategory');
+        if (categoryInput.value.trim() === '') {
+            errorCategory.textContent = 'Category is required';
+            isValid = false;
+        }
+
+        // Validate Stock
+        const stockInput = document.getElementById('productStock');
+        const errorStock = document.getElementById('errorStock');
+        if (stockInput.value.trim() === '') {
+            errorStock.textContent = 'Stock is required';
+            isValid = false;
+        }
+
+        // Validate Offer Price
+        const offerPriceInput = document.getElementById('productOfferPrice');
+        const errorOfferPrice = document.getElementById('errorOfferPrice');
+        // Add additional validations for Offer Price
+
+        // Validate Discount
+        const discountInput = document.getElementById('productDiscount');
+        const errorDiscount = document.getElementById('errorDiscount');
+        // Add additional validations for Discount
+
+        // Additional validations can be added for Offer Price and Discount
+
+        if (!isValid) {
+            // Prevent form submission if not valid
+            return false;
+        }
+
+        return true;
+    }
+
+    function resetErrorMessages() {
+        const errorElements = document.querySelectorAll('.error-message');
+        errorElements.forEach(element => {
+            element.textContent = '';
+        });
+    }
+</script>
 
 
 
@@ -213,74 +289,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/flot-chart/excanvas.min.js"></script><![endif]-->
 <script src="/js/admin/jquery.scrollTo.js"></script>
 <!--     ///////////////////////-->
-<script>
-    function validateForm() {
-        let isValid = true;
 
-        const name = document.getElementById('productName').value;
-        const description = document.getElementById('productDescription').value;
-        const price =document.getElementById('productPrice').value;
-        const category =document.getElementById('productCategory').value;
-        const image =document.getElementById('productImage').value;
-        const stock =document.getElementById('productStock').value;
-
-        const errorName = document.getElementById('errorName');
-        const errorDescription = document.getElementById('errorDescription');
-        const errorPrice = document.getElementById('errorPrice');
-        const errorCategory = document.getElementById('errorCategory');
-        const errorImage = document.getElementById('errorImage');
-        const errorStock = document.getElementById('errorStock');
-
-        errorName.innerHTML = '';
-        errorDescription.innerHTML = '';
-        errorPrice.innerHTML = '';
-        errorCategory.innerHTML = '';
-        errorImage.innerHTML = '';
-        errorStock.innerHTML = '';
-
-
-        if (name.trim() === '') {
-            errorName.innerHTML = 'Please enter a product name.';
-            isValid = false;
-        }
-
-        if (description.trim() === '') {
-            errorDescription.innerHTML = 'Please enter a product description.';
-            isValid = false;
-        }
-
-        if (price <= 0 || isNaN(price)) {
-                errorPrice.innerHTML = 'Price must be a number greater than zero.';
-                isValid = false;
-            }
-
-            // Validation logic for 'Category'
-            if (category.trim() === '') {
-                errorCategory.innerHTML = 'Please enter a product category.';
-                isValid = false;
-            }
-
-            // Validation logic for 'Image' - You might want to check if a file is selected
-            if (!image) {
-                errorImage.innerHTML = 'Please select an image.';
-                isValid = false;
-            }
-
-            // Validation logic for 'Stock'
-            if (stock <= 0 || isNaN(stock)) {
-                errorStock.innerHTML = 'Stock must be a number greater than zero.';
-                isValid = false;
-            }
-
-       
-
-        if (!isValid) {
-            
-            return false;
-        }
-        
-        return true;
-    }
-</script>
 </body>
 </html>

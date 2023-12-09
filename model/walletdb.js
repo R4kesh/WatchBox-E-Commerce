@@ -19,6 +19,11 @@ const transactionSchema = new mongoose.Schema({
 const WalletSchema=new mongoose.Schema({
     customerid:String,
     Amount:{type:Number,default:0},
+    redeemedCoupons: [
+      {
+          couponCode: String,
+      },
+  ],
     transactions:[transactionSchema],
 })
 

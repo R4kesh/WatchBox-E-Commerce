@@ -4,8 +4,14 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
+	<title>WatchBox_Luxury Watches A Ecommerce Category Flat Bootstrap Resposive Website </title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+	<!-- Bootstrap JS -->
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
+
     <style>
         .gradient-custom {
 /* fallback for old browsers */
@@ -72,20 +78,17 @@ background: linear-gradient(to top left, rgba(205, 156, 242, 1), rgba(246, 243, 
                   <h5 class="text-muted mb-0">Thanks for your Order, <span style="color: #a8729a;"><%=user.name%></span>!</h5>
                 </div>
                 <div class="card-body p-4">
-					<%orderItems.forEach(item =>{%>
+					<%orderItems.reverse().forEach(item =>{%>
                   <div class="d-flex justify-content-between align-items-center mb-4">
                     <p class="lead fw-normal mb-0" style="color: #a8729a;">Receipt</p>
                     <p class="small text-muted mb-0">Receipt Voucher : 1KAU9-84UIL</p>
                   </div>
-                  
-
-                 
+            
                   <div class="card shadow-0 border mb-4">
                     <div class="card-body">
                       <div class="row">
                         <div class="col-md-2">
-                            <img src="/productimg/<%= item.product.image.length > 0 ? item.product.image[0] : 'default-image.jpg' %>" class="border rounded me-3" style="width: 96px; height: 96px;" />
-                            
+                            <img src="/productimg/<%= item.product.image.length > 0 ? item.product.image[0] : 'default-image.jpg' %>" class="border rounded me-3" style="width: 96px; height: 96px;" />   
                         </div>
                         <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
                           <p class="text-muted mb-0"><%=item.product.name%></p>
@@ -106,10 +109,12 @@ background: linear-gradient(to top left, rgba(205, 156, 242, 1), rgba(246, 243, 
 						<div class="col-md-2 text-center d-flex justify-content-center align-items-center">
 							<% if (item.status !== 'Cancelled') { %>
 								<% if (item.status === 'Delivered') { %>
-									<!-- If status is Delivered, display Return button -->
-									<a href="/returnOrder/<%= item._id %>" class="btn btn-outline-primary">Return</a>
-								<% } else if (item.status === 'Returned') { %>
-									<!-- If status is Returned, display Returned Successfully message -->
+									<% const sevenDaysAgo = new Date(); %>
+									<% sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7); %>
+									<% if (new Date(item.orderDate) > sevenDaysAgo && item.status !== 'Returned') { %>
+										<button class="btn btn-outline-primary" data-toggle="modal" data-target="#returnModal" data-order-id="<%= item._id %>">Return</button>
+									<% } %>
+								<% } else if (item.status === 'Returned') { %>	
 									<p class="text-success mb-0 small">Returned Successfully</p>
 								<% } else { %>
 									<!-- If status is not Cancelled, Delivered, or Returned, display Cancel Order button -->
@@ -121,22 +126,21 @@ background: linear-gradient(to top left, rgba(205, 156, 242, 1), rgba(246, 243, 
 							<% } %>
 						</div>
 						<div class="col-md-2 text-center d-flex justify-content-between align-items-center">
-							<a href="/invoice/<%=item._id%>" class="btn btn-outline-primary btn-sm" download="invoice.pdf">Invoice</a>
-							
+							<% if (item.status === 'Delivered') { %>
+								<a href="/invoice/<%= item._id %>" class="btn btn-outline-primary btn-sm" download="invoice.pdf">Invoice</a>
+							<% } %>
 						</div>
 						</div>
-						
                       </div>
+					  <p class="text-muted mb-0 small mt-2">Replacement available within 7 days after delivery</p>
                       <hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">
                       <div class="row d-flex align-items-center">
                         <div class="col-md-2">
                           <p class="text-muted mb-0 small">Track Order</p>
                         </div>
                         <div class="col-md-10">
-
-
-                          <div class="progress" style="height: 6px; border-radius: 16px;">
-        <div class="progress-bar" role="progressbar"
+						 <div class="progress" style="height: 6px; border-radius: 16px;">
+       					 <div class="progress-bar" role="progressbar"
             style="width: <% 
                 switch (item.status) {
                     case 'Pending':
@@ -179,8 +183,6 @@ background: linear-gradient(to top left, rgba(205, 156, 242, 1), rgba(246, 243, 
                 }
             %>" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
-
-
                           <div class="d-flex justify-content-around mb-1">
                             <p class="text-muted mt-1 mb-0 small ms-xl-5"></p>
                             <p class="text-muted mt-1 mb-0 small ms-xl-5"><%=item.status%></p>
@@ -226,8 +228,37 @@ background: linear-gradient(to top left, rgba(205, 156, 242, 1), rgba(246, 243, 
 
 
 
+<div class="modal fade" id="returnModal" tabindex="-1" role="dialog" aria-labelledby="returnModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title" id="returnModalLabel">Return Order</h5>
+		  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 
-
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		</div>
+		<div class="modal-body">
+		  <!-- Your return form with reason options and feedback text area -->
+		  <form id="returnForm">
+			<div class="form-group">
+			  <label for="returnReason">Select Reason:</label>
+			  <select class="form-control" id="returnReason" required>
+				<option value="Product Defect or Damage">Product Defect or Damage</option>
+				<option value="Wrong Product or Size">Wrong Product or Size</option>
+				<option value="Late Delivery">Late Delivery</option>
+			  </select>
+			</div>
+			<div class="form-group">
+			  <label for="feedback">Product Feedback:</label>
+			  <textarea class="form-control" id="feedback" rows="3"></textarea>
+			</div>
+			<button type="submit" class="btn btn-primary">Submit</button>
+		  </form>
+		</div>
+	  </div>
+	</div>
+  </div>
 
       <footer class="text-center text-lg-start text-muted bg-black mt-3">
 		<!-- Section: Links  -->
@@ -364,6 +395,63 @@ background: linear-gradient(to top left, rgba(205, 156, 242, 1), rgba(246, 243, 
 		</div>
 	  </footer>
 	  <!-- Footer -->
+
+	  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Add a click event listener to each "Return" button
+    document.querySelectorAll('.btn-outline-primary[data-toggle="modal"]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        // Get the order ID from the clicked button
+        const orderId = button.getAttribute('data-order-id');
+        // Set the order ID in the modal
+        document.getElementById('returnModal').setAttribute('data-order-id', orderId);
+        // Open the modal
+        var myModal = new bootstrap.Modal(document.getElementById('returnModal'));
+        myModal.show();
+      });
+    });
+
+    // Add a submit event listener to the return form
+    document.getElementById('returnForm').addEventListener('submit', async function (event) {
+      event.preventDefault();
+
+      const returnReason = document.getElementById('returnReason').value;
+      const feedback = document.getElementById('feedback').value;
+      const orderId = document.getElementById('returnModal').getAttribute('data-order-id');
+
+      try {
+        // Use fetch or another method to send data to the server
+        const response = await fetch(`/returnOrder/${orderId}`,{
+          method:'POST',
+          headers:{
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ returnReason, feedback }),
+        });
+
+        // Handle the response as needed
+        if (response.ok) {
+          // Close the modal after successful submission
+          var myModal = new bootstrap.Modal(document.getElementById('returnModal'));
+          myModal.hide();
+		  window.location.reload();
+        } else {
+          // Handle errors here, e.g., show an error message to the user
+          console.error('Error submitting return form:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error submitting return form:', error);
+      }
+    });
+
+    // Add a click event listener to the "Cancel" button
+    document.getElementById('cancelButton').addEventListener('click', function () {
+      // Close the modal when the "Cancel" button is clicked
+      var myModal = new bootstrap.Modal(document.getElementById('returnModal'));
+      myModal.hide();
+    });
+  });
+</script>
 	 
 <script
   type="text/javascript"

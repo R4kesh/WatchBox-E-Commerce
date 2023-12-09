@@ -92,15 +92,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <!--search & user info start-->
     <ul class="nav pull-right top-menu">
         <li>
-            <input type="text" class="form-control search" placeholder=" Search">
+            <input type="text" class="form-control search" placeholder=" Search" id="searchInput">
         </li>
+        &emsp;
         <!-- user login dropdown start-->
         <li class="dropdown">
-            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+            <!-- <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                 <img alt="" src="/images/2.png">
                 <span class="username">John Doe</span>
                 <b class="caret"></b>
-            </a>
+            </a> -->
             <ul class="dropdown-menu extended logout">
                 <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
                 <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
@@ -163,6 +164,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </a>
                    
                 </li>
+                <li class="sub-menu">
+                    <a href="/admin/return">
+                        <i class="fas fa-undo"></i>
+                        <span>Return Order</span>
+                    </a>
+                   
+                </li>
                 
             </ul>            </div>
         <!-- sidebar menu end-->
@@ -202,7 +210,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="tableBody">
                                 <% category.forEach((cat, index) => { %>
                                     <tr class='align-middle'>
                                         <td style="color: black;"><%= index+1 %></td>
@@ -264,6 +272,33 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
       }
     }
   </script> 
+  
+<script>
+    document.getElementById('searchInput').addEventListener('input', function () {
+        const searchValue = this.value.toLowerCase();
+        const tableBody = document.getElementById('tableBody');
+        const rows = tableBody.getElementsByTagName('tr');
+
+        for (let i = 0; i < rows.length; i++) {
+            const cells = rows[i].getElementsByTagName('td');
+            let found = false;
+
+            for (let j = 1; j < cells.length - 1; j++) {
+                const cellText = cells[j].innerText.toLowerCase();
+                if (cellText.includes(searchValue)) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (found) {
+                rows[i].style.display = '';
+            } else {
+                rows[i].style.display = 'none';
+            }
+        }
+    });
+</script>
 <script>
     // Add an event listener for all buttons with the class "block-button"
     const buttons = document.querySelectorAll('.block-button');

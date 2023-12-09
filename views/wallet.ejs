@@ -124,7 +124,7 @@
                                                 <span class="text-danger amount">₹<%= transaction.amount.toFixed(2) %></span>
                                             <% } %>
                                         </div>
-                                        <span class="date"><%= transaction.time.toDateString() %></span>
+                                        <span class="date"><%= transaction.time.toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' }) %></span>
                                     </li>
                                 <% }); %>
                             </ul>

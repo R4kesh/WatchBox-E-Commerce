@@ -418,31 +418,12 @@
 	  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <!------------------------------------ partial payment------------- -->
-<script>
 
-	function handlePaymentSelection() {
-		var walletRadio = document.getElementById('flexRadioDefault3');
-		var onlinePaymentRadio = document.getElementById('flexRadioDefault2');
-		var placeOrderButton = document.querySelector('.placeorder');
-	
-		// Check if Wallet is selected and wallet amount is sufficient
-		if (walletRadio.checked && <%= wallet %> >= <%= total %>) {
-			// Automatically select Online Payment
-			onlinePaymentRadio.checked = true;
-	
-			// Trigger a click event on the Place Order button
-			if (placeOrderButton) {
-				placeOrderButton.click();
-			}
-		}
-	}
-
-</script>
 
 
 
 	  <script>
-		const dotenv=require('dotenv').config();
+		
 
 		var payorderid;
 		const formVALUE = document.getElementById("Formvalue");
@@ -469,7 +450,7 @@
               payorderid = data.id;
 
 			  var options = {
-                "key": KEYID, 
+                "key":'rzp_test_dnwNaYmhWn2A9y', 
                 "amount": "<%=(total)*100 %>", 
                 "currency": "INR",
                 "name": "WatchBox", 

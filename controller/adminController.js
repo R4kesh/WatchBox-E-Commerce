@@ -2,7 +2,6 @@ const collection = require("../model/userdb");
 const productcollection=require('../model/productdb');
 const categorycollection = require("../model/categorydb");
 const couponCollection=require("../model/coupondb")
-const sharp=require('sharp')
 const dotenv=require('dotenv').config();
 
 

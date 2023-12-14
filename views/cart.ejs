@@ -254,7 +254,7 @@
 					<div class="form-group">
 						<label class="form-label">Have coupon?</label>
 						<div class="input-group">
-							<input type="text" class="form-control border" id="couponid" name="couponid" placeholder="<%= cartItems[0].product.OfferPrice ? 'Coupon not applicable (Offer applied)' : 'Coupon code' %>" <% if (cartItems[0].product.OfferPrice) { %> disabled <% } %> />
+							<input type="text" class="form-control border" id="couponid" name="couponid" placeholder="<%= cartItems[0].product.OfferPrice ? 'Coupon not applicable' : 'Coupon code' %>" <% if (cartItems[0].product.OfferPrice) { %> disabled <% } %> />
 							<button class="btn btn-light border" type="button" id="buttons" <% if (cartItems[0].product.OfferPrice) { %>disabled<% } %>>Apply</button>
 						</div>
 						<div class="alert alert-success mt" role="alert" id="success-message" style="display: none;">

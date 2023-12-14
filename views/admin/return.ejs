@@ -103,9 +103,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <div class="top-nav clearfix">
                 <!--search & user info start-->
                 <ul class="nav pull-right top-menu">
-                    <li>
+                    <!-- <li>
                         <input type="text" class="form-control search" placeholder=" Search">
-                    </li>
+                    </li> -->
                     &emsp;
                     <!-- user login dropdown start-->
                     <li class="dropdown">
@@ -167,17 +167,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 <i class="fas fa-shopping-bag"></i>
                                 <span>Orders</span>
                             </a>
-
                         </li>
                         <li class="sub-menu">
-                            <a  class="active" href="/admin/Coupon">
-                                <i class="fas fa-shopping-bag"></i>
+                            <a href="/admin/Coupon">
+                                <i class="fas fa-tag fa-2x"></i>
                                 <span>Coupon</span>
                             </a>
-                           
                         </li>
                         <li class="sub-menu">
-                            <a href="/admin/return">
+                            <a class="active" href="/admin/return">
                                 <i class="fas fa-undo"></i>
                                 <span>Return Order</span>
                             </a>
@@ -196,10 +194,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <section class="wrapper">
                 <div class="market-updates"></div>
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-                        <a class="nav-link" href="/admin/coupon/add">Add-Coupon</a>
-                    </button>
-                    <h1>Return</h1>
+                    
+                    <h1>Return Orders</h1>
                 </nav>
    
                 <div class="container2"> <!-- I noticed you had commented this out, you can uncomment if needed. -->
@@ -213,6 +209,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                             <th>ID</th>
                                             
                                             <th>Email</th>
+                                            <th>Product</th>
                                             <th>Return Date</th>
                                             <th>Reason</th>
                                             <th>Feedback</th>
@@ -220,11 +217,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <% orderreturn.forEach((retur,index) => { %>
+                                        <% orderreturn.reverse().forEach((retur,index) => { %>
                                         <tr class='align-middle'>
                                                 <td style="color: black;"><%= index +1 %></td>
                                                 
                                                 <td style="color: black;"><%= retur.userId%></td>
+                                                <td style="color: black;"><%= retur.productName %></td> 
                                                 <td>
                                                 <% if (retur && retur.date) { %>
                                                     <%= retur.date.toDateString() %>

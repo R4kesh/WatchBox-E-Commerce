@@ -121,6 +121,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </a>
                    
                 </li>
+                <li class="sub-menu">
+                    <a href="/admin/return">
+                        <i class="fas fa-undo"></i>
+                        <span>Return Order</span>
+                    </a>
+                   
+                </li>
                 
             </ul>            </div>
         <!-- sidebar menu end-->
@@ -135,17 +142,19 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <div class="container">
             <div class="row justify-content-center">
               <div class="col-md-6">
-                <form action="/admin/category/add" method="post" >
+                <form action="/admin/category/add" method="post" onsubmit="return validateForm()">
                   <div class="form-group">
                     <label for="productName"><i class="fas fa-user"></i>Category</label>
-                    <input type="text" name="category" class="form-control" id="categoryName" placeholder="Enter Category name" required>
+                    <input type="text" name="category" class="form-control" id="categoryName" placeholder="Enter Category name" >
+                    <span id="categoryError" style="color: red;"></span>
                   </div>
                   <% if (error) { %>
                     <p style="color: red;"><%= error %></p>
                   <% } %>
                   <div class="form-group">
                     <label for="productDescription"><i class="fas fa-file-alt"></i> Description of Category</label>
-                    <textarea class="form-control" name="description" id="Category Description" rows="3" required></textarea>
+                    <textarea class="form-control" name="description" id="Category Description" rows="3" ></textarea>
+                    <span id="descriptionError" style="color: red;"></span>
                   </div>
                   
                   <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> Submit</button>
@@ -153,20 +162,36 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
               </div>
             </div>
           </div>
-        
-        
-
-
-
-
-
-
 
     </section>
 </section>
 
 
+<script>
+    function validateForm() {
+        // Reset previous error messages
+        document.getElementById('categoryError').innerText = '';
+        document.getElementById('descriptionError').innerText = '';
 
+        // Validate Category Name
+        var categoryName = document.getElementById('categoryName').value.trim();
+        if (categoryName === '') {
+            document.getElementById('categoryError').innerText = 'Category name is required';
+            return false;
+        }
+
+        // Validate Description
+        var categoryDescription = document.getElementById('CategoryDescription').value.trim();
+        if (categoryDescription === '') {
+            document.getElementById('descriptionError').innerText = 'Description is required';
+            return false;
+        }
+
+        // Add additional validation if needed
+
+        return true;
+    }
+</script>
 
 
 

@@ -353,24 +353,33 @@ const returnOrder=async(req,res)=>{
         const user=await collection.findOne({email:userId}).populate('orders.product');
         const orderDetails=await collection.findOne({'orders._id':orderId}).populate('orders.product')
         const order = orderDetails.orders.find(order => order._id == orderId);
-        if ((order.paymentmethod === 'Online Payment' || order.paymentmethod === 'Cash On Delivery'|| order.paymentmethod==='wallet') && order.status === 'Delivered') {
-            const wallet = await walletcollection.findOneAndUpdate(
-                { customerid: user._id },
-                { $inc: {Amount: (order.totalPrice+50) } },
-                { new: true }
-            ) 
-        }
+        // if ((order.paymentmethod === 'Online Payment' || order.paymentmethod === 'Cash On Delivery'|| order.paymentmethod==='wallet') && order.status === 'Delivered') {
+        //     const wallet = await walletcollection.findOneAndUpdate(
+        //         { customerid: user._id },
+        //         { $inc: {Amount: (order.totalPrice+50) },
+        //         $push:{
+        //             transactions:{
+        //                 type:'Refund',
+        //                 amount:(order.totalPrice+50),
+        //             },
+        //         },
+            
+        //     },
+        //         { new: true }
+        //     ) 
+        // }
         
-        if (req.body.returnReason !== "Product Defect or Damage") {
-        for (const order of user.orders) {
-            const product = order.product;
-            const orderedQuantity = order.quantity;
-            product.stock += orderedQuantity;
-            await product.save();
-        }
-    } else {
-        console.log("Return reason is Product Defect or Damage");
-    }
+        
+    //     if (req.body.returnReason !== "Product Defect or Damage") {
+    //     for (const order of user.orders) {
+    //         const product = order.product;
+    //         const orderedQuantity = order.quantity;
+    //         product.stock += orderedQuantity;
+    //         await product.save();
+    //     }
+    // } else {
+    //     console.log("Return reason is Product Defect or Damage");
+    // }
 
         const updateorder = await collection.findOneAndUpdate(
             { 'orders._id': orderId }, 
@@ -391,11 +400,6 @@ const returnOrder=async(req,res)=>{
             });
             await returnOrderDetails.save();
        
-
-        
-
-        
-
         res.redirect('/user/orders')
 
     }catch(error){

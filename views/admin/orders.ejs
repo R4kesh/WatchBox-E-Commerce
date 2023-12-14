@@ -71,7 +71,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <!--search & user info start-->
     <ul class="nav pull-right top-menu">
         <li>
-            <input type="text" class="form-control search" placeholder=" Search">
+            <input type="text" class="form-control search" placeholder=" Search" id="searchInput">
         </li>
         &emsp;
         <!-- user login dropdown start-->
@@ -92,7 +92,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         </button>
         
     </ul>
- >
+ 
 </div>
 </header>
 
@@ -136,7 +136,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 </li>
                 <li class="sub-menu">
                     <a href="/admin/Coupon">
-                        <i class="fas fa-shopping-bag"></i>
+                        <i class="fas fa-tag fa-2x"></i>
                         <span>Coupon</span>
                     </a>
                    
@@ -186,9 +186,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                     <th scope="col">Edit Status</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="tableBody">
                                 <% users.forEach((user, index) => { %>
-                                    <% user.orders.forEach((order, orderIndex) => { %>
+                                    <% user.orders.reverse().forEach((order, orderIndex) => { %>
                                         <tr class='align-middle'>
                                             
                                             <td style="color: black;"><%= user.name %></td>
@@ -263,7 +263,32 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     </section>
 </section>
 
+<script>
+    document.getElementById('searchInput').addEventListener('input', function () {
+        const searchValue = this.value.toLowerCase();
+        const tableBody = document.getElementById('tableBody');
+        const rows = tableBody.getElementsByTagName('tr');
 
+        for (let i = 0; i < rows.length; i++) {
+            const cells = rows[i].getElementsByTagName('td');
+            let found = false;
+
+            for (let j = 1; j < cells.length - 1; j++) {
+                const cellText = cells[j].innerText.toLowerCase();
+                if (cellText.includes(searchValue)) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (found) {
+                rows[i].style.display = '';
+            } else {
+                rows[i].style.display = 'none';
+            }
+        }
+    });
+</script>
 
 
 

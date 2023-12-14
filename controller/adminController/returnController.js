@@ -1,8 +1,13 @@
 const userCollection = require("../../model/userdb");
 const returnCollection = require("../../model/returndb");
+
 const returnLoad=async (req,res)=>{
     try{
-        const orderreturn = await returnCollection.find({})
+        const orderreturn = await returnCollection.find({}).populate('product');
+
+        orderreturn.forEach(retur => {
+            retur.productName = retur.product ? retur.product.name : 'N/A';
+        });
         
      res.render("return",{orderreturn})
         
@@ -15,3 +20,5 @@ const returnLoad=async (req,res)=>{
 module.exports={
     returnLoad,
 }
+
+// const returnapproval=async

@@ -93,6 +93,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <section id="container">
 <!--header start-->
 <header class="header fixed-top clearfix">
+   
 <!--logo start-->
 <div class="brand">
     <a href="/admin" class="logo">
@@ -135,6 +136,7 @@ views/admin/category.ejs                <li><a href="#"><i class=" fa fa-suitcas
 </div>
 </header>
 <!--header end-->
+
 <!--sidebar start-->
 <aside>
     <div id="sidebar" class="nav-collapse">
@@ -176,7 +178,7 @@ views/admin/category.ejs                <li><a href="#"><i class=" fa fa-suitcas
                 </li>
                 <li class="sub-menu">
                     <a href="/admin/Coupon">
-                        <i class="fas fa-shopping-bag"></i>
+                        <i class="fas fa-tag fa-2x"></i>
                         <span>Coupon</span>
                     </a>
                    
@@ -193,6 +195,9 @@ views/admin/category.ejs                <li><a href="#"><i class=" fa fa-suitcas
         <!-- sidebar menu end-->
     </div>
 </aside>
+
+
+
 <!--sidebar end-->
 <!--main content start-->
 
@@ -301,8 +306,12 @@ views/admin/category.ejs                <li><a href="#"><i class=" fa fa-suitcas
 
 
 
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
 <!--main content end-->
+
+
+
 
 <script src="js/admin/bootstrap.js"></script>
 <script src="js/admin/jquery.dcjqaccordion.2.7.js"></script>
@@ -338,19 +347,7 @@ views/admin/category.ejs                <li><a href="#"><i class=" fa fa-suitcas
         }
     });
 </script>
-<!-- <script>
 
-onclick="checker(event)"
-
-
-    function checker(event) {
-      const result=confirm('Are You Sure You Want to Delete?');
-      if(result==false){
-        event.preventDefault();
-      }
-    }
-  </script> -->
-<!--     ///////////////////////-->
 <script>
     // Add an event listener for all buttons with the class "block-button"
     const buttons = document.querySelectorAll('.block-button');

@@ -136,41 +136,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </a>
                    
                 </li>
+                <li class="sub-menu">
+                    <a href="/admin/return">
+                        <i class="fas fa-undo"></i>
+                        <span>Return Order</span>
+                    </a>
+                   
+                </li>
                 
             </ul>            </div>
         <!-- sidebar menu end-->
     </div>
 </aside>
 <!--sidebar end-->
-<!--main content start-->
-
-
-
-<!-- 
-<section id="main-content">
-    <section class="wrapper">
-        <div class="market-updates"></div>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-                <a class="nav-link" href="/admin/products/add">Add-product</a>
-            </button>
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-                <a class="nav-link" href="/admin/logout">Log-out</a>
-            </button>
-        </nav>
-        You may want to remove or replace the above navbar with your preferred navigation. -->
-
-        <!-- <div class="container2"> I noticed you had commented this out, you can uncomment if needed. -->
-            <!-- <div class="row my-4">
-                <div class="col-lg-12">
-                   
-                </div>
-            </div>
-        </div>
-    </section>
-</section> -->
-
-    
+<!--main content start-->   
 <section id="main-content">
     <section class="wrapper">
         <h1>Add Products</h1>
@@ -212,7 +191,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <input type="file" name="image" class="form-control-file" id="productImage" onchange="previewImage(this)" multiple>
                     <div id="errorImage" class="error-message"></div>
                     <img id="imagePreview" src="#" alt="Image Preview" style="max-width: 25%; display: none;">
-                    <button type="button" onclick="getCroppedImage()">Crop Image</button>
+                    <!-- <button type="button" onclick="getCroppedImage()">Crop Image</button> -->
                   </div>
                   
                   <div class="form-group">
@@ -222,13 +201,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                   </div>
                   <div class="form-group">
                     <label for="productStock"><i class="fas fa-cubes"></i> Offer Price</label>
-                    <input type="text" name="offerprice" class="form-control" id="productStock" placeholder="Enter product offer Price">
-                    <div id="errorStock" class="error-message"></div>
+                    <input type="text" name="offerprice" class="form-control" id="productOfferPrice" placeholder="Enter product offer Price">
+                    <div id="errorOfferPrice" class="error-message"></div>
+                   
                   </div>
                   <div class="form-group">
                     <label for="discount"><i class="fas fa-cubes"></i> Discount</label>
-                    <input type="text" name="discount" class="form-control" id="productStock" placeholder="Enter product Discount">
-                    <div id="errorStock" class="error-message"></div>
+                    <input type="text" name="discount" class="form-control" id="productDiscount" placeholder="Enter product Discount">
+                    <div id="errorDiscount" class="error-message"></div>
+                   
                   </div>
                   <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> Submit</button>
                 </form>
@@ -316,18 +297,24 @@ function validateForm() {
             const category = document.getElementById('productCategory').value;
             const image = document.getElementById('productImage').value;
             const stock = parseFloat(document.getElementById('productStock').value);
+            const offerPrice = parseFloat(document.getElementById('productOfferPrice').value);
+        const discount = parseFloat(document.getElementById('productDiscount').value);
 
             const errorName = document.getElementById('errorName');
             const errorDescription = document.getElementById('errorDescription');
             const errorPrice = document.getElementById('errorPrice');
             const errorImage = document.getElementById('errorImage');
             const errorStock = document.getElementById('errorStock');
+            const errorOfferPrice = document.getElementById('errorOfferPrice');
+        const errorDiscount = document.getElementById('errorDiscount');
 
             errorName.innerHTML = '';
             errorDescription.innerHTML = '';
             errorPrice.innerHTML = '';
             errorImage.innerHTML = '';
             errorStock.innerHTML = '';
+            errorOfferPrice.innerHTML = '';
+        errorDiscount.innerHTML = '';
 
             if (name.trim() === '') {
                 errorName.innerHTML = 'Please enter a product Name.';
@@ -345,8 +332,7 @@ function validateForm() {
             }
 
             if (category.trim() === '') {
-                // No validation needed for category
-                // Add custom validation if required
+                
             }
 
             if (!image) {
@@ -359,6 +345,15 @@ function validateForm() {
                 isValid = false;
             }
 
+            if (offerPrice <= 0 || isNaN(offerPrice)) {
+            errorOfferPrice.innerHTML = 'Offer Price must be a number greater than zero.';
+            isValid = false;
+        }
+
+        if (discount < 0 || isNaN(discount) || discount >= price) {
+            errorDiscount.innerHTML = 'Discount must be a positive number less than the product price.';
+            isValid = false;
+        }
             return isValid;
         }
 

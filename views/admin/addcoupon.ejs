@@ -28,6 +28,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="/js/admin/jquery2.0.3.min.js"></script>
 <script src="/js/admin/raphael-min.js"></script>
 <script src="/js/admin/morris.js"></script>
+<style>
+    .error-message {
+        color: red; /* Set error messages to red color */
+        margin-top: 5px;
+    }
+</style>
 </head>
 <body>
 <section id="container">
@@ -121,6 +127,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </a>
                    
                 </li>
+                <li class="sub-menu">
+                    <a href="/admin/return">
+                        <i class="fas fa-undo"></i>
+                        <span>Return Order</span>
+                    </a>
+                   
+                </li>
                 
             </ul>            </div>
         <!-- sidebar menu end-->
@@ -132,36 +145,38 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <h1>Add Coupon</h1>
         <div class="container">
             <div class="row justify-content-center">
-              <div class="col-md-6">
-                <form action="/admin/coupon/add" method="post">
-                    <div class="form-group">
-                        <label for="couponName"><i class="fas fa-user"></i>Coupon Name</label>
-                        <input type="text" name="couponName" class="form-control" id="couponName" placeholder="Enter Coupon Name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="couponCode"><i class="fas fa-user"></i>Coupon Code</label>
-                        <input type="text" name="couponCode" class="form-control" id="couponCode" placeholder="Enter Coupon Code" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="discountAmount"><i class="fas fa-user"></i>Discount Amount</label>
-                        <input type="text" name="discountAmount" class="form-control" id="discountAmount" placeholder="Enter Discount Amount" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="expirationDate"><i class="fas fa-user"></i>Expiration Date</label>
-                        <input type="date" name="expirationDate" class="form-control" id="expirationDate" placeholder="Enter Expiration Date" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="description"><i class="fas fa-file-alt"></i> Description of Coupon</label>
-                        <textarea class="form-control" name="description" id="description" rows="3" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> Submit</button>
-                </form>
-                
-              </div>
+                <div class="col-md-6">
+                    <form action="/admin/coupon/add" method="post" onsubmit="return validateForm()">
+                        <div class="form-group">
+                            <label for="couponName"><i class="fas fa-user"></i>Coupon Name</label>
+                            <input type="text" name="couponName" class="form-control" id="couponName" placeholder="Enter Coupon Name" >
+                            <div id="errorCouponName" class="error-message"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="couponCode"><i class="fas fa-user"></i>Coupon Code</label>
+                            <input type="text" name="couponCode" class="form-control" id="couponCode" placeholder="Enter Coupon Code" >
+                            <div id="errorCouponCode" class="error-message"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="discountAmount"><i class="fas fa-user"></i>Discount Amount</label>
+                            <input type="text" name="discountAmount" class="form-control" id="discountAmount" placeholder="Enter Discount Amount" >
+                            <div id="errorDiscountAmount" class="error-message"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="expirationDate"><i class="fas fa-user"></i>Expiration Date</label>
+                            <input type="date" name="expirationDate" class="form-control" id="expirationDate" placeholder="Enter Expiration Date">
+                            <div id="errorExpirationDate" class="error-message"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description"><i class="fas fa-file-alt"></i> Description of Coupon</label>
+                            <textarea class="form-control" name="description" id="description" rows="3" ></textarea>
+                            <div id="errorDescription" class="error-message"></div>
+                        </div>
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> Submit</button>
+                    </form>
+                </div>
             </div>
-          </div>
-        
-
+        </div>
     </section>
 </section>
 
@@ -169,7 +184,59 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 
 
+<script>
+    function validateForm() {
+        let isValid = true;
 
+        const couponName = document.getElementById('couponName').value;
+        const couponCode = document.getElementById('couponCode').value;
+        const discountAmount = parseFloat(document.getElementById('discountAmount').value);
+        const expirationDate = document.getElementById('expirationDate').value;
+        const description = document.getElementById('description').value;
+
+        const errorCouponName = document.getElementById('errorCouponName');
+        const errorCouponCode = document.getElementById('errorCouponCode');
+        const errorDiscountAmount = document.getElementById('errorDiscountAmount');
+        const errorExpirationDate = document.getElementById('errorExpirationDate');
+        const errorDescription = document.getElementById('errorDescription');
+
+        // Reset error messages
+        errorCouponName.innerHTML = '';
+        errorCouponCode.innerHTML = '';
+        errorDiscountAmount.innerHTML = '';
+        errorExpirationDate.innerHTML = '';
+        errorDescription.innerHTML = '';
+
+        if (couponName.trim() === '') {
+            errorCouponName.innerHTML = 'Please enter a coupon name.';
+            isValid = false;
+        }
+
+        if (couponCode.trim() === '') {
+            errorCouponCode.innerHTML = 'Please enter a coupon code.';
+            isValid = false;
+        }
+
+        if (isNaN(discountAmount) || discountAmount <= 0) {
+            errorDiscountAmount.innerHTML = 'Discount Amount must be a valid number greater than zero.';
+            isValid = false;
+        }
+
+        // Check if the expiration date is a valid date
+        const isValidDate = !isNaN(Date.parse(expirationDate));
+        if (!isValidDate) {
+            errorExpirationDate.innerHTML = 'Expiration Date must be a valid date.';
+            isValid = false;
+        }
+
+        if (description.trim() === '') {
+            errorDescription.innerHTML = 'Please enter a description for the coupon.';
+            isValid = false;
+        }
+
+        return isValid;
+    }
+</script>
 <!--main content end-->
  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

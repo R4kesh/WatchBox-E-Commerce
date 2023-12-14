@@ -49,9 +49,13 @@ const insertProduct = async (req, res) => {
             name: { $regex: new RegExp('^' + enteredProductName + '$', 'i') }
         });
 
+        
+
         if (existingProduct) {
             res.render('addproducts', { error: 'Product already exists',categories });
+
         } else {
+
             const price = Number(req.body.price);
 
             if (price > 0) {

@@ -124,6 +124,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </a>
                    
                 </li>
+                <li class="sub-menu">
+                    <a href="/admin/return">
+                        <i class="fas fa-undo"></i>
+                        <span>Return Order</span>
+                    </a>
+                   
+                </li>
                 
             </ul>            </div>
         <!-- sidebar menu end-->
@@ -197,7 +204,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         </div>
     </section>
 </section>
-<script>
+<!-- <script>
     function validateForm() {
         resetErrorMessages();
 
@@ -222,10 +229,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         // Validate Price
         const priceInput = document.getElementById('productPrice');
         const errorPrice = document.getElementById('errorPrice');
-        if (priceInput.value.trim() === '') {
-            errorPrice.textContent = 'Price is required';
-            isValid = false;
-        }
+        // if (priceInput.value.trim() === '') {
+        //     errorPrice.textContent = 'Price is required';
+        //     isValid = false;
+        // }
+        if (isNaN(price) || price <= 0) {
+        errorPrice.textContent = 'Price must be a valid number greater than zero';
+        isValid = false;
+    }
 
         // Validate Category
         const categoryInput = document.getElementById('productCategory');
@@ -238,20 +249,32 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         // Validate Stock
         const stockInput = document.getElementById('productStock');
         const errorStock = document.getElementById('errorStock');
-        if (stockInput.value.trim() === '') {
-            errorStock.textContent = 'Stock is required';
-            isValid = false;
-        }
+        // if (stockInput.value.trim() === '') {
+        //     errorStock.textContent = 'Stock is required';
+        //     isValid = false;
+        // }
+        if (isNaN(stock) || stock <= 0) {
+        errorStock.textContent = 'Stock must be a valid number greater than zero';
+        isValid = false;
+    }
 
         // Validate Offer Price
         const offerPriceInput = document.getElementById('productOfferPrice');
         const errorOfferPrice = document.getElementById('errorOfferPrice');
-        // Add additional validations for Offer Price
+        const offerPrice = parseFloat(offerPriceInput.value);
+    if (isNaN(offerPrice) || offerPrice < 0) {
+        errorOfferPrice.textContent = 'Offer Price must be a valid number greater than or equal to zero';
+        isValid = false;
+    }
 
         // Validate Discount
         const discountInput = document.getElementById('productDiscount');
         const errorDiscount = document.getElementById('errorDiscount');
-        // Add additional validations for Discount
+        const discount = parseFloat(discountInput.value);
+    if (isNaN(discount) || discount < 0) {
+        errorDiscount.textContent = 'Discount must be a valid number greater than or equal to zero';
+        isValid = false;
+    }
 
         // Additional validations can be added for Offer Price and Discount
 
@@ -263,13 +286,96 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         return true;
     }
 
+    // function resetErrorMessages() {
+    //     const errorElements = document.querySelectorAll('.error-message');
+    //     errorElements.forEach(element => {
+    //         element.textContent = '';
+    //     });
+    // }
     function resetErrorMessages() {
-        const errorElements = document.querySelectorAll('.error-message');
-        errorElements.forEach(element => {
-            element.textContent = '';
-        });
+    // Reset all error messages to empty
+    document.getElementById('errorName').textContent = '';
+    document.getElementById('errorDescription').textContent = '';
+    document.getElementById('errorPrice').textContent = '';
+    document.getElementById('errorCategory').textContent = '';
+    document.getElementById('errorStock').textContent = '';
+    document.getElementById('errorOfferPrice').textContent = '';
+    document.getElementById('errorDiscount').textContent = '';
+}
+</script> -->
+
+<script>
+    function validateForm() {
+    let isValid = true;
+
+    const name = document.getElementById('productName').value;
+    const description = document.getElementById('productDescription').value;
+    const price = parseFloat(document.getElementById('productPrice').value);
+    const category = document.getElementById('productCategory').value;
+    const image = document.getElementById('productImages').value; // Corrected ID
+    const stock = parseFloat(document.getElementById('productStock').value);
+    const offerPrice = parseFloat(document.getElementById('productOfferPrice').value);
+    const discount = parseFloat(document.getElementById('productDiscount').value);
+
+    const errorName = document.getElementById('errorName');
+    const errorDescription = document.getElementById('errorDescription');
+    const errorPrice = document.getElementById('errorPrice');
+    const errorImages = document.getElementById('errorImages'); // Corrected ID
+    const errorStock = document.getElementById('errorStock');
+    const errorOfferPrice = document.getElementById('errorOfferPrice');
+    const errorDiscount = document.getElementById('errorDiscount');
+
+    errorName.innerHTML = '';
+    errorDescription.innerHTML = '';
+    errorPrice.innerHTML = '';
+    errorImages.innerHTML = ''; // Corrected ID
+    errorStock.innerHTML = '';
+    errorOfferPrice.innerHTML = '';
+    errorDiscount.innerHTML = '';
+
+    if (name.trim() === '') {
+        errorName.innerHTML = 'Please enter a product Name.';
+        isValid = false;
     }
-</script>
+
+    if (description.trim() === '') {
+        errorDescription.innerHTML = 'Please enter a product description.';
+        isValid = false;
+    }
+
+    if (isNaN(price) || price <= 0) {
+        errorPrice.innerHTML = 'Price must be a number greater than zero.';
+        isValid = false;
+    }
+
+    if (category.trim() === '') {
+        // Add custom validation if required
+    }
+
+    if (!image) {
+        errorImages.innerHTML = 'Please select an image.'; // Corrected ID
+        isValid = false;
+    }
+
+    if (isNaN(stock) || stock <= 0) {
+        errorStock.innerHTML = 'Stock must be a number greater than zero.';
+        isValid = false;
+    }
+
+    if (isNaN(offerPrice) || offerPrice <= 0) {
+        errorOfferPrice.innerHTML = 'Offer Price must be a number greater than zero.';
+        isValid = false;
+    }
+
+    if (isNaN(discount) || discount < 0 || discount >= price) {
+        errorDiscount.innerHTML = 'Discount must be a positive number less than the product price.';
+        isValid = false;
+    }
+
+    return isValid;
+}
+
+      </script>
 
 
 

@@ -149,7 +149,18 @@ const conformLoad=async(req,res)=>{
                             await product.save();
                         }
                        
-                        
+                        if(wallet.redeemedCoupons.length>0){
+
+                            const couponCodeToMove = wallet.redeemedCoupons[0].couponCode;
+                            const redeemedCoupon = {
+                                couponCode: couponCodeToMove,
+                                redeemedAt: Date.now(),
+                            };
+                            user.redeemedCoupons.push(redeemedCoupon)
+                            await user.save();
+                        }
+
+
                             user.cart = [];
                             await user.save();
 
@@ -185,6 +196,16 @@ const conformLoad=async(req,res)=>{
                     await product.save();
                 }
 
+                if(wallet.redeemedCoupons.length>0){
+
+                    const couponCodeToMove = wallet.redeemedCoupons[0].couponCode;
+                    const redeemedCoupon = {
+                        couponCode: couponCodeToMove,
+                        redeemedAt: Date.now(),
+                    };
+                    user.redeemedCoupons.push(redeemedCoupon)
+                    await user.save();
+                }
 
 
                     user.cart = [];
@@ -236,10 +257,6 @@ const conformLoad=async(req,res)=>{
                         user.redeemedCoupons.push(redeemedCoupon)
                         await user.save();
                     }
-
-
-
-                    
                         user.cart = [];
                         await user.save();
                     
@@ -247,7 +264,6 @@ const conformLoad=async(req,res)=>{
                     
                 }
 
-   
         }else{
             throw 'User not logged in'
         }

@@ -29,7 +29,6 @@
     "razorpay": "^2.9.2",
     "referral-codes": "^3.0.0",
     "session": "^0.1.0",
-    "sharp": "^0.33.1",
     "stream": "^0.0.2",
     "sweetalert2": "^11.10.1"
   }

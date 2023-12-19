@@ -1,7 +1,5 @@
-const collection = require("../../model/userdb");
-const productcollection=require('../../model/productdb');
+
 const categorycollection = require("../../model/categorydb");
-const couponCollection=require("../../model/coupondb")
 const dotenv=require('dotenv').config();
 
 const categoryLoad=async(req,res)=>{
@@ -27,7 +25,7 @@ const insertCategory=async(req,res)=>{
         const existingCategory = await categorycollection.findOne({
             category: { $regex: new RegExp('^' + enteredCategory + '$', 'i') }
         });
-        console.log('ex',existingCategory);
+    
         if (existingCategory) {
             
             res.render('addcategory', { error: 'Category already exists' });
@@ -55,7 +53,7 @@ const editCategory = async (req, res) => {
             return res.redirect('/admin/category');
         }
 
-        // Render the editcategory form
+      
         res.render('editcategory', { category: category, message: '',errors: {} });
     } catch (error) {
         console.log("Error in finding the Category : ", error);
@@ -65,23 +63,23 @@ const editCategory = async (req, res) => {
 const updateCategory = async (req, res) => {
     try {
         const categoryId = req.params.id;
-        const enteredCategory = req.body.category.trim(); // Trim to handle whitespace-only input
-        const enteredDescription = req.body.description.trim(); // Trim to handle whitespace-only input
+        const enteredCategory = req.body.category.trim(); 
+        const enteredDescription = req.body.description.trim(); 
 
-        // Simple validation
+   
         const errors = {};
 
-        // Check if category is empty
+       
         if (!enteredCategory) {
             errors.category = { msg: 'Category is required.' };
         }
 
-        // Check if description is empty (optional, adjust as needed)
+       
         if (!enteredDescription) {
             errors.description = { msg: 'Description is required.' };
         }
 
-        // Check if the category already exists
+        
         const existingCategory = await categorycollection.findOne({
             $and: [
                 { category: { $regex: new RegExp('^' + enteredCategory + '$', 'i') } },
@@ -94,13 +92,13 @@ const updateCategory = async (req, res) => {
             errors.category = { msg: 'Category already exists.' };
         }
 
-        // Check if there are any validation errors
+       
         if (Object.keys(errors).length > 0) {
-            // Pass the errors to the rendering context
+           
             return res.render('editcategory', { category: req.body, errors,message: '' });
         }
 
-        // If no validation errors, proceed with updating category
+       
         const result = await categorycollection.findByIdAndUpdate(categoryId, {
             category: enteredCategory,
             description: enteredDescription,

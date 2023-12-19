@@ -1,28 +1,13 @@
-const collection=require('../../model/userdb')
-const nodemailer=require("nodemailer");
-const generateOtp=require("generate-otp");
-const productcollection = require('../../model/productdb');
+const userCollection=require('../../model/userdb')
 const addressCollection=require('../../model/addressdb')
-const couponCollection=require('../../model/coupondb')
 const walletcollection=require("../../model/walletdb")
 const returnCollection=require("../../model/returndb")
-const wishlistcollection=require("../../model/wishlistdb")
-const referralcollection=require("../../model/referraldb")
-const mongoose = require('mongoose');
-const Razorpay = require('razorpay');
-const bodyParser=require('body-parser');
-const nodemon = require('nodemon');
 const easyinvoice=require('easyinvoice')
-const fs=require('fs');
-const { clear } = require('console');
-
-
-
 
 
 const profileLoad=async(req,res)=>{
     const session=req.session.user
-    const user = await collection.findOne({email:session})
+    const user = await userCollection.findOne({email:session})
     const walletDetails = await walletcollection.findOne({ customerid: user._id })
     const walletAmount = walletDetails ? walletDetails.Amount : 0;
     res.render('profile',{user, walletAmount })
@@ -31,8 +16,8 @@ const profileLoad=async(req,res)=>{
 const addaddressLoad=async(req,res)=>{
     const id=req.session.user;
    
-    const user = await collection.findOne({email:id})
-    console.log('user:',user)
+    const user = await userCollection.findOne({email:id})
+    
     res.render('addaddress',{user})
 }
 
@@ -50,13 +35,13 @@ const updateAddress = async (req, res) => {
     };
 
     try {
-        const user = await collection.findOne({ email: id });
+        const user = await userCollection.findOne({ email: id });
         if (user) {
-            await collection.updateOne(
+            await userCollection.updateOne(
                 { email: id },
                 { $push: { address: newAddress } }
             );
-            console.log('Address added successfully');
+            
             res.redirect('/user/profile');
         } else {
             res.status(404).send('User not found');
@@ -69,7 +54,7 @@ const updateAddress = async (req, res) => {
 
 const editAddress=async (req,res)=>{
     const id=req.params.id;
-    collection.findById(id)
+    userCollection.findById(id)
     .then(user=>{
         if(!user){
             res.redirect('/user/profile')
@@ -100,8 +85,8 @@ const addressUpdate=async(req,res)=>{
         }]
     }
     const option={upsert:true};
-    console.log(newAddress)
-    await collection.updateOne(id,newAddress,option)
+  
+    await userCollection.updateOne(id,newAddress,option)
     res.redirect("/user/profile")
    }
    catch(error){
@@ -113,7 +98,7 @@ const addressUpdate=async(req,res)=>{
 
 const editProfile=async(req,res)=>{
     const id=req.params.id;
-    collection.findById(id)
+    userCollection.findById(id)
     .then(user=>{
         if(!user){
             res.redirect('/user/profile')
@@ -130,7 +115,7 @@ const editProfile=async(req,res)=>{
 const updateProfile=async(req,res)=>{
     try{
         let id=req.params.id;
-        const result = await collection.findByIdAndUpdate(id, {
+        const result = await userCollection.findByIdAndUpdate(id, {
             name:req.body.name,
             email:req.body.email,
             phone:req.body.phone
@@ -151,7 +136,7 @@ const updateProfile=async(req,res)=>{
 const walletLoad=async(req,res)=>{
     try {
         const userId = req.session.user;
-       const user=await collection.findOne({email:userId}) 
+       const user=await userCollection.findOne({email:userId}) 
         const wallet = await walletcollection.findOne({customerid: user._id });
 
         if (wallet) {
@@ -177,11 +162,11 @@ const resetLoad=async(req,res)=>{
 
 const resetCheck=async(req,res)=>{
     const useremail=req.session.user
-    const user=await collection.findOne({email:useremail})
+    const user=await userCollection.findOne({email:useremail})
    
     if (req.body.currentpassword === user.password){
 
-        await collection.findByIdAndUpdate(user._id, { password: req.body.newpassword });
+        await userCollection.findByIdAndUpdate(user._id, { password: req.body.newpassword });
         const successMessage = 'Your password has been reset successfully.';
         const error=''
         res.render('resetpassword', { successMessage,error });
@@ -197,15 +182,12 @@ const invoice = async (req, res) => {
     const userId = req.session.user;
     
     try {
-        const user = await collection.findOne({ email: userId });
-        const orderDetails = await collection.findOne({ 'orders._id': orderId }).populate('orders.product');
-  
+        const user = await userCollection.findOne({ email: userId });
+        const orderDetails = await userCollection.findOne({ 'orders._id': orderId }).populate('orders.product');
         const order = orderDetails.orders.find(order => order._id == orderId);
         
-
-        // Assuming 'order.product' is a single product
         const product = order.product;
-        console.log('product:', product);
+    
         const quantity = order.quantity;
 
         const products = [{
@@ -215,7 +197,7 @@ const invoice = async (req, res) => {
             price: product.price,
         }];
 
-        // Calculate the total price as the sum of all product prices
+      
         const totalPrice = products.reduce((total, product) => {
             return total + product.price * product.quantity;
         }, 0);
@@ -251,9 +233,8 @@ const invoice = async (req, res) => {
             Your satisfaction is our priority. Hope to see you again!`
         };
 
-        // Create invoice
+       
         easyinvoice.createInvoice(invoiceData, function (result) {
-            // Send the PDF as a response for download
             res.setHeader('Content-Disposition', `attachment; filename=invoice_${orderId}.pdf`);
             res.setHeader('Content-Type', 'application/pdf');
             res.send(Buffer.from(result.pdf, 'base64'));
@@ -269,8 +250,7 @@ const invoice = async (req, res) => {
 const ordersLoad=async(req,res)=>{
     try{
         const userId = req.session.user; 
-        const user = await collection.findOne({ email: userId }).populate('orders.product').sort({ 'orders.orderDate': -1 });
-      
+        const user = await userCollection.findOne({ email: userId }).populate('orders.product').sort({ 'orders.orderDate': -1 });
         res.render('orderdetails',{orderItems:user.orders,user})
 
     }catch (error) {
@@ -283,12 +263,10 @@ const viewMore=async(req,res)=>{
     try{
         const orderId=req.params.id
         const userId = req.session.user; 
-        const user = await collection.findOne({ email: userId });
-        const orderDetails = await collection.findOne({'orders._id':orderId }).populate('orders.product');
+        const user = await userCollection.findOne({ email: userId });
+        const orderDetails = await userCollection.findOne({'orders._id':orderId }).populate('orders.product');
         const order = orderDetails.orders.find(order => order._id == orderId);
         const address=await addressCollection.find({})
-
-
 
         res.render('viewmore',{item:order,user,address:address})
     }catch(error){
@@ -301,8 +279,8 @@ const cancelOrder=async(req,res)=>{
     try{
         const orderId = req.params.id;
         const userId = req.session.user;
-        const user=await collection.findOne({email:userId}).populate('orders.product');
-        const orderDetails=await collection.findOne({'orders._id':orderId}).populate('orders.product')
+        const user=await userCollection.findOne({email:userId}).populate('orders.product');
+        const orderDetails=await userCollection.findOne({'orders._id':orderId}).populate('orders.product')
         const order = orderDetails.orders.find(order => order._id == orderId);
        
         if (order.paymentmethod === 'Online Payment'|| order.paymentmethod==='Wallet' && (order.status === 'Pending' || order.status === 'Shipped' || order.status === 'Out for Delivery')) {
@@ -326,9 +304,8 @@ const cancelOrder=async(req,res)=>{
             product.stock += orderedQuantity;
             await product.save();
         }
-               
-        
-        const updateorder = await collection.findOneAndUpdate(
+       
+        const updateorder = await userCollection.findOneAndUpdate(
             { 'orders._id': orderId }, 
             { $set: {'orders.$.status': 'Cancelled' } }, 
             { new: true } 
@@ -345,49 +322,30 @@ const cancelOrder=async(req,res)=>{
 
 const returnOrder=async(req,res)=>{
     try{
-
-        console.log('sel',req.body)
-
+        
         const orderId = req.params.id;
         const userId = req.session.user;
-        const user=await collection.findOne({email:userId}).populate('orders.product');
-        const orderDetails=await collection.findOne({'orders._id':orderId}).populate('orders.product')
+        const user=await userCollection.findOne({email:userId}).populate('orders.product');
+        const orderDetails=await userCollection.findOne({'orders._id':orderId}).populate('orders.product')
         const order = orderDetails.orders.find(order => order._id == orderId);
-        // if ((order.paymentmethod === 'Online Payment' || order.paymentmethod === 'Cash On Delivery'|| order.paymentmethod==='wallet') && order.status === 'Delivered') {
-        //     const wallet = await walletcollection.findOneAndUpdate(
-        //         { customerid: user._id },
-        //         { $inc: {Amount: (order.totalPrice+50) },
-        //         $push:{
-        //             transactions:{
-        //                 type:'Refund',
-        //                 amount:(order.totalPrice+50),
-        //             },
-        //         },
-            
-        //     },
-        //         { new: true }
-        //     ) 
-        // }
-        
-        
-    //     if (req.body.returnReason !== "Product Defect or Damage") {
-    //     for (const order of user.orders) {
-    //         const product = order.product;
-    //         const orderedQuantity = order.quantity;
-    //         product.stock += orderedQuantity;
-    //         await product.save();
-    //     }
-    // } else {
-    //     console.log("Return reason is Product Defect or Damage");
-    // }
+       
+        if (req.body.returnReason !== "Product Defect or Damage") {
+        for (const order of user.orders) {
+            const product = order.product;
+            const orderedQuantity = order.quantity;
+            product.stock += orderedQuantity;
+            await product.save();
+        }
+    } else {
+        console.log("Return reason is Product Defect or Damage");
+    }
 
-        const updateorder = await collection.findOneAndUpdate(
-            { 'orders._id': orderId }, 
-            { $set: {'orders.$.status': 'Returned'}}, 
-            { new: true } 
+        const updateorder = await userCollection.findOneAndUpdate(
+            {'orders._id':orderId }, 
+            {$set:{'orders.$.status':'Return requested !!'}}, 
+            {new:true } 
         );
 
-        
             const returnOrderDetails = new returnCollection({
                 userId: userId,
                 orderId: orderId,
@@ -395,7 +353,7 @@ const returnOrder=async(req,res)=>{
                 quantity: order.quantity,
                 reason: req.body.returnReason, 
                 feedback: req.body.feedback, 
-                status: 'Returned', 
+                status: 'Requested', 
                 date: new Date(),
             });
             await returnOrderDetails.save();
@@ -406,7 +364,6 @@ const returnOrder=async(req,res)=>{
         console.log("Error",error)
     }
 }
-
 
 module.exports={
     cancelOrder,returnOrder,viewMore,

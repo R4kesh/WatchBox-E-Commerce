@@ -80,6 +80,9 @@ admin_Routes.get("/admin/coupon/undelete/:id",adminAuth.isLogin,couponController
 
 admin_Routes.get("/admin/return",returnController.returnLoad)
 
+admin_Routes.get("/returnaccept/:id",returnController.accept)
+admin_Routes.get("/returndeny/:id",returnController.reject)
+
 admin_Routes.get('/admin/logout',adminController.adminLogout);
 
 

@@ -113,15 +113,19 @@ background: linear-gradient(to top left, rgba(205, 156, 242, 1), rgba(246, 243, 
 									<% sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7); %>
 									<% if (new Date(item.orderDate) > sevenDaysAgo && item.status !== 'Returned') { %>
 										<button class="btn btn-outline-primary" data-toggle="modal" data-target="#returnModal" data-order-id="<%= item._id %>">Return</button>
-									<% } %>
-								<% } else if (item.status === 'Returned') { %>	
-									<p class="text-success mb-0 small">Returned Successfully</p>
+									<% } %> 
+								<% } else if (item.status === 'Return requested !!') { %>	
+									<p class="text-success mb-0 small">Return requested</p>
+									<% } else if (item.status ==='Rejected') { %>	
+										<p class="text-danger mb-0 small">Return Rejected By Admin</p>
+									<% } else if (item.status ==='Returned') { %>	
+										<p class="text-success mb-0 small">Return Approved</p>
 								<% } else { %>
-									<!-- If status is not Cancelled, Delivered, or Returned, display Cancel Order button -->
+									
 									<a href="/cancelOrder/<%= item._id %>" class="btn btn-outline-primary">Cancel Order</a>
 								<% } %>
 							<% } else { %>
-								<!-- If status is Cancelled, display Cancelled message -->
+								
 								<p class="text-muted mb-0 small">Cancelled</p>
 							<% } %>
 						</div>
@@ -185,7 +189,7 @@ background: linear-gradient(to top left, rgba(205, 156, 242, 1), rgba(246, 243, 
     </div>
                           <div class="d-flex justify-content-around mb-1">
                             <p class="text-muted mt-1 mb-0 small ms-xl-5"></p>
-                            <p class="text-muted mt-1 mb-0 small ms-xl-5"><%=item.status%></p>
+                            <p class="text-muted mt-1 mb-0 small ms-xl-5" style="color: lightblue;"><%=item.status%></p>
                           </div>
                         </div>
                       </div>

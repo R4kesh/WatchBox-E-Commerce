@@ -1,4 +1,4 @@
-const collection = require("../model/userdb");
+const userCollection = require("../model/userdb");
 const productcollection=require('../model/productdb');
 const categorycollection = require("../model/categorydb");
 const couponCollection=require("../model/coupondb")
@@ -10,10 +10,9 @@ const adminLog=async(req,res)=>{
     try{
 
         if(req.session.admin){
-        const userCount = await collection.countDocuments();
-        const users=await collection.find()
-
-        const categorySalesData = await collection.aggregate([
+        const userCount = await userCollection.countDocuments();
+        const users=await userCollection.find()
+        const categorySalesData = await userCollection.aggregate([
           {
               $unwind: '$orders',
           },
@@ -42,10 +41,7 @@ const adminLog=async(req,res)=>{
               },
           },
       ]);
-console.log('sales',categorySalesData);
-  
-
-        const orderCount = await collection.aggregate([
+        const orderCount = await userCollection.aggregate([
             { $unwind: '$orders' },
             { $group: { _id: null, totalOrders: { $sum: 1 } } },
             { $project: { _id: 0, totalOrders: 1 } }
@@ -56,12 +52,11 @@ console.log('sales',categorySalesData);
         const startOfWeek = new Date();
         startOfWeek.setHours(0, 0, 0, 0);
         startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay());
-        
         const endOfWeek = new Date();
         endOfWeek.setHours(23, 59, 59, 999);
         endOfWeek.setDate(endOfWeek.getDate() + (6 - endOfWeek.getDay()));
         
-        const dayCounts = await collection.aggregate([
+        const dayCounts = await userCollection.aggregate([
             { $unwind: '$orders' },
             {
                 $match: {
@@ -82,7 +77,7 @@ console.log('sales',categorySalesData);
        
         const currentYear = new Date().getFullYear();
        
-        const monthlyCounts = await collection.aggregate([
+        const monthlyCounts = await userCollection.aggregate([
             { $unwind: '$orders' },
             {
                 $match: {
@@ -102,7 +97,7 @@ console.log('sales',categorySalesData);
         ]);
 
 
-        const yearlyCount = await collection.aggregate([
+        const yearlyCount = await userCollection.aggregate([
             { $unwind: '$orders' },
             {
                 $group: {
@@ -112,9 +107,8 @@ console.log('sales',categorySalesData);
             },
             { $project: { _id: 0, year: '$_id', totalOrders: 1 } }
         ]);
-  console.log('yearly',yearlyCount);
 
-        const totalSales=await collection.aggregate([
+        const totalSales=await userCollection.aggregate([
             {
                 $group: {
                     _id: null,
@@ -124,7 +118,6 @@ console.log('sales',categorySalesData);
         ])
         const [{ totalAmount }] = totalSales;
 
-       
         res.render('index',{userCount,dayCounts,monthlyCounts,yearlyCount,totalAmount,totalOrders,categorySalesData})
     }else{
         res.render('adminlogin')
@@ -140,7 +133,6 @@ console.log('sales',categorySalesData);
 const adminHome=async(req,res)=>{
     try{
 
-    
     if(req.body.email==process.env.ADEMAIL&&req.body.password==process.env.ADPASSWORD){
         req.session.admin=req.body.email
         res.redirect('/admin')
@@ -157,8 +149,7 @@ const adminHome=async(req,res)=>{
 const usersLoad=async(req,res)=>{
     try{
 
-    
-    const users = await collection.find()
+    const users = await userCollection.find()
     res.render('users',{users})
 }catch(error){
     console.log("Error In Users Load Page");
@@ -171,7 +162,7 @@ const usersLoad=async(req,res)=>{
 const userBlock = async (req, res) => {
     try {
       const id = req.params.id;
-      const user = await collection.findByIdAndUpdate(id, { blocked: true });
+      const user = await userCollection.findByIdAndUpdate(id, { blocked: true });
   
       if (!user) {
         res.status(400).json({ error: 'User not found or could not be blocked' });
@@ -187,7 +178,7 @@ const userBlock = async (req, res) => {
   const userUnblock = async (req, res) => {
     try {
       const id = req.params.id;
-      const user = await collection.findByIdAndUpdate(id, { blocked: false });
+      const user = await userCollection.findByIdAndUpdate(id, { blocked: false });
   
       if (!user) {
         res.status(400).json({ error: 'User not found or could not be unblocked' });
@@ -204,10 +195,9 @@ const ordersLoad=async(req,res)=>{
     const page=parseInt(req.query.page) || 1;
     const perPage = 2;
     try {
-        const totalOrders = await collection.countDocuments({ orders: { $exists: true, $ne: [] } })
-        const users = await collection.find({ orders: { $exists: true, $ne: [] } }).sort({ 'orders.orderDate': -1 }).skip((page - 1) * perPage).limit(perPage).populate('orders.product')
+        const totalOrders = await userCollection.countDocuments({ orders: { $exists: true, $ne: [] } })
+        const users = await userCollection.find({ orders: { $exists: true, $ne: [] } }).sort({ 'orders.orderDate': -1 }).skip((page - 1) * perPage).limit(perPage).populate('orders.product')
         const address=await addressCollection.find({})
-        console.log('add:',address);
         res.render('orders', { users:users,address:address,currentPage: page, pages: Math.ceil(totalOrders / perPage) });
     } catch (error) {
         console.error('Error:', error);
@@ -221,13 +211,12 @@ const updateOrderStatus=async(req,res)=>{
     const newStatus = req.params.newStatus;
     
     try{
-        const order=await collection.findOneAndUpdate(
+        const order=await userCollection.findOneAndUpdate(
             {'orders._id':orderId},
             {$set:{ 'orders.$.status':newStatus}},
            {new:true}
            
         )
-        console.log('oo',order)
             res.redirect('/admin/orders')
 
     }catch(error){
@@ -249,7 +238,7 @@ const excelsheet = async (req, res) => {
     const startDate =new Date( req.query.startDate);
     const endDate =new Date( req.query.endDate);
 
-    const usersWithOrders = await collection.find({
+    const usersWithOrders = await userCollection.find({
         'orders': {
           $exists: true,
         //   $not: { $size: 0 },
@@ -267,7 +256,7 @@ const excelsheet = async (req, res) => {
       return res.status(404).send("No orders found");
     }
 
-    // Create a new Excel workbook and worksheet
+   
     let workbook = new excel.Workbook();
     let worksheet = workbook.addWorksheet("Orders");
 
@@ -309,10 +298,10 @@ const excelsheet = async (req, res) => {
     
     const streamifier = new stream.PassThrough();
 
-    // Pipe the Excel workbook to the stream
+    
     await workbook.xlsx.write(streamifier);
 
-    // Set response headers for Excel file download
+   
     res.setHeader("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
     res.setHeader("Content-Disposition", "attachment; filename=orders.xlsx");
 

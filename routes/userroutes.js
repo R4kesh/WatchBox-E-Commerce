@@ -3,7 +3,7 @@ const path = require('path')
 const user_Routes=express()
 const collection=require('../model/userdb')
 const session=require('express-session')
-// const nocache = require('nocache');
+
 const nodemailer=require("nodemailer");
 const generateOtp=require("generate-otp")
 const userController=require('../controller/userController')
@@ -11,19 +11,19 @@ const profileController=require('../controller/userController/profileController'
 const wishlistController=require('../controller/userController/wishlistController')
 const cartController=require('../controller/userController/cartController')
 const checkoutController=require('../controller/userController/checkoutController')
-// user_Routes.use(nocache()); 
-// paring the user inputed data
+
 user_Routes.use(express.urlencoded({extended : true}))
 user_Routes.use(express.json())
+
 // setting the static pages
 user_Routes.use(express.static('public'))
+
 // setting the view engines
 user_Routes.set('view engine','ejs')
 user_Routes.set('views','./views')
 user_Routes.use(express.static(path.join(__dirname,'public')))
-
-
 const userAuth=require("../middleware/userAuth")
+
 // session handleing 
 user_Routes.use(session({
     secret : "secret-key" ,
@@ -86,16 +86,10 @@ user_Routes.get('/cart/remove/:id',userAuth.isLogin,cartController.removeFromCar
 user_Routes.post('/cart/update/:productId',userAuth.isLogin,cartController.quantityUpdate)
 user_Routes.get("/apply-coupon",userAuth.isLogin,cartController.couponAdd)
 
-
-
 user_Routes.get('/user/wishlist',userAuth.isLogin,wishlistController.wishLoad)
 user_Routes.get('/addtowish/:id',userAuth.isLogin,wishlistController.addToWish)
 user_Routes.get('/wishlist/remove/:id',userAuth.isLogin,wishlistController.removeFromWishlist)
 user_Routes.get('/wishlist/cart/:id',userAuth.isLogin,wishlistController.wishlistAddCart)
-
-
-
-
 
 user_Routes.post('/user/cart',userAuth.isLogin,checkoutController.checkoutLoad)
 user_Routes.get('/user/checkout',userAuth.isLogin,checkoutController.checkoutLoad)

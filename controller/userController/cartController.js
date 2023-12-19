@@ -1,4 +1,4 @@
-const collection=require('../../model/userdb')
+const userCollection=require('../../model/userdb')
 const productcollection = require('../../model/productdb');
 const addressCollection=require('../../model/addressdb')
 const couponCollection=require('../../model/coupondb');
@@ -11,8 +11,7 @@ const cartLoad=async(req,res)=>{
     try {
         const userId = req.session.user; 
         const product=await productcollection.find({}).limit(4)
-        console.log("pr",product);
-        const user = await collection.findOne({ email: userId }).populate('cart.product');
+        const user = await userCollection.findOne({ email: userId }).populate('cart.product');
         if (user) {
             let totalprice=0;
             user.cart.forEach(element => {
@@ -20,8 +19,6 @@ const cartLoad=async(req,res)=>{
                 
             });
            
-
-            
           res.render('cart', { cartItems: user.cart,totalprice,product,productdis:user.cart.product});
         } else {
           res.status(404).send('User not found');
@@ -38,7 +35,7 @@ const addToCart = async (req, res) => {
    
     try {
         const product = await productcollection.findOne({ _id: productId });
-        const user = await collection.findOne({ email: userId });
+        const user = await userCollection.findOne({ email: userId });
        
    
         if (user && product) {
@@ -78,7 +75,7 @@ const removeFromCart = async (req, res) => {
     const productId = req.params.id; 
 
     try {
-        const user = await collection.findOne({ email: userId });
+        const user = await userCollection.findOne({ email: userId });
 
         if (user) {
            
@@ -113,15 +110,13 @@ const quantityUpdate=async (req, res) => {
     try {
         let products=await productcollection.findById(productId)
         
-      const User = await collection.findOne({email:session});
+      const User = await userCollection.findOne({email:session});
 
      
       if (!User) {
         return res.status(404).json({ message: 'User not found' });
       }
-      
-    //   const productItem=products.find()
-      // Find the specific product in the user's cart and update its quantity
+   
       const cartItem = User.cart.find(item => item.product.toString() === productId);
 
       if (cartItem) {
@@ -165,7 +160,7 @@ const quantityUpdate=async (req, res) => {
     
     try{
       const email=req.session.user
-   const userz=await collection.findOne({email:email})
+   const userz=await userCollection.findOne({email:email})
         const couponCode = req.query.code;
         const totalPrice=req.query.total
         const minimumAmount = 5000;
@@ -176,7 +171,7 @@ const quantityUpdate=async (req, res) => {
           return res.json({ success: false, message: "Coupon Expired" });
         }
        
-        const user = await collection.findOne({email:email});
+        const user = await userCollection.findOne({email:email});
         if (user.redeemedCoupons.some((redeemedCoupon) => redeemedCoupon.couponCode === couponCode)) {
             return res.json({ success: false, message: "You have already used this coupon" });
         }
@@ -192,32 +187,25 @@ const quantityUpdate=async (req, res) => {
         user.totalPrice = newTotal;
        
         if (wallet) {
-          // Remove any existing redeemedCoupons array
+         
           wallet.redeemedCoupons = [];
       
-          // Insert the new array with the couponCode
+        
           wallet.redeemedCoupons.push({
               couponCode: couponCode,
           });
       
-          // Save the updated wallet
+         
           await wallet.save();
       } else {
           console.error('Wallet not found for the given customer ID');
-          // Handle the case where the wallet is not found
+          
       }
 
-
-        
-        
-
-       
         await user.save();
  
         res.json({success:true, newTotal,discountAmount: calculatedDiscount });
-        
-
-
+   
     }catch(error){
         console.error("Error applying coupon:", error);
     res.status(500).json({ success: false, message: "Internal server error" });
@@ -229,7 +217,7 @@ const quantityUpdate=async (req, res) => {
         const userId = req.session.user; 
         const totalPrice = req.body.totalAmount;
         const totalAmount = parseInt(totalPrice);
-        const user = await collection.findOne({ email: userId }).populate('cart.product').populate('orders.product')   
+        const user = await userCollection.findOne({ email: userId }).populate('cart.product').populate('orders.product')   
         const address=await addressCollection.find({userId:user._id })
         // user.totalPrice=totalAmount
         // await user.save();

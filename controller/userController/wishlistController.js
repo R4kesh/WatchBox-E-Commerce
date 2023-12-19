@@ -1,18 +1,15 @@
-const collection=require('../../model/userdb')
+const userCollection=require('../../model/userdb')
 const productcollection = require('../../model/productdb');
 const wishlistcollection=require("../../model/wishlistdb")
-
-
-
 
 
 const wishLoad=async(req,res)=>{
     try{
         const users=req.session.user
-        console.log('us:',users);
+      
         const product=await wishlistcollection.find({}).populate('Product')
-        const user=await collection.findOne({email:users})
-        console.log('ur:',user);
+        const user=await userCollection.findOne({email:users})
+        
         if(user){
            res.render('wishlist',{product}) 
         }else{
@@ -30,10 +27,10 @@ const addToWish=async(req,res)=>{
     const productId=req.params.id;
     try{
         const product=await productcollection.findOne({_id:productId})
-        const user = await collection.findOne({ email:req.session.user});
+        const user = await userCollection.findOne({ email:req.session.user});
         if(user&&product){
             const isExist=await wishlistcollection.findOne({UserId:user._id,Product:product._id})
-            console.log('isExist',isExist);
+           
             if(!isExist){
                 const data={
                     UserId:user._id,
@@ -64,11 +61,11 @@ const removeFromWishlist = async (req, res) => {
     const productId = req.params.id;
 
     try {
-        // Find the user based on the email
-        const user = await collection.findOne({ email: userId });
+    
+        const user = await userCollection.findOne({ email: userId });
 
         if (user) {
-            // Find the wishlist item based on the product ID
+            
             const wishlistItem = await wishlistcollection.findOneAndRemove({
                 UserId: user._id,
                 'Product': productId
@@ -76,13 +73,13 @@ const removeFromWishlist = async (req, res) => {
             res.redirect('/user/wishlist');
 
         } else {
-            // User not found
+           
             console.log('No such user found');
-            res.redirect('user/wishlist'); // Redirect to the wishlist page or handle accordingly
+            res.redirect('user/wishlist'); 
         }
     } catch (error) {
         console.log('Error removing from wishlist', error);
-        res.redirect('user/wishlist'); // Redirect to the wishlist page or handle accordingly
+        res.redirect('user/wishlist');
     }
 };
 
@@ -92,7 +89,7 @@ const wishlistAddCart=async(req,res)=>{
 
     try{
         const product = await productcollection.findOne({ _id: productId });
-        const user = await collection.findOne({ email: userId });
+        const user = await userCollection.findOne({ email: userId });
         const existingProductIndex = user.cart.findIndex(item => item.product.toString() === productId);
             if (existingProductIndex !== -1) {
             

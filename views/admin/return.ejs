@@ -79,6 +79,40 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             color: black;
             /* Text color */
         }
+        a {
+  text-decoration: none;
+}
+
+.accept,
+.deny {
+  display: inline-block; /* Add this to make the buttons inline */
+  font-size: 14px; /* Adjust the font size as needed */
+  margin: 5px; /* Add margin for spacing between buttons */
+}
+
+.accept {
+  color: #FFF;
+  background: #44CC44;
+  padding: 10px 15px; /* Adjust padding as needed */
+  box-shadow: 0 4px 0 0 #2EA62E;
+}
+
+.accept:hover {
+  background: #6FE76F;
+  box-shadow: 0 4px 0 0 #7ED37E;
+}
+
+.deny {
+  color: #FFF;
+  background: tomato;
+  padding: 10px 15px; /* Adjust padding as needed */
+  box-shadow: 0 4px 0 0 #CB4949;
+}
+
+.deny:hover {
+  background: rgb(255, 147, 128);
+  box-shadow: 0 4px 0 0 #EF8282;
+}
 
         /* Additional styles if needed */
     </style>
@@ -213,7 +247,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                             <th>Return Date</th>
                                             <th>Reason</th>
                                             <th>Feedback</th>
-                                            
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -232,6 +266,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                                 </td>
                                                 <td style="color: black;"><%= retur.reason%></td>
                                                 <td style="color: black;"><%=retur.feedback%></td>
+                                                <td>
+                                                    <% if (retur.status === 'Return approved') { %>
+                                                      
+                                                      Return approved
+                                                    <% } else if (retur.status === 'Return Rejected') { %>
+                                                     
+                                                      Return Rejected
+                                                    <% } else { %>
+                                                      
+                                                      <a href="/returnaccept/<%=retur.orderId%>" class="accept">ACCEPT <span class="fas fa-check"></span></a>
+                                                      <a href="/returndeny/<%=retur.orderId%>" class="deny">DENY <span class="fas fa-close"></span></a>
+                                                    <% } %>
+                                                  </td>
+                                                  
                                                 
                                             </tr>
                                         <% }); %>

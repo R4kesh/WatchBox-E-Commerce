@@ -1,7 +1,5 @@
 const productcollection=require("../../model/productdb")
-const collection = require("../../model/userdb");
 const categorycollection=require("../../model/categorydb")
-const mongoose = require('mongoose');
 
 const productsLoad = async (req, res) => {
     const page = parseInt(req.query.page) || 1; 
@@ -44,12 +42,9 @@ const insertProduct = async (req, res) => {
     try {
         const enteredProductName = req.body.name.toLowerCase();
         const categories = await categorycollection.find({ isDeleted: false }); 
-       
         const existingProduct = await productcollection.findOne({
             name: { $regex: new RegExp('^' + enteredProductName + '$', 'i') }
         });
-
-        
 
         if (existingProduct) {
             res.render('addproducts', { error: 'Product already exists',categories });
@@ -119,7 +114,7 @@ const editProduct=async(req,res)=>{
     const errorMessage=''
     productcollection.findById(id)
     .then(product=>{
-        console.log('proid:',product._id)
+        
         if(!product){
             res.redirect('/admin/products')
         }else{
@@ -153,10 +148,8 @@ const updateProduct = async (req, res) => {
             ]
         });
 
-        console.log('Existing Product:', existingProduct);
-
         if (existingProduct) {
-            console.log('Product with the same name already exists');
+        
             res.render('editproducts',{product,errorMessage:'product Already Exist'}) // You may want to handle this case differently
         } else {
             const productData = {
@@ -170,7 +163,7 @@ const updateProduct = async (req, res) => {
                 Discount: req.body.discount,
             };
 
-            console.log(productData);
+        
             const result = await productcollection.findByIdAndUpdate(id, productData);
 
             if (!result) {
@@ -184,9 +177,6 @@ const updateProduct = async (req, res) => {
         
     }
 }
-
-
-
 
 module.exports={
     productsLoad,

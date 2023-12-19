@@ -1,4 +1,4 @@
-const collection=require('../../model/userdb')
+const userCollection=require('../../model/userdb')
 const addressCollection=require('../../model/addressdb')
 const walletcollection=require("../../model/walletdb")
 const Razorpay = require('razorpay');
@@ -7,11 +7,11 @@ const Razorpay = require('razorpay');
 const checkoutLoad=async(req,res)=>{
     try {
         const userId = req.session.user;
-        const users=await collection.findOne({email:userId}) 
-        const user = await collection.findOne({ email: userId }).populate('cart.product').populate('orders.product') 
+        const users=await userCollection.findOne({email:userId}) 
+        const user = await userCollection.findOne({ email: userId }).populate('cart.product').populate('orders.product') 
         const wallet=await walletcollection.findOne({customerid:users._id})
         if (wallet && wallet.Amount !== undefined) {
-            console.log("Amount:", wallet.Amount);
+           
         } else {
             console.log("Wallet or Amount not found");
         }
@@ -39,7 +39,7 @@ const checkoutLoad=async(req,res)=>{
 
 const checkoutAddAddress=async(req,res)=>{
     const userId = req.session.user;
-    const user = await collection.findOne({ email: userId });
+    const user = await userCollection.findOne({ email: userId });
    
     res.render('checkoutaddaddress',{user})
 }
@@ -47,7 +47,7 @@ const checkoutAddAddress=async(req,res)=>{
 const updateCheckoutAddress=async(req,res)=>{
     
         const id=req.session.user;
-        const user= await collection.findOne({email:id})
+        const user= await userCollection.findOne({email:id})
       const  newAddress={
             userId:user._id,  
             houseName: req.body.houseName,
@@ -58,9 +58,8 @@ const updateCheckoutAddress=async(req,res)=>{
             country: req.body.country,
             }
         
-        
         try{
-       const user= await collection.findOne({email:id})
+       const user= await userCollection.findOne({email:id})
        
        if(user){
         await addressCollection.insertMany([newAddress])
@@ -104,14 +103,12 @@ const updateeditCheckoutAddress=async(req,res)=>{
     }
 }
 
-
-
 const conformLoad=async(req,res)=>{
     try{
 
         const userId = req.session.user; 
-        const users=await collection.findOne({email:userId})
-        const user = await collection.findOne({ email: userId }).populate('cart.product').populate('orders.product');
+        const users=await userCollection.findOne({email:userId})
+        const user = await userCollection.findOne({ email: userId }).populate('cart.product').populate('orders.product');
         const wallet=await walletcollection.findOne({customerid:users._id})
         if(user){
            
@@ -160,7 +157,6 @@ const conformLoad=async(req,res)=>{
                             await user.save();
                         }
 
-
                             user.cart = [];
                             await user.save();
 
@@ -206,7 +202,6 @@ const conformLoad=async(req,res)=>{
                     user.redeemedCoupons.push(redeemedCoupon)
                     await user.save();
                 }
-
 
                     user.cart = [];
                     await user.save();

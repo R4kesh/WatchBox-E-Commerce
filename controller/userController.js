@@ -1,23 +1,12 @@
-const collection=require('../model/userdb')
+const userCollection=require('../model/userdb')
 const nodemailer=require("nodemailer");
 const generateOtp=require("generate-otp");
 const productcollection = require('../model/productdb');
-const addressCollection=require('../model/addressdb')
-const couponCollection=require('../model/coupondb')
 const walletcollection=require("../model/walletdb")
-const wishlistcollection=require("../model/wishlistdb")
 const referralcollection=require("../model/referraldb")
-const mongoose = require('mongoose');
 const Razorpay = require('razorpay');
-const bodyParser=require('body-parser');
-const nodemon = require('nodemon');
-const easyinvoice=require('easyinvoice')
-const fs=require('fs');
 const dotenv=require('dotenv').config();
 const { clear } = require('console');
-
-
-
 
 const loginLoad=async(req,res)=>{
     try{
@@ -64,10 +53,10 @@ const homeLoad = async (req, res) => {
                 .find({ isDeleted: false })
                 .skip(skip)
                 .limit(PAGE_SIZE)
-                .exec(); // Use .exec() to execute the query
+                .exec(); 
 
                     
-            const users = await collection.findOne({ email: req.session.user });
+            const users = await userCollection.findOne({ email: req.session.user });
             const wallet = await walletcollection.findOne({ customerid: users._id });
             
         if (!wallet) {
@@ -99,9 +88,9 @@ const productsLoad= async (req, res) => {
                 .find()
                 .skip(skip)
                 .limit(PAGESIZE)
-                .exec(); // Use .exec() to execute the query
+                .exec(); 
 
-            const users = await collection.findOne({ email: req.session.user });
+            const users = await userCollection.findOne({ email: req.session.user });
 
             res.render('products', { products, users, currentPage });
         
@@ -120,7 +109,7 @@ const forgotLoad=async(req,res)=>{
 const verifyEmail=async(req,res)=>{
     
     try{
-        const userremail=await collection.findOne({email:req.body.email})
+        const userremail=await userCollection.findOne({email:req.body.email})
 
         if(userremail){
             
@@ -134,8 +123,8 @@ const verifyEmail=async(req,res)=>{
         },
     })
     const mailOptions={
-        from:"rakeshsrks2580@gmail.com",
-        to:"rakeshsrks2580@gmail.com",
+        from:`${req.body.email}`,
+        to:`${req.body.email}`,
         subject:"Your Otp code",
         text:`your otp code is:${otp}`
     }
@@ -168,7 +157,7 @@ const verifyEmail=async(req,res)=>{
 const forgototpverify=async(req,res)=>{
     try{
         const id=req.params.id
-        const user=await collection.findById(id)
+        const user=await userCollection.findById(id)
         
         const enterOtp=req.body.otp;
         console.log(enterOtp)
@@ -193,12 +182,12 @@ const setnewpassword=async(req,res)=>{
     try{
         const newPassword = req.body.password;
         const id=req.params.id;
-        const user=await collection.findById(id)
+        const user=await userCollection.findById(id)
       
         console.log('uu',user)
 
 
-        await collection.findByIdAndUpdate(id, { password:newPassword });
+        await userCollection.findByIdAndUpdate(id, { password:newPassword });
 
         res.redirect('/login')
 
@@ -212,7 +201,7 @@ const setnewpassword=async(req,res)=>{
 const verifyLogin=async(req,res)=>{
     try{
     const error='';
-    const check=await collection.findOne({email:req.body.email})
+    const check=await userCollection.findOne({email:req.body.email})
     if(check){
 if(check.password===req.body.password&&check.blocked===false){
 req.session.user=req.body.email
@@ -224,7 +213,7 @@ else{
 
 } 
 } else {
-    // Email not found in the database
+    
     res.render("login", { error: "Email not found" });
 }
 }
@@ -245,7 +234,7 @@ const insertUser=async(req,res)=>{
       }
       const referralCode = generateReferralCode(req.body.name);
     
-    const data={
+    data={
         name:req.body.name,
         email:req.body.email,
         phone:req.body.phone,
@@ -255,9 +244,8 @@ const insertUser=async(req,res)=>{
 
     
 
-    const refcheck=await collection.findOne({referral:req.body.referralCode})
-    console.log('nu',refcheck);
-    const check=await collection.findOne({email:req.body.email})
+    const refcheck=await userCollection.findOne({referral:req.body.referralCode})
+    const check=await userCollection.findOne({email:req.body.email})
     const message='Email Already Exist'
 
     if(check){
@@ -267,9 +255,9 @@ const insertUser=async(req,res)=>{
         res.render('signup',{message1})
     }else{
         
-    await collection.insertMany([data])
+    
 
-    const id=await collection.findOne({referral:referralCode})
+    const id=await userCollection.findOne({referral:referralCode})
     if (id) {
         const newReferraldetail = new referralcollection({
              userId: id._id,
@@ -282,7 +270,7 @@ const insertUser=async(req,res)=>{
          console.log("User not found for referral code creation.");
      }
 
-      let refferaluser=await collection.findOne({referral:req.body.referralCode})
+      let refferaluser=await userCollection.findOne({referral:req.body.referralCode})
       let referreduser = await walletcollection.findOneAndUpdate(
         {customerid:refferaluser._id},
         {
@@ -302,9 +290,10 @@ const insertUser=async(req,res)=>{
               pass: 'wikvaxsgqyebphvh',
         },
     })
+    console.log('otp',otp)
     const mailOptions={
-        from:"rakeshsrks2580@gmail.com",
-        to:"rakeshsrks2580@gmail.com",
+        from:`${req.body.email}`,
+        to:`${req.body.email}`,
         subject:"Your Otp code",
         text:`your otp code is:${otp}`
     }
@@ -344,8 +333,8 @@ const verifyOtp=async(req,res)=>{
         const enterOtp=req.body.otp;
         console.log(enterOtp)
         if(otp===enterOtp){
-            // await collection.insertMany([data])
-        
+            
+            await userCollection.insertMany([data])
         res.redirect("/login")
         }
         else{
@@ -376,7 +365,7 @@ const categorywiseLoad=async(req,res)=>{
     try{
     const userId=req.session.user;
     const catId = req.params.id;
-    const user=await collection.findOne({email:userId})
+    const user=await userCollection.findOne({email:userId})
     const currentPage = parseInt(req.query.page) || 1;
     const skip = (currentPage - 1) * PAGESIZES;
     const products=await productcollection.find({category:catId}).skip(skip)
@@ -415,7 +404,7 @@ let instance = new Razorpay({
 
 const paypost = async(req, res) => {
     const userId = req.session.user; 
-    const user = await collection.findOne({ email: userId })
+    const user = await userCollection.findOne({ email: userId })
     const total=user.totalPrice
    
     instance.orders.create({

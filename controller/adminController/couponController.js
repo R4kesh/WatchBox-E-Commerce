@@ -1,6 +1,4 @@
-const collection = require("../../model/userdb");
-const productcollection=require('../../model/productdb');
-const categorycollection = require("../../model/categorydb");
+
 const couponCollection=require("../../model/coupondb")
 const dotenv=require('dotenv').config();
 
@@ -53,7 +51,7 @@ const couponEditLoad=async(req,res)=>{
         if(!result){
             res.status(400).send("Coupon not found");
             }
-            console.log('res:',result);
+            
             res.render('editcoupon',{result})
     }catch(error){
         console.log("Error due to Edit Coupon: ",error);

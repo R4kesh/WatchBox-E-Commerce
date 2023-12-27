@@ -148,8 +148,10 @@
                             <div class="col-sm-12">
                                 <% if (user.address && user.address.length > 0) { %>
                                     <a class="btn btn-info" href="/user/address/edit/<%= user._id %>">Edit Address</a>
+                                    <a class="btn btn-info" href="/user/address/delete/<%= user._id %>">Delete Address</a>
                                 <% } else { %>
                                     <button class="btn btn-info" disabled>Edit Address</button>
+                                    
                                 <% } %>
                             </div>
                         </div>

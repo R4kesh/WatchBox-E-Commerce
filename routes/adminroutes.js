@@ -67,6 +67,7 @@ admin_Routes.get('/admin/category/edit/:id',adminAuth.isLogin,categoryController
 admin_Routes.post('/admin/category/update/:id',adminAuth.isLogin,categoryController.updateCategory)
 
 admin_Routes.get('/admin/orders',adminAuth.isLogin,adminController.ordersLoad)
+admin_Routes.get('/admin/viewmore/:id/:user',adminAuth.isLogin,adminController.viewmore)
 admin_Routes.get('/updateOrderStatus/:userId/:orderId/:newStatus',adminAuth.isLogin,adminController.updateOrderStatus)
 admin_Routes.get("/exportOrdersToExcel", adminController.excelsheet)
 

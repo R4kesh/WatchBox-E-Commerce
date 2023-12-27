@@ -284,6 +284,23 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			 
 			</div>
 		</div>
+
+		<script>
+			// Get the current date in the format "YYYY-MM-DD"
+			var currentDate = new Date().toISOString().split('T')[0];
+	
+			// Set the maximum attribute for both date inputs to the current date
+			document.getElementById('startDate').max = currentDate;
+			document.getElementById('endDate').max = currentDate;
+	
+			// Optional: You can also handle the change event to ensure the end date is not before the start date
+			document.getElementById('startDate').addEventListener('change', function () {
+				document.getElementById('endDate').min = this.value;
+			});
+		</script>
+
+
+
 		  </div>
 		  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 		  <script>

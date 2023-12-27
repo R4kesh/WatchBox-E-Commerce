@@ -21,7 +21,22 @@ const addaddressLoad=async(req,res)=>{
     res.render('addaddress',{user})
 }
 
+const editAddress=async (req,res)=>{
+    const id=req.params.id;
+    userCollection.findById(id)
+    .then(user=>{
+        if(!user){
+            res.redirect('/user/profile')
+        }else{
+            res.render('editaddress',{user})
+        }
+    })
+    .catch(error =>{
+        console.log("Error in finding the address : ", error);
+        res.redirect('/user/profile')
+    })
 
+}
 
 const updateAddress = async (req, res) => {
     const id = req.session.user;
@@ -52,20 +67,27 @@ const updateAddress = async (req, res) => {
     }
 };
 
-const editAddress=async (req,res)=>{
-    const id=req.params.id;
-    userCollection.findById(id)
-    .then(user=>{
-        if(!user){
+
+
+const deleteAddress=async(req,res)=>{
+    
+    const userId = req.params.id;
+
+    try {
+        const result = await userCollection.updateOne(
+            { _id: userId },
+            { $unset: { address: 1 } }
+        );
+
+        if (result.nModified > 0) {
+            res.redirect('/user/profile');
+        } else {
             res.redirect('/user/profile')
-        }else{
-            res.render('editaddress',{user})
         }
-    })
-    .catch(error =>{
-        console.log("Error in finding the address : ", error);
-        res.redirect('/user/profile')
-    })
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).send('Error unsetting address field');
+    }
 
 }
 
@@ -111,6 +133,7 @@ const editProfile=async(req,res)=>{
         res.redirect('/admin/profile')
     })
 }
+
 
 const updateProfile=async(req,res)=>{
     try{
@@ -369,5 +392,5 @@ module.exports={
     cancelOrder,returnOrder,viewMore,
     profileLoad,resetLoad,walletLoad,invoice,
     addaddressLoad,updateAddress,editAddress
-    ,addressUpdate,editProfile,updateProfile,resetCheck,ordersLoad,
+    ,addressUpdate,editProfile,deleteAddress,updateProfile,resetCheck,ordersLoad,
 }

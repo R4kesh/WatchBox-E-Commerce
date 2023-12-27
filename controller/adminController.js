@@ -206,6 +206,23 @@ const ordersLoad=async(req,res)=>{
  
 }
 
+
+const viewmore=async(req,res)=>{
+    try{
+        const orderId=req.params.id;
+        const userId = req.params.user; 
+        const user = await userCollection.findOne({_id: userId});
+        const orderDetails = await userCollection.findOne({'orders._id':orderId }).populate('orders.product');
+        const order = orderDetails.orders.find(order => order._id == orderId);
+        const address=await addressCollection.find({})
+
+        res.render('orderdetails',{item:order,user,address:address})
+    }catch(error){
+        console.log(error);
+        res.status(500).send('Internal Server Error');
+    }
+}
+
 const updateOrderStatus=async(req,res)=>{
     const orderId = req.params.orderId;
     const newStatus = req.params.newStatus;
@@ -246,7 +263,7 @@ const excelsheet = async (req, res) => {
         //     'orderDate': { $gte: startDate, $lte: endDate }
         //   }
         }
-      });
+      }).populate('orders.product')
       const add= await addressCollection.find({})
      
      
@@ -274,14 +291,17 @@ const excelsheet = async (req, res) => {
       
     ];
 
+
+   
+
     usersWithOrders.forEach((order) => {
         
         order.orders.forEach((singleOrder) => {
             
-          const itemDetails = singleOrder.productName + `, Quantity: ${singleOrder.quantity}`;
+          const itemDetails = singleOrder.product.name + `, Quantity: ${singleOrder.quantity}`;
           const deliveryAddress = order.address && order.address.length > 0
-          ? order.address[0].houseName + ', ' + order.address[0].street + ', ' + order.address[0].city
-          : 'N/A';
+          ? order.address[0].houseName + ', ' + order.address[0].street +','+ order.address[0].city
+          :'N/A';
           worksheet.addRow({
             id: order._id,
             customerName: order.name,
@@ -339,5 +359,6 @@ module.exports={
     userBlock,
     userUnblock,
     ordersLoad,
+    viewmore,
     updateOrderStatus,excelsheet,  
 }

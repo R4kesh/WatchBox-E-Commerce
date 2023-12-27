@@ -66,6 +66,49 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 .wishlist-icon a {
    font-size: 20px;
 }
+
+.custom-modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: wheat;
+    border: 2px solid green;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    color: black;
+    text-align: center;
+    font-size: 16px;
+}
+
+.custom-modal p {
+    margin: 0; /* Remove default margin for paragraphs inside the modal */
+}
+
+.custom-modal::before {
+    content: "\2713"; /* Unicode checkmark symbol */
+    display: block;
+    font-size: 36px;
+    color: white;
+    margin-bottom: 10px;
+}
+
+/* Add a fade-in animation for a smoother appearance */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.custom-modal.show {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
 </style>
 
 <!--dropdown-->
@@ -128,8 +171,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<div class="logo">
 		<a href="https://watchbox-sfcc.imgix.net/og/watchbox-og-full.png"><h1>Luxury Watches</h1></a>
 	</div>
-	<!--start-logo-->
-	<!--bottom-header-->
+	
 	<div class="header-bottom">
 		<div class="container">
 			<div class="header">
@@ -321,7 +363,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											<a class="btn btn-secondary" href="/productdetails/<%= row._id %>">View Details</a>
 										
 											<% if (row.stock > 0) { %>
-												<a class="btn btn-primary" href="/addtocart/<%= row._id %>">Add to Cart</a>
+												<a class="btn btn-primary" href="/addtocart/<%= row._id %>" onclick="showAddedToCartMessage()">Add to Cart</a>
 											<% } else { %>
 												<button class="btn btn-primary" disabled>Out of Stock</button>
 											<% } %>
@@ -344,6 +386,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</div>
 			</div>
 		</div>
+		<!--------------------- alert-------------------------------------- -->
+		<script>
+			function showAddedToCartMessage() {
+				// Display the custom modal
+				var modal = document.getElementById('customModal');
+				modal.style.display = 'block';
+		
+				// You can customize the content of the modal message here
+				modal.innerHTML = "Item added to cart!";
+		
+				
+			}
+		</script>
+		<!--------------------- alert-------------------------------------- -->
 		<div class="container">
 			<div class="row justify-content-center">
 				
@@ -433,6 +489,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		</div>
 	</div>
 	<!--footer-end-->	
+
+	<div id="customModal" class="custom-modal"></div>
 	
 </body>
 </html>

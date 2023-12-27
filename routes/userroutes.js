@@ -65,7 +65,7 @@ user_Routes.get('/profile/addaddress',userAuth.isLogin,profileController.addaddr
 user_Routes.post('/user/addaddress',userAuth.isLogin,profileController.updateAddress)
 user_Routes.get('/user/address/edit/:id',userAuth.isLogin,profileController.editAddress)
 user_Routes.post('/user/address/update/:id',userAuth.isLogin,profileController.addressUpdate)
-
+user_Routes.get("/user/address/delete/:id",userAuth.isLogin,profileController.deleteAddress)
 user_Routes.get('/user/profile/edit/:id',userAuth.isLogin,profileController.editProfile)
 user_Routes.post('/user/Profile/update/:id',userAuth.isLogin,profileController.updateProfile)
 user_Routes.get('/resetpassword',userAuth.isLogin,profileController.resetLoad)

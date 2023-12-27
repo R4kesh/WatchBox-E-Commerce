@@ -144,9 +144,9 @@ const updateProduct = async (req, res) => {
         const existingProduct = await productcollection.findOne({
             $and: [
                 { name: { $regex: new RegExp('^' + enteredProductName + '$', 'i') } },
-                { _id: { $ne: id } }
+                { _id: { $ne: id  } }
             ]
-        });
+        })
 
         if (existingProduct) {
         
